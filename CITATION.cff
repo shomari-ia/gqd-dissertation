@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite it as below."
+title: "pH-Responsive Carboxyl-Functionalized Graphene Quantum Dots for Anticancer Drug Delivery: Computational Record"
+abstract: >-
+  Inputs, submission scripts, quality-control tooling, run log, and derived
+  results for a three-phase computational study of anticancer drug loading on
+  a carboxyl-functionalized graphene quantum dot.
+type: software
+authors:
+  - family-names: Johnson
+    given-names: Shomari
+    name-particle: A.
+    affiliation: "Jackson State University, Interdisciplinary Center for Nanotoxicity"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"   # add before deposit
+keywords:
+  - graphene quantum dot
+  - density functional theory
+  - drug delivery
+  - reproducible research
+license: MIT
+version: "0.1.0"
+date-released: "2026-07-22"
+# repository-code: "https://github.com/<username>/gqd-dissertation"
+# doi: ""   # minted by Zenodo at first release

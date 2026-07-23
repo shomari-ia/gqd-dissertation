@@ -1,0 +1,17 @@
+# conda env create -f environments/environment.yml
+# conda activate gqd
+#
+# Deliberately small. cclib parses Gaussian logs properly (orbital energies,
+# frequency lists, atomic charges) — far more reliable than grep for anything
+# past a single SCF energy.
+name: gqd
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - matplotlib
+  - pyyaml
+  - cclib
+  - jupyterlab

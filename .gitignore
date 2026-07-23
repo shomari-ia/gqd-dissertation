@@ -1,0 +1,48 @@
+# ---------------------------------------------------------------------------
+# Rule: the repository holds inputs, scripts, metadata, summaries and results.
+# Everything large or regenerable lives in archive/ and is mirrored to Google
+# Drive, with its SHA-256 recorded in run_log.tsv.
+# ---------------------------------------------------------------------------
+
+archive/          # chk, wfx, cube, and full Gaussian logs — Drive-backed
+!archive/README.md
+
+# Gaussian scratch
+*.rwf
+*.int
+*.d2e
+*.skr
+fort.*
+Gau-*
+
+# Full Gaussian output: the committed record is the .summary.txt, not the log
+*.log
+!**/summaries/*.summary.txt
+
+# OpenPBS stdout/stderr
+*.o[0-9]*
+*.e[0-9]*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*~
+*.swp
+.vscode/
+
+# Python / conda
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# Secrets — never commit cluster credentials
+.env
+*.pem
+*.key
+credentials*

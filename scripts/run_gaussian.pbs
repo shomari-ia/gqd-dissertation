@@ -1,0 +1,77 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=16:mem=32gb
+#PBS -l walltime=48:00:00
+#PBS -j oe
+#PBS -o archive/logs/
+#
+# run_gaussian.pbs — one submission script for every Gaussian job in this project.
+# Single node only (MCSR Gaussian licensing).
+#
+# SUBMIT LIKE THIS (from the repository root on Maple):
+#
+#   qsub -N cooh_gqd_b3lyp_optfreq_v01 \
+#        -v RUN_ID=DFT-COOH-GQD-001,INPUT=calculations/phase1_dft/b3lyp/inputs/cooh_gqd_b3lyp_optfreq_v01.com \
+#        scripts/run_gaussian.pbs
+#
+# Override resources on the command line when a job needs more/less:
+#   qsub -l select=1:ncpus=8:mem=8gb -l walltime=04:00:00 ... scripts/run_gaussian.pbs
+# Whatever you override is captured in the provenance file, so the record stays true.
+#
+# VERIFY BEFORE FIRST USE: queue name, Gaussian module name, and the g16
+# launch command all come from the MCSR site documentation / example job.
+# Do not guess them.
+
+set -euo pipefail
+
+cd "${PBS_O_WORKDIR:?must be submitted with qsub from the repo root}"
+
+: "${INPUT:?pass -v INPUT=path/to/input.com}"
+: "${RUN_ID:?pass -v RUN_ID=STAGE-SYSTEM-NNN}"
+
+STAGE_DIR="$(dirname "$(dirname "$INPUT")")"     # .../phase1_dft/b3lyp
+BASE="$(basename "$INPUT" .com)"
+OUTPUT="archive/logs/${BASE}.log"
+PROV="${STAGE_DIR}/prov/${RUN_ID}.prov"
+
+mkdir -p archive/logs archive/chk "${STAGE_DIR}/prov" "${STAGE_DIR}/summaries"
+
+# ---------------------------------------------------------------- modules
+module purge
+# <<< REPLACE with Maple's verified Gaussian module name >>>
+module load gaussian/16
+
+# ------------------------------------------------------------- provenance
+{
+    echo "run_id=${RUN_ID}"
+    echo "date=$(date --iso-8601=seconds)"
+    echo "input_file=${INPUT}"
+    echo "output_file=${OUTPUT}"
+    echo "job_script=scripts/run_gaussian.pbs"
+    echo "job_id=${PBS_JOBID:-NA}"
+    echo "queue=${PBS_QUEUE:-NA}"
+    echo "node=$(head -n1 "${PBS_NODEFILE:-/dev/null}" 2>/dev/null || hostname)"
+    echo "ncpus=${NCPUS:-NA}"
+    echo "hostname=$(hostname)"
+    echo "git_commit=$(git rev-parse --short HEAD 2>/dev/null || echo NA)"
+    echo "git_dirty=$(git diff --quiet 2>/dev/null && echo no || echo YES)"
+    echo "input_sha256=$(sha256sum "$INPUT" | awk '{print $1}')"
+    echo "gaussian_path=$(command -v g16 || echo NA)"
+    echo "modules=$(module list 2>&1 | tr '\n' ';' )"
+    echo "start_time=$(date --iso-8601=seconds)"
+} > "$PROV"
+
+# ------------------------------------------------------------------- run
+# <<< CONFIRM the launch command against Maple's example job >>>
+g16 < "$INPUT" > "$OUTPUT" || true      # keep going so the QC gate can classify the failure
+
+echo "end_time=$(date --iso-8601=seconds)"        >> "$PROV"
+echo "output_sha256=$(sha256sum "$OUTPUT" | awk '{print $1}')" >> "$PROV"
+
+# --------------------------------------------------------------- QC gate
+set +e
+scripts/verify_gaussian.sh "$OUTPUT" "${STAGE_DIR}/summaries"
+QC=$?
+set -e
+echo "qc_exit=${QC}" >> "$PROV"
+
+exit 0

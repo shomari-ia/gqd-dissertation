@@ -1,0 +1,127 @@
+# config/systems.yml
+# Single source of truth for what is being calculated and at what level.
+# If a number appears in Chapter 2 methods, it should appear here too — and
+# nowhere else. Change it in one place, cite it from one place.
+
+project: pH-responsive COOH-functionalized graphene quantum dots for anticancer drug delivery
+phase: I
+author: Shomari A. Johnson
+cluster: maple.mcsr.olemiss.edu
+scheduler: OpenPBS
+node_limit: single node (36 cores, 119 GB) — MCSR Gaussian licensing
+
+# --------------------------------------------------------------------------
+# Levels of theory. The `route` strings here are pasted verbatim into inputs.
+# --------------------------------------------------------------------------
+methods:
+
+  pm6:
+    stage: pre-optimization
+    software: Gaussian 16 Rev C.01
+    route: "#p PM6 opt"
+    mem: 8GB
+    nproc: 8
+    purpose: remove poor initial geometry before the expensive DFT step
+
+  b3lyp_optfreq:
+    stage: optimization + frequencies
+    software: Gaussian 16 Rev C.01
+    functional: B3LYP
+    dispersion: D3(BJ)  # EmpiricalDispersion=GD3BJ
+    basis_set: 6-31G(d,p)
+    solvation: SMD, water
+    route: "#p opt freq B3LYP/6-31G(d,p) EmpiricalDispersion=GD3BJ SCRF=(SMD,Solvent=Water) geom=check"
+    mem: 32GB
+    nproc: 16
+    # NOTE: geom=check only. Do NOT add guess=read when coming from PM6 —
+    # a semi-empirical wavefunction is not a valid guess for a DFT basis.
+
+  m062x_sp:
+    stage: single-point validation
+    software: Gaussian 16 Rev C.01
+    functional: M06-2X          # dispersion is intrinsic — never add GD3BJ
+    basis_set: 6-311+G(d,p)
+    solvation: SMD, water
+    route: "#p M06-2X/6-311+G(d,p) SCRF=(SMD,Solvent=Water) geom=check"
+    mem: 32GB
+    nproc: 16
+    # NOTE: basis set changes here, so guess=read from the B3LYP checkpoint
+    # is invalid. geom=check alone; let Gaussian build a fresh guess.
+
+  counterpoise:
+    stage: BSSE-corrected binding energy
+    route: "#p B3LYP/6-31G(d,p) EmpiricalDispersion=GD3BJ SCRF=(SMD,Solvent=Water) Counterpoise=2"
+    mem: 32GB
+    nproc: 16
+    charge_mult_line: "0 1 0 1 0 1"   # complex, fragment 1 (GQD), fragment 2 (drug)
+
+# --------------------------------------------------------------------------
+# Systems. charge/multiplicity errors are the most expensive mistake in this
+# phase — they waste days of walltime and are silent. Check against this table
+# before every submission.
+# --------------------------------------------------------------------------
+systems:
+
+  cooh_gqd:
+    label: COOH-GQD
+    description: circumcoronene with one edge carboxyl group
+    parent: circumcoronene C54H18, D6h, ~1.2 nm
+    source: PubChem CID 25137954 (+ COOH added in Avogadro 1.2)
+    formula: C55H18O2
+    n_atoms: 75
+    charge: 0
+    multiplicity: 1
+
+  erlotinib:
+    label: erlotinib
+    source: PubChem CID 176870
+    target: EGFR
+    charge: 0
+    multiplicity: 1
+
+  gefitinib:
+    label: gefitinib
+    source: PubChem CID 123631
+    target: EGFR
+    charge: 0
+    multiplicity: 1
+
+  venetoclax:
+    label: venetoclax (ABT-199)
+    source: PubChem CID 49846579
+    target: Bcl-2
+    charge: 0
+    multiplicity: 1
+    note: large and flexible — most demanding job of the phase; expect walltime restarts
+
+  abt737:
+    label: ABT-737
+    source: PubChem CID 11228183
+    target: Bcl-2
+    charge: 0
+    multiplicity: 1
+    note: large and flexible — most demanding job of the phase
+
+# --------------------------------------------------------------------------
+# Complex poses (Section 2.2.4). Three starting orientations per drug;
+# the lowest-energy converged pose is retained.
+# --------------------------------------------------------------------------
+poses:
+  - flat        # parallel stack
+  - slipped     # offset parallel stack
+  - edge        # edge-on
+
+# --------------------------------------------------------------------------
+# Unit conversions used in reporting
+# --------------------------------------------------------------------------
+conversions:
+  hartree_to_kcal_mol: 627.5095
+  hartree_to_ev: 27.2114
+  ev_to_nm: 1239.84   # lambda(nm) = 1239.84 / E(eV)
+
+reporting:
+  binding_and_free_energies: kcal/mol
+  orbital_gaps: eV
+  rule: >
+    Two energies are comparable only if they came from the same method, basis
+    set, and solvent. Never subtract a gas-phase number from a solvated one.

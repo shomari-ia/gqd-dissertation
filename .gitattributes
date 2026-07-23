@@ -1,0 +1,18 @@
+# Line endings. This file is the fix for the CRLF problem: files you edit in
+# Notepad++ on Windows are stored and checked out with Unix LF endings, so a
+# script that works locally also works on Maple. Nothing to remember.
+* text=auto eol=lf
+
+*.sh   text eol=lf
+*.pbs  text eol=lf
+*.com  text eol=lf
+*.gjf  text eol=lf
+*.yml  text eol=lf
+*.tsv  text eol=lf
+*.md   text eol=lf
+
+# Never touch these (they are not text)
+*.chk  binary
+*.rwf  binary
+*.png  binary
+*.pdf  binary

@@ -1,0 +1,9 @@
+# The only file in the run-log system you edit by hand.
+# Columns: run_id <TAB> manual_status <TAB> note
+# manual_status is optional — leave it empty to keep the automatic QC verdict.
+# Use it only for a decision the machine cannot know (SUPERSEDED, CANCELLED).
+# Never delete a row. Supersede it.
+#
+# Example (delete this line once you have real runs):
+# DFT-COOH-GQD-002	SUPERSEDED	SCF convergence failure; restarted with scf=xqc as DFT-COOH-GQD-003
+run_id	manual_status	note
