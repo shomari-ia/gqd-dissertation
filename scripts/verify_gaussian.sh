@@ -68,18 +68,21 @@ else
 fi
 
 # --- energies ----------------------------------------------------------
-SCF=$(grep "SCF Done" "$LOG" | tail -n 1 | awk '{print $5}')
+SCF=$(grep "SCF Done" "$LOG" \
+      | tail -n 1 | awk '{print $5}' || true)
 SCF="${SCF:-NA}"
 
 GIBBS=$(grep "Sum of electronic and thermal Free Energies" "$LOG" \
-        | tail -n 1 | awk '{print $NF}')
+        | tail -n 1 | awk '{print $NF}' || true)
 GIBBS="${GIBBS:-NA}"
 
-ZPE=$(grep "Zero-point correction" "$LOG" | tail -n 1 | awk '{print $3}')
+ZPE=$(grep "Zero-point correction" "$LOG" \
+      | tail -n 1 | awk '{print $3}' || true)
 ZPE="${ZPE:-NA}"
 
 # BSSE counterpoise, if this was a Counterpoise=2 job
-CP=$(grep -m1 "counterpoise corrected energy" "$LOG" | awk '{print $NF}' || true)
+CP=$(grep -m1 "counterpoise corrected energy" "$LOG" \
+     | awk '{print $NF}' || true)
 CP="${CP:-NA}"
 
 CHARGE_MULT=$(grep -m1 "Charge =" "$LOG" | sed 's/^ *//' || echo "NA")
@@ -117,3 +120,5 @@ printf "%s\t%s\t%s\t%s\t%s\t%s\n" \
     "$RUN_ID" "$STATUS" "$IMAG" "$SCF" "$GIBBS" "$SHA"
 
 exit $CODE
+
+

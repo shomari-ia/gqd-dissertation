@@ -1,46 +1,100 @@
 #!/bin/bash
-#PBS -l select=1:ncpus=16:mem=32gb
+#PBS -S /bin/bash
+#PBS -q workq
+#PBS -l nodes=1:ppn=16
+#PBS -l mem=32gb
 #PBS -l walltime=48:00:00
+#PBS -l cput=768:00:00
 #PBS -j oe
-#PBS -o archive/logs/
 #
-# run_gaussian.pbs — one submission script for every Gaussian job in this project.
-# Single node only (MCSR Gaussian licensing).
+# run_gaussian.pbs — unified Gaussian 16 submission script for Maple.
 #
-# SUBMIT LIKE THIS (from the repository root on Maple):
+# Submit from the repository root:
 #
-#   qsub -N cooh_gqd_b3lyp_optfreq_v01 \
-#        -v RUN_ID=DFT-COOH-GQD-001,INPUT=calculations/phase1_dft/b3lyp/inputs/cooh_gqd_b3lyp_optfreq_v01.com \
-#        scripts/run_gaussian.pbs
+# qsub -N cooh_gqd_pm6 \
+#   -v RUN_ID=PM6-COOH-GQD-001,INPUT=calculations/phase1_dft/pm6/inputs/cooh_gqd_pm6_opt_v01.com \
+#   scripts/run_gaussian.pbs
 #
-# Override resources on the command line when a job needs more/less:
-#   qsub -l select=1:ncpus=8:mem=8gb -l walltime=04:00:00 ... scripts/run_gaussian.pbs
-# Whatever you override is captured in the provenance file, so the record stays true.
+# Resources may be overridden at submission:
 #
-# VERIFY BEFORE FIRST USE: queue name, Gaussian module name, and the g16
-# launch command all come from the MCSR site documentation / example job.
-# Do not guess them.
+# qsub -N cooh_gqd_pm6 \
+#   -l nodes=1:ppn=8 \
+#   -l mem=8gb \
+#   -l walltime=04:00:00 \
+#   -v RUN_ID=PM6-COOH-GQD-001,INPUT=calculations/phase1_dft/pm6/inputs/cooh_gqd_pm6_opt_v01.com \
+#   scripts/run_gaussian.pbs
 
 set -euo pipefail
 
-cd "${PBS_O_WORKDIR:?must be submitted with qsub from the repo root}"
+cd "${PBS_O_WORKDIR:?Submit the job with qsub from the repository root.}"
 
-: "${INPUT:?pass -v INPUT=path/to/input.com}"
-: "${RUN_ID:?pass -v RUN_ID=STAGE-SYSTEM-NNN}"
+: "${INPUT:?Pass -v INPUT=path/to/input.com}"
+: "${RUN_ID:?Pass -v RUN_ID=STAGE-SYSTEM-NNN}"
 
-STAGE_DIR="$(dirname "$(dirname "$INPUT")")"     # .../phase1_dft/b3lyp
-BASE="$(basename "$INPUT" .com)"
+if [[ ! -f "$INPUT" ]]; then
+    echo "ERROR: Gaussian input file not found: $INPUT" >&2
+    exit 2
+fi
+
+STAGE_DIR="$(dirname "$(dirname "$INPUT")")"
+BASE="$(basename "$INPUT")"
+BASE="${BASE%.com}"
+BASE="${BASE%.gjf}"
+
 OUTPUT="archive/logs/${BASE}.log"
 PROV="${STAGE_DIR}/prov/${RUN_ID}.prov"
 
-mkdir -p archive/logs archive/chk "${STAGE_DIR}/prov" "${STAGE_DIR}/summaries"
+mkdir -p \
+    archive/logs \
+    archive/chk \
+    "${STAGE_DIR}/prov" \
+    "${STAGE_DIR}/summaries"
 
-# ---------------------------------------------------------------- modules
-module purge
-# <<< REPLACE with Maple's verified Gaussian module name >>>
-module load gaussian/16
+# --------------------------------------------------------- Gaussian scratch
+
+SCRDIR="/tmp/${USER}.${PBS_JOBID}"
+mkdir -p "$SCRDIR"
+export GAUSS_SCRDIR="$SCRDIR"
+export OMP_NUM_THREADS=1
+
+cleanup() {
+    rm -rf "$SCRDIR"
+}
+trap cleanup EXIT
+
+ulimit -s unlimited
+
+# ------------------------------------------------ node-specific Gaussian build
+
+EXEC_HOST="$(hostname)"
+echo "Execution host: $EXEC_HOST"
+
+if [[ "$EXEC_HOST" =~ cn([0-9]{3}) ]]; then
+    NODE_NUMBER="${BASH_REMATCH[1]}"
+    NODE_NUMBER=$((10#$NODE_NUMBER))
+
+    if (( NODE_NUMBER <= 29 )); then
+        export g16root="/usr/local/apps/gaussian/g16-c01-avx"
+        GAUSSIAN_BUILD="g16-c01-avx"
+    else
+        export g16root="/usr/local/apps/gaussian/g16-c01-avx2"
+        GAUSSIAN_BUILD="g16-c01-avx2"
+    fi
+else
+    echo "ERROR: Job is not running on a recognized Maple compute node." >&2
+    exit 3
+fi
+
+# shellcheck disable=SC1091
+. "$g16root/g16/bsd/g16.profile"
+
+if ! command -v g16 >/dev/null 2>&1; then
+    echo "ERROR: g16 was not found after loading $GAUSSIAN_BUILD." >&2
+    exit 4
+fi
 
 # ------------------------------------------------------------- provenance
+
 {
     echo "run_id=${RUN_ID}"
     echo "date=$(date --iso-8601=seconds)"
@@ -48,30 +102,55 @@ module load gaussian/16
     echo "output_file=${OUTPUT}"
     echo "job_script=scripts/run_gaussian.pbs"
     echo "job_id=${PBS_JOBID:-NA}"
-    echo "queue=${PBS_QUEUE:-NA}"
-    echo "node=$(head -n1 "${PBS_NODEFILE:-/dev/null}" 2>/dev/null || hostname)"
-    echo "ncpus=${NCPUS:-NA}"
+    echo "queue=${PBS_QUEUE:-workq}"
+    echo "execution_host=${EXEC_HOST}"
+    echo "node_file=${PBS_NODEFILE:-NA}"
+    echo "gaussian_build=${GAUSSIAN_BUILD}"
+    echo "g16root=${g16root}"
+    echo "gaussian_path=$(command -v g16)"
+    echo "scratch_directory=${GAUSS_SCRDIR}"
+    echo "omp_num_threads=${OMP_NUM_THREADS}"
     echo "hostname=$(hostname)"
     echo "git_commit=$(git rev-parse --short HEAD 2>/dev/null || echo NA)"
     echo "git_dirty=$(git diff --quiet 2>/dev/null && echo no || echo YES)"
     echo "input_sha256=$(sha256sum "$INPUT" | awk '{print $1}')"
-    echo "gaussian_path=$(command -v g16 || echo NA)"
-    echo "modules=$(module list 2>&1 | tr '\n' ';' )"
     echo "start_time=$(date --iso-8601=seconds)"
 } > "$PROV"
 
 # ------------------------------------------------------------------- run
-# <<< CONFIRM the launch command against Maple's example job >>>
-g16 < "$INPUT" > "$OUTPUT" || true      # keep going so the QC gate can classify the failure
 
-echo "end_time=$(date --iso-8601=seconds)"        >> "$PROV"
-echo "output_sha256=$(sha256sum "$OUTPUT" | awk '{print $1}')" >> "$PROV"
+set +e
+g16 < "$INPUT" > "$OUTPUT"
+GAUSSIAN_EXIT=$?
+set -e
+
+echo "gaussian_exit=${GAUSSIAN_EXIT}" >> "$PROV"
+echo "end_time=$(date --iso-8601=seconds)" >> "$PROV"
+
+if [[ -f "$OUTPUT" ]]; then
+    echo "output_sha256=$(sha256sum "$OUTPUT" | awk '{print $1}')" >> "$PROV"
+else
+    echo "output_sha256=NA" >> "$PROV"
+fi
 
 # --------------------------------------------------------------- QC gate
+
 set +e
 scripts/verify_gaussian.sh "$OUTPUT" "${STAGE_DIR}/summaries"
-QC=$?
+QC_EXIT=$?
 set -e
-echo "qc_exit=${QC}" >> "$PROV"
 
-exit 0
+echo "qc_exit=${QC_EXIT}" >> "$PROV"
+
+# The provenance and QC files are retained even if Gaussian fails.
+# Return failure to PBS when either Gaussian or the QC gate fails.
+
+if (( GAUSSIAN_EXIT != 0 )); then
+    exit "$GAUSSIAN_EXIT"
+fi
+
+exit "$QC_EXIT"
+
+
+
+
