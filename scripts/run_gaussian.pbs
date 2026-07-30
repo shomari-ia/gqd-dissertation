@@ -85,8 +85,12 @@ else
     exit 3
 fi
 
+# Gaussian's legacy profile references optional variables such as PERLLIB.
+# Temporarily disable nounset while loading the site environment.
+set +u
 # shellcheck disable=SC1091
 . "$g16root/g16/bsd/g16.profile"
+set -u
 
 if ! command -v g16 >/dev/null 2>&1; then
     echo "ERROR: g16 was not found after loading $GAUSSIAN_BUILD." >&2
@@ -150,6 +154,7 @@ if (( GAUSSIAN_EXIT != 0 )); then
 fi
 
 exit "$QC_EXIT"
+
 
 
 
