@@ -27,6 +27,7 @@
 set -euo pipefail
 
 cd "${PBS_O_WORKDIR:?Submit the job with qsub from the repository root.}"
+REPO_DIR="$PWD"
 
 : "${INPUT:?Pass -v INPUT=path/to/input.com}"
 : "${RUN_ID:?Pass -v RUN_ID=STAGE-SYSTEM-NNN}"
@@ -121,11 +122,19 @@ fi
     echo "scratch_directory=${GAUSS_SCRDIR}"
     echo "omp_num_threads=${OMP_NUM_THREADS}"
     echo "hostname=$(hostname)"
-    echo "git_commit=$(git rev-parse --short HEAD 2>/dev/null || echo NA)"
-    echo "git_dirty=$(git diff --quiet 2>/dev/null && echo no || echo YES)"
+    echo "repository_directory=${REPO_DIR}"
+    echo "runtime_directory=$(pwd)"
+    echo "git_commit=$(git -C "$REPO_DIR" rev-parse --short HEAD 2>/dev/null || echo NA)"
+
+    if [[ -z "$(git -C "$REPO_DIR" status --porcelain 2>/dev/null)" ]]; then
+       echo "git_dirty=no"
+    else
+       echo "git_dirty=YES"
+    fi
+    
     echo "input_sha256=$(sha256sum "$INPUT" | awk '{print $1}')"
     echo "start_time=$(date --iso-8601=seconds)"
-} > "$PROV"
+    } > "$PROV"
 
 # ------------------------------------------------------------------- run
 
@@ -160,6 +169,8 @@ if (( GAUSSIAN_EXIT != 0 )); then
 fi
 
 exit "$QC_EXIT"
+
+
 
 
 
