@@ -31,7 +31,14 @@ from the cluster after a successful QC gate.
 
 ## Integrity
 
-Every archived file's SHA-256 is recorded in `run_log.tsv` at the moment the job
-finished. To verify an archive years later, re-hash and compare. If a hash does
-not match, the file was corrupted in transfer — most often by FileZilla in Auto
-transfer mode. Use Binary.
+Every archived file's SHA-256, size, file type, and associated `run_id` are
+recorded in `archive_manifest.tsv`. Gaussian output-log hashes are also
+recorded in `run_log.tsv` and the corresponding provenance records.
+
+Run:
+
+    scripts/build_archive_manifest.sh --verify
+
+to re-hash every archived file and compare it with the committed manifest. A
+size or checksum mismatch indicates that a file changed or was corrupted during
+storage or transfer.
