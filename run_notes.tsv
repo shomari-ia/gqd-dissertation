@@ -7,3 +7,6 @@
 # Example (delete this line once you have real runs):
 # DFT-COOH-GQD-002	SUPERSEDED	SCF convergence failure; restarted with scf=xqc as DFT-COOH-GQD-003
 run_id	manual_status	note
+PM6-COOH-GQD-003	SUPERSEDED	Scientific calculation and QC passed, but Git provenance was unavailable on the compute node.
+PM6-COOH-GQD-004	SUPERSEDED	Scientific calculation and QC passed, but git_commit was recorded as NA.
+PM6-COOH-GQD-005		First fully Git-linked PM6 reproducibility run; Gaussian and QC passed.

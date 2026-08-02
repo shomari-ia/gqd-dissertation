@@ -31,7 +31,8 @@ emit() {
         input=$(get input_file)
         output=$(get output_file)
         job_id=$(get job_id)
-        node=$(get node)
+        node=$(get execution_host)
+        [[ -z "$node" ]] && node=$(get node)
         commit=$(get git_commit)
         osha=$(get output_sha256)
 
@@ -40,7 +41,15 @@ emit() {
         system_id=$(echo "$run_id" | cut -d- -f2- | sed 's/-[0-9]*$//')
 
         status="MISSING_LOG"; imag="NA"; scf="NA"; gibbs="NA"
-        sumfile="$(dirname "$(dirname "$input")")/summaries/$(basename "$output" .log).summary.txt"
+        sumdir="$(dirname "$(dirname "$input")")/summaries"
+
+        # Preferred naming convention: summary named by reproducible run ID.
+        sumfile="${sumdir}/${run_id}.summary.txt"
+
+        # Backward-compatible fallback for older output-basename summaries.
+        if [[ ! -f "$sumfile" ]]; then
+           sumfile="${sumdir}/$(basename "$output" .log).summary.txt"
+        fi
         if [[ -f "$sumfile" ]]; then
             status=$(grep -m1 '^qc_status' "$sumfile" | awk '{print $2}')
             imag=$(grep  -m1 '^imag_freq'  "$sumfile" | awk '{print $2}')
@@ -70,3 +79,5 @@ if [[ "${1:-}" == "--write" ]]; then
 else
     emit
 fi
+
+
