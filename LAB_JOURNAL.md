@@ -1,3 +1,26 @@
+## Entry template (copy this block for each new entry)
+
+```text
+### Entry NNN — YYYY-MM-DD — <short title>
+- Scientific/build objective:
+- Starting state:
+- Commands / actions performed:
+- Files changed:
+- Job IDs / run IDs:
+- Git commit:
+- Validation performed:
+- Result:
+- Problems encountered:
+- Root cause:
+- Correction:
+- Why the correction was justified:
+- Decision / advancement gate:
+- Archive / checksum status:
+- What remains:
+- Next action:
+``` 
+
+
 ## Entry 001 — 2026-07-20 → 2026-09-08 — FOUNDATION: Reproducibility architecture and accepted PM6 COOH-GQD baseline
 
 *Retrospective foundation entry documenting the computational and
@@ -329,6 +352,10 @@ single-session format.*
   evidence of covalent attachment than relying solely on file-format bond
   perception or visualization.
 
+- Decision / advancement gate:
+  PM6-COOH-GQD-005 is cleared for use as the starting geometry for the
+  tracked B3LYP COOH-GQD optimization/frequency calculation.
+
 - Archive / checksum status:
   PM6-COOH-GQD-005 was previously archived under the established reproducibility
   workflow and its provenance/checksum record retained.
@@ -342,3 +369,4 @@ single-session format.*
 - Next action:
   Resolve the current untracked repository files, commit this validation entry,
   confirm the accepted PM6 checkpoint path, and prepare B3LYP-COOH-GQD-001.
+
