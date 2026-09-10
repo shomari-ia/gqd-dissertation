@@ -370,3 +370,299 @@ single-session format.*
   Resolve the current untracked repository files, commit this validation entry,
   confirm the accepted PM6 checkpoint path, and prepare B3LYP-COOH-GQD-001.
 
+
+
+
+### Entry 003 — 2026-09-10 — B3LYP-COOH-GQD-001 preflight and production submission
+
+- Scientific/build objective:
+  Validate the accepted PM6 checkpoint as the starting geometry for the first
+  tracked production B3LYP calculation, audit the B3LYP input and reproducibility
+  chain, correct any provenance-related problems, and submit
+  B3LYP-COOH-GQD-001 to Maple.
+
+- Starting state:
+  PM6-COOH-GQD-005 had been accepted under full provenance.
+
+  Direct Cartesian analysis had verified the optimized COOH-GQD structure:
+
+      molecular composition: C55H18O2
+      total atoms: 75
+      charge: 0
+      multiplicity: 1
+
+      C58-O73 = 1.2096 Å
+      C58-O74 = 1.3796 Å
+      C58-C40 = 1.4618 Å
+
+  The -COOH group therefore passed the direct covalent-connectivity gate.
+
+  The existing B3LYP input used the correct scientific method but still
+  referenced the older generic PM6 checkpoint rather than the accepted
+  run005 checkpoint.
+
+- Commands / actions performed:
+  Located all available PM6 checkpoints and identified:
+
+      archive/chk/cooh_gqd_pm6_opt_v01.run005.chk
+
+  as the checkpoint associated with accepted run:
+
+      PM6-COOH-GQD-005
+
+  Verified checkpoint size:
+
+      12 MB
+
+  Recorded checkpoint SHA256:
+
+      79d756a8ab5ec8968dd7ed022171fda4f194f565a38c518f368e398d1c716677
+
+  `formchk` was not available in the Maple login-shell PATH, so a small
+  OpenPBS compute-node validation job was submitted using the same
+  node-specific Gaussian environment logic as the production workflow.
+
+  Checkpoint-validation PBS job:
+
+      7633381.maple
+
+  The validation job ran on:
+
+      cn119
+      Gaussian build: g16-c01-avx2
+
+  Gaussian successfully read the checkpoint as a G16 checkpoint and produced
+  a temporary formatted checkpoint containing:
+
+      Number of atoms: 75
+      Charge: 0
+      Multiplicity: 1
+
+  Validation result:
+
+      CHECKPOINT_READABILITY=PASS
+
+  Inspected the existing B3LYP input:
+
+      calculations/phase1_dft/b3lyp/inputs/
+      cooh_gqd_b3lyp_optfreq_v01.com
+
+  Confirmed:
+
+      %mem=32GB
+      %nprocshared=16
+      B3LYP/6-31G(d,p)
+      EmpiricalDispersion=GD3BJ
+      SCRF=(SMD,Solvent=Water)
+      opt
+      freq
+      geom=check
+      charge 0
+      multiplicity 1
+      no guess=read
+
+  Corrected the checkpoint source from:
+
+      %oldchk=archive/chk/cooh_gqd_pm6_opt_v01.chk
+
+  to:
+
+      %oldchk=archive/chk/cooh_gqd_pm6_opt_v01.run005.chk
+
+  Committed the corrected input before submission.
+
+  A remote Git update caused the initial push to be rejected. The local
+  commit was safely rebased onto origin/main using:
+
+      git pull --rebase origin main
+
+  and then successfully pushed.
+
+  Final production Git commit:
+
+      795588f
+
+  Verified no pre-existing B3LYP working log or checkpoint existed, preventing
+  accidental output collision.
+
+  Recorded B3LYP input SHA256:
+
+      6b29c78bcce591d59cebdf99336dc2452bb99de4c9d94ff99a00c8f9a8ffd57d
+
+  Submitted:
+
+      RUN_ID=B3LYP-COOH-GQD-001
+
+  with:
+
+      1 Maple node
+      16 CPU
+      32 GB memory
+      48-hour walltime
+
+  PBS job:
+
+      7633495.maple
+
+- Files changed:
+  calculations/phase1_dft/b3lyp/inputs/
+  cooh_gqd_b3lyp_optfreq_v01.com
+
+  The only scientific-input change was the `%oldchk` reference to the
+  accepted PM6-COOH-GQD-005 checkpoint.
+
+- Job IDs / run IDs:
+  Checkpoint validation:
+      PBS job 7633381.maple
+
+  Production:
+      RUN_ID B3LYP-COOH-GQD-001
+      PBS job 7633495.maple
+
+- Git commit:
+  795588f
+
+- Validation performed:
+  Production provenance file:
+
+      calculations/phase1_dft/b3lyp/prov/
+      B3LYP-COOH-GQD-001.prov
+
+  recorded:
+
+      run_id=B3LYP-COOH-GQD-001
+      job_id=7633495.maple
+      execution_host=cn045
+      gaussian_build=g16-c01-avx2
+      git_commit=795588f
+      git_dirty=no
+      input_sha256=
+      6b29c78bcce591d59cebdf99336dc2452bb99de4c9d94ff99a00c8f9a8ffd57d
+
+  The running Gaussian log independently confirmed:
+
+      NAtoms=75
+      Charge=0
+      Multiplicity=1
+
+  Route:
+
+      #p opt freq B3LYP/6-31G(d,p)
+      EmpiricalDispersion=GD3BJ
+      SCRF=(SMD,Solvent=Water)
+      geom=check
+
+  The first reported B3LYP SCF point converged:
+
+      E(RB3LYP) = -2256.96666058 A.U.
+      after 15 cycles
+
+- Result:
+  PASS for preflight and production submission.
+
+  B3LYP-COOH-GQD-001 successfully entered production on Maple with the
+  correct accepted PM6 geometry, scientific method, computational resources,
+  Git provenance, and input checksum.
+
+  The calculation is currently active.
+
+  The reported first SCF energy is an intermediate optimization value and is
+  not treated as the final B3LYP energy.
+
+- Problems encountered:
+  1. `formchk` was unavailable from the interactive Maple login-shell PATH.
+  2. The pre-existing B3LYP input referenced the generic PM6 checkpoint rather
+     than the accepted run005 checkpoint.
+  3. The first Git push of the corrected B3LYP input was rejected because
+     origin/main contained newer work.
+  4. Reproducibility inspection identified that archive-manifest RUN_ID parsing
+     is currently PM6-specific.
+  5. QC summary naming currently derives from the output-log basename rather
+     than directly from the explicit production RUN_ID.
+
+- Root cause:
+  Gaussian utilities are configured within Maple's compute-node-specific
+  environment rather than the login shell.
+
+  The B3LYP input predated final acceptance of PM6-COOH-GQD-005.
+
+  The Git remote had advanced independently before the B3LYP input push.
+
+  Some reproducibility scripts were initially designed around the first PM6
+  workflow and have not yet been generalized across all computational stages.
+
+- Correction:
+  Used an OpenPBS compute-node validation job to test the checkpoint within
+  Maple's verified Gaussian environment.
+
+  Updated `%oldchk` to the accepted run005 checkpoint.
+
+  Rebased the local Git commit onto the current remote main branch and pushed
+  successfully.
+
+  Confirmed that the existing QC/run-log fallback remains functional for the
+  current B3LYP calculation.
+
+  Deferred generalization of the archive/QC naming architecture to a separate
+  infrastructure task rather than modifying production behavior during the
+  scientific run.
+
+- Why the correction was justified:
+  Each correction preserved the existing validated computational architecture
+  while ensuring that B3LYP-COOH-GQD-001 is traceable to the exact accepted
+  PM6 geometry and exact Git-controlled input.
+
+  No scientific method was changed during the correction.
+
+- Decision / advancement gate:
+  PASS for submission.
+
+  All pre-submission scientific and reproducibility checks were satisfied.
+  B3LYP-COOH-GQD-001 was submitted as PBS job 7633495.maple from Git commit
+  795588f with a clean repository state.
+
+  Final scientific acceptance remains pending:
+
+      optimization completion,
+      frequency calculation,
+      zero imaginary frequencies,
+      normal Gaussian termination,
+      QC PASS,
+      final energy extraction,
+      Gibbs free-energy extraction,
+      checksum verification,
+      run-log registration,
+      and archive preservation.
+
+- Archive / checksum status:
+  Input SHA256 recorded:
+
+      6b29c78bcce591d59cebdf99336dc2452bb99de4c9d94ff99a00c8f9a8ffd57d
+
+  PM6 source checkpoint SHA256 recorded:
+
+      79d756a8ab5ec8968dd7ed022171fda4f194f565a38c518f368e398d1c716677
+
+  Production B3LYP output checksum will be recorded only after completion.
+
+- What remains:
+  1. Monitor B3LYP-COOH-GQD-001 without interfering with execution.
+  2. Confirm geometry optimization completion.
+  3. Confirm frequency calculation completion.
+  4. Verify zero imaginary frequencies.
+  5. Confirm Normal termination.
+  6. Run the Gaussian QC gate.
+  7. Record final SCF and Gibbs free energies.
+  8. Update run_log.tsv through the automated workflow.
+  9. Preserve the accepted B3LYP log/checkpoint in the archive.
+  10. Generalize archive-manifest and explicit RUN_ID summary handling as a
+      separate reproducibility infrastructure task.
+
+- Next action:
+  Begin Entry 004 when B3LYP-COOH-GQD-001 completes or when a scientifically
+  meaningful event requiring intervention occurs.
+
+
+
+
+
