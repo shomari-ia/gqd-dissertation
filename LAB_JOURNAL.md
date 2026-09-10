@@ -21,7 +21,7 @@
 ``` 
 
 
-## Entry 001 — 2026-07-20 → 2026-09-08 — FOUNDATION: Reproducibility architecture and accepted PM6 COOH-GQD baseline
+### Entry 001 — 2026-07-20 → 2026-09-08 — FOUNDATION: Reproducibility Architecture & PM6 COOH-GQD Baseline
 
 *Retrospective foundation entry documenting the computational and
 reproducibility work completed before implementation of the formal
