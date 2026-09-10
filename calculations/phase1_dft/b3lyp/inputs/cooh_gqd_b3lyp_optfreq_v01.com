@@ -1,4 +1,4 @@
-%oldchk=archive/chk/cooh_gqd_pm6_opt_v01.chk
+%oldchk=archive/chk/cooh_gqd_pm6_opt_v01.run005.chk
 %chk=archive/chk/cooh_gqd_b3lyp_optfreq_v01.chk
 %mem=32GB
 %nprocshared=16
