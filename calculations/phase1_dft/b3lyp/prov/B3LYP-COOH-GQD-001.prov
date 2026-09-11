@@ -19,3 +19,7 @@ git_commit=795588f
 git_dirty=no
 input_sha256=6b29c78bcce591d59cebdf99336dc2452bb99de4c9d94ff99a00c8f9a8ffd57d
 start_time=2026-09-10T00:51:00-05:00
+gaussian_exit=0
+end_time=2026-09-10T07:34:34-05:00
+output_sha256=bcc0062f2341239b8cc12a2f92ef14f714c558ca4acf3b2e7d73c92b5d1c8467
+qc_exit=0

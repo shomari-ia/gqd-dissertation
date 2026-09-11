@@ -665,4 +665,164 @@ single-session format.*
 
 
 
+### Entry 004 — 2026-09-11 — B3LYP-COOH-GQD-001 completion, frequency QC, and scientific acceptance
+
+- Scientific/build objective:
+  Evaluate the completed B3LYP-COOH-GQD-001 production calculation, verify
+  geometry optimization and frequency results, confirm provenance integrity,
+  extract final thermochemical quantities, and determine whether the optimized
+  COOH-GQD structure passes the advancement gate.
+
+- Starting state:
+  B3LYP-COOH-GQD-001 had been submitted from the accepted
+  PM6-COOH-GQD-005 geometry as PBS job 7633495.maple.
+
+  Production input:
+      calculations/phase1_dft/b3lyp/inputs/
+      cooh_gqd_b3lyp_optfreq_v01.com
+
+  Production Git commit:
+      795588f
+
+  Input SHA256:
+      6b29c78bcce591d59cebdf99336dc2452bb99de4c9d94ff99a00c8f9a8ffd57d
+
+- Commands / actions performed:
+  Confirmed that PBS job 7633495.maple had exited the queue.
+
+  Inspected final SCF energies and Gaussian termination.
+
+  Checked geometry-optimization completion.
+
+  Inspected harmonic frequencies and explicitly counted negative frequencies.
+
+  Ran the formal Gaussian QC gate:
+
+      scripts/verify_gaussian.sh \
+      archive/logs/cooh_gqd_b3lyp_optfreq_v01.log \
+      calculations/phase1_dft/b3lyp/summaries
+
+  Rebuilt the machine-generated run ledger:
+
+      scripts/build_run_log.sh --write
+
+- Job IDs / run IDs:
+      RUN_ID: B3LYP-COOH-GQD-001
+      PBS job: 7633495.maple
+      execution host: cn045
+
+- Validation performed:
+  Gaussian termination:
+      NORMAL
+
+  Geometry optimization:
+      COMPLETED
+
+  Harmonic-frequency analysis:
+      imaginary frequencies = 0
+
+  System:
+      atoms = 75
+      charge = 0
+      multiplicity = 1
+
+  QC status:
+      PASS
+
+  Gaussian exit:
+      0
+
+  QC exit:
+      0
+
+- Result:
+  Final electronic SCF energy:
+
+      E(RB3LYP) = -2257.22593711 Hartree
+
+  Zero-point correction:
+
+      0.541834 Hartree
+
+  Gibbs free energy:
+
+      -2256.741041 Hartree
+
+  CPU time:
+
+      1 day 12 hours 7 minutes 41.1 seconds
+
+  Wall-clock elapsed time:
+
+      2 hours 16 minutes 6.5 seconds
+
+  Output SHA256:
+
+      bcc0062f2341239b8cc12a2f92ef14f714c558ca4acf3b2e7d73c92b5d1c8467
+
+- Interpretation:
+  The B3LYP-D3(BJ)/6-31G(d,p), SMD-water optimization completed normally.
+  Harmonic-frequency analysis found zero imaginary frequencies.
+
+  Therefore, the optimized COOH-GQD geometry corresponds to a local minimum
+  on the calculated potential-energy surface at the stated level of theory.
+
+  The final SCF energy and Gibbs free energy supersede intermediate
+  optimization energies and are the accepted values for this run.
+
+  Two "Optimization completed." records appeared in the Gaussian log.
+  Inspection of both locations showed all four convergence criteria satisfied
+  and "Stationary point found." in each case. This did not indicate failure.
+  Final acceptance was based on normal termination, successful QC, and zero
+  imaginary frequencies.
+
+- Decision / advancement gate:
+  PASS.
+
+  B3LYP-COOH-GQD-001 is accepted as the optimized
+  B3LYP-D3(BJ)/6-31G(d,p), SMD-water COOH-GQD baseline structure.
+
+  The calculation satisfied all required scientific acceptance criteria:
+
+      normal Gaussian termination,
+      completed geometry optimization,
+      all optimization convergence criteria satisfied,
+      stationary point confirmed,
+      zero imaginary frequencies,
+      Gaussian exit code = 0,
+      QC exit code = 0,
+      and reproducible provenance linked to the production Git commit.
+
+  Accepted final values for this run are:
+
+      Electronic SCF energy:
+      -2257.22593711 Hartree
+
+      Zero-point correction:
+      0.541834 Hartree
+
+      Gibbs free energy:
+      -2256.741041 Hartree
+
+      Output SHA256:
+      bcc0062f2341239b8cc12a2f92ef14f714c558ca4acf3b2e7d73c92b5d1c8467
+
+  The optimized structure therefore passes the B3LYP geometry and
+  frequency-validation gate and may serve as the accepted DFT baseline
+  geometry for subsequent Phase I calculations.
+
+  Advancement beyond this point is permitted only after the accepted
+  B3LYP log, checkpoint, completed provenance, QC summary, and run-log
+  record are preserved under the reproducibility/archive workflow.
+
+  Scientific status:
+      ACCEPTED — B3LYP-COOH-GQD-001
+
+  Reproducibility/archive status:
+      ACCEPTANCE RECORD COMPLETE;
+      PERMANENT RUN-SPECIFIC ARCHIVE PRESERVATION PENDING.
+
+
+
+
 
