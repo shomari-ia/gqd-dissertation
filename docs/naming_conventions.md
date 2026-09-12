@@ -1,7 +1,7 @@
 # Naming Conventions
 
 One pattern, used everywhere. If a name does not fit the pattern, the file does
-not belong where you are about to put it.
+not belong.
 
 ## Files
 
