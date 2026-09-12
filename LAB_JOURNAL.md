@@ -822,6 +822,232 @@ single-session format.*
       ACCEPTANCE RECORD COMPLETE;
       PERMANENT RUN-SPECIFIC ARCHIVE PRESERVATION PENDING.
 
+### Entry 005 — 2026-09-11 — B3LYP-COOH-GQD-001 archive and reproducibility closure
+
+- Scientific/build objective:
+  Preserve the accepted B3LYP-COOH-GQD-001 Gaussian artifacts as immutable,
+  run-specific records; verify their integrity; and update the archive and
+  naming infrastructure so the accepted B3LYP calculation remains traceable
+  independently of mutable working files.
+
+- Starting state:
+  B3LYP-COOH-GQD-001 had passed geometry optimization, frequency analysis,
+  formal QC, and scientific acceptance.
+
+  Accepted production working artifacts:
+
+      archive/logs/cooh_gqd_b3lyp_optfreq_v01.log
+      archive/chk/cooh_gqd_b3lyp_optfreq_v01.chk
+
+  Accepted run:
+
+      B3LYP-COOH-GQD-001
+
+  Acceptance Git commit:
+
+      0591f8a
+
+- Commands / actions performed:
+  Recorded SHA256 fingerprints of the accepted B3LYP working artifacts.
+
+  Created immutable run-specific preservation copies using `cp -p`:
+
+      archive/logs/cooh_gqd_b3lyp_optfreq_v01.run001.log
+      archive/chk/cooh_gqd_b3lyp_optfreq_v01.run001.chk
+
+  Verified the preservation copies against their source artifacts using
+  SHA256 checksums.
+
+  Updated `scripts/build_archive_manifest.sh` so:
+
+      PM6 run-specific files map to PM6-COOH-GQD-###,
+      B3LYP run-specific files map to B3LYP-COOH-GQD-###,
+      and only immutable `.runNNN.*` scientific artifacts are inventoried.
+
+  Mutable generic `.log` and `.chk` working/handoff files are therefore no
+  longer treated as permanent archive records.
+
+  Updated `docs/naming_conventions.md` so `B3LYP` is the canonical run-stage
+  label for primary B3LYP-D3(BJ)/6-31G(d,p) optimization/frequency
+  calculations.
+
+  Regenerated:
+
+      archive_manifest.tsv
+
+  Performed Bash syntax validation:
+
+      bash -n scripts/build_archive_manifest.sh
+
+  Performed Git whitespace validation:
+
+      git diff --check
+
+  Performed full archive checksum verification:
+
+      scripts/build_archive_manifest.sh --verify
+
+- Files changed:
+      archive_manifest.tsv
+      docs/naming_conventions.md
+      scripts/build_archive_manifest.sh
+      LAB_JOURNAL.md
+
+  Large Gaussian log/checkpoint preservation copies remain under `archive/`
+  and are excluded from Git according to the established storage architecture.
+
+- Job IDs / run IDs:
+      RUN_ID: B3LYP-COOH-GQD-001
+      PBS job: 7633495.maple
+      execution host: cn045
+
+- Validation performed:
+  Source B3LYP log SHA256:
+
+      bcc0062f2341239b8cc12a2f92ef14f714c558ca4acf3b2e7d73c92b5d1c8467
+
+  Preserved run001 log SHA256:
+
+      bcc0062f2341239b8cc12a2f92ef14f714c558ca4acf3b2e7d73c92b5d1c8467
+
+  Source B3LYP checkpoint SHA256:
+
+      b8d45cb64aaf8bb49d5140bf44167253859dfb65ed1dc740437b0fc79071ba88
+
+  Preserved run001 checkpoint SHA256:
+
+      b8d45cb64aaf8bb49d5140bf44167253859dfb65ed1dc740437b0fc79071ba88
+
+  Source and preservation-copy hashes matched exactly.
+
+  Archive manifest contains eight immutable run-specific scientific files:
+
+      6 PM6 artifacts
+      2 B3LYP artifacts
+
+  B3LYP manifest records correctly map to:
+
+      B3LYP-COOH-GQD-001
+
+  Bash syntax validation:
+
+      PASS
+
+  Git whitespace validation:
+
+      PASS
+
+  Archive verification:
+
+      PASS
+
+- Result:
+  The accepted B3LYP Gaussian log and checkpoint were preserved without
+  alteration as immutable run-specific artifacts associated with
+  B3LYP-COOH-GQD-001.
+
+  The mutable generic working artifacts remain available for computational
+  handoff while `.run001.*` artifacts preserve the accepted scientific result.
+
+  The archive manifest now distinguishes permanent run-specific records from
+  mutable working files.
+
+- Problems encountered:
+  The original archive-manifest logic assigned every `.runNNN` artifact to
+  the PM6-COOH-GQD run family.
+
+  The initial generalized manifest also inventoried mutable generic B3LYP
+  working files, which appeared as UNASSIGNED.
+
+  The naming-conventions document used `DFT` as the primary stage label even
+  though the accepted production workflow used `B3LYP`.
+
+  A Python cleanup command using `pathlib` failed because Maple's default
+  `python` environment did not provide the `pathlib` module.
+
+- Root cause:
+  The original archive infrastructure was developed around the first PM6
+  workflow before B3LYP production runs entered the pipeline.
+
+  Generic Gaussian working artifacts and immutable run-specific artifacts had
+  not yet been formally separated in the archive-manifest logic.
+
+  The naming documentation predated adoption of the explicit B3LYP RUN_ID
+  convention.
+
+- Correction:
+  Added explicit PM6 and B3LYP run-family mappings.
+
+  Restricted permanent archive inventory to:
+
+      *.runNNN.*
+
+  Updated naming documentation so `B3LYP` is the canonical primary
+  optimization/frequency stage label.
+
+  Used a Perl-based text cleanup compatible with the Maple environment when
+  the attempted Python `pathlib` method was unavailable.
+
+- Why the correction was justified:
+  Permanent archive records must have stable checksums and explicit RUN_ID
+  associations.
+
+  Mutable working and checkpoint handoff files may legitimately change during
+  later calculations and therefore should not be treated as immutable
+  archived records.
+
+  The naming standard must match the RUN_ID convention actually used by
+  accepted production calculations.
+
+- Decision / advancement gate:
+  PASS.
+
+  B3LYP-COOH-GQD-001 has completed scientific acceptance and local
+  reproducibility/archive closure.
+
+  Its accepted Gaussian log and checkpoint now exist as immutable,
+  checksum-verified run-specific artifacts.
+
+  The local archive manifest correctly associates both artifacts with
+  B3LYP-COOH-GQD-001 and passes full integrity verification.
+
+  The workflow is cleared to advance beyond the COOH-GQD baseline and begin
+  the next defined Phase I scientific calculation.
+
+- Archive / checksum status:
+  Permanent log:
+
+      archive/logs/cooh_gqd_b3lyp_optfreq_v01.run001.log
+
+  SHA256:
+
+      bcc0062f2341239b8cc12a2f92ef14f714c558ca4acf3b2e7d73c92b5d1c8467
+
+  Permanent checkpoint:
+
+      archive/chk/cooh_gqd_b3lyp_optfreq_v01.run001.chk
+
+  SHA256:
+
+      b8d45cb64aaf8bb49d5140bf44167253859dfb65ed1dc740437b0fc79071ba88
+
+  Local archive-manifest verification:
+
+      PASS
+
+- What remains:
+  1. Commit Entry 005 together with the archive manifest, manifest-script
+     correction, and naming-convention update.
+  2. Synchronize the immutable B3LYP run artifacts with the Google Drive
+     write-once archive if that transfer has not yet been completed.
+  3. Generalize archive RUN_ID mapping further as additional systems and
+     computational stages enter production.
+  4. Determine the next Phase I production calculation.
+
+- Next action:
+  Commit and push the archive-closure documentation and infrastructure changes,
+  then begin planning the next Phase I calculation from the accepted B3LYP
+  COOH-GQD baseline.
 
 
 

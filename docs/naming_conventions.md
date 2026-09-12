@@ -32,14 +32,17 @@ Must match a key in `config/systems.yml`:
     <STAGE>-<SYSTEM>-<NNN>
 
     PM6-COOH-GQD-001
-    DFT-COOH-GQD-001
-    DFT-ERLOTINIB-001
-    DFT-COOH-GQD-ERLOTINIB-FLAT-001
+    B3LYP-COOH-GQD-001
+    B3LYP-ERLOTINIB-001
+    B3LYP-COOH-GQD-ERLOTINIB-FLAT-001
     CP-COOH-GQD-ERLOTINIB-001
     SP-COOH-GQD-ERLOTINIB-001
 
-Stages: `PM6`, `DFT`, `CP` (counterpoise), `SP` (M06-2X single point),
+Stages: `PM6`, `B3LYP`, `CP` (counterpoise), `SP` (M06-2X single point),
 `TD` (TDDFT), `WFX` (wavefunction generation).
+
+`B3LYP` is the canonical run-stage label for the primary
+B3LYP-D3(BJ)/6-31G(d,p) optimization/frequency calculations.
 
 The number increments per system+stage and **never repeats, never gets
 reused**. A failed job keeps its number forever; the retry gets the next one.
@@ -47,7 +50,7 @@ reused**. A failed job keeps its number forever; the retry gets the next one.
 ## Checkpoints
 
 `%chk` always points into `archive/chk/` and always carries the full file
-stem, so PM6 and DFT checkpoints for the same molecule can never collide:
+stem, so PM6 and B3LYP checkpoints for the same molecule can never collide:
 
     %oldchk=archive/chk/cooh_gqd_pm6_opt_v01.chk
     %chk=archive/chk/cooh_gqd_b3lyp_optfreq_v01.chk

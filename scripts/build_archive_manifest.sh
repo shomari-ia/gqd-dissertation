@@ -17,12 +17,12 @@ OUT="archive_manifest.tsv"
 
 emit() {
     printf "file_path\tfile_type\tsize_bytes\tsha256\trun_id\n"
-
     find archive -type f \
         ! -name '.gitkeep' \
         ! -name 'README.md' \
+        -name '*.run[0-9][0-9][0-9].*' \
         -print0 |
-    sort -z |
+        sort -z |
     while IFS= read -r -d '' file; do
         case "$file" in
             *.chk) file_type="gaussian_checkpoint" ;;
@@ -35,15 +35,26 @@ emit() {
         size=$(stat -c '%s' "$file")
         sha=$(sha256sum "$file" | awk '{print $1}')
 
-        run_number=$(basename "$file" |
-            sed -n 's/.*\.run\([0-9][0-9][0-9]\)\..*/\1/p')
+base=$(basename "$file")
 
-        if [[ -n "$run_number" ]]; then
+run_number=$(printf '%s\n' "$base" |
+    sed -n 's/.*\.run\([0-9][0-9][0-9]\)\..*/\1/p')
+
+if [[ -n "$run_number" ]]; then
+    case "$base" in
+        cooh_gqd_pm6_*)
             run_id="PM6-COOH-GQD-${run_number}"
-        else
+            ;;
+        cooh_gqd_b3lyp_*)
+            run_id="B3LYP-COOH-GQD-${run_number}"
+            ;;
+        *)
             run_id="UNASSIGNED"
-        fi
-
+            ;;
+    esac
+else
+    run_id="UNASSIGNED"
+fi
         printf "%s\t%s\t%s\t%s\t%s\n" \
             "$file" "$file_type" "$size" "$sha" "$run_id"
     done
