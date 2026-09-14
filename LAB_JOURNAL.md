@@ -1052,3 +1052,161 @@ single-session format.*
 
 
 
+### Entry 006 — 2026-09-13 — Phase I drug-set scope lock and Erlotinib structure-preparation preflight
+
+- Scientific/build objective:
+  Formally lock the Phase I anticancer drug set before tracked drug
+  calculations begin and establish Erlotinib as the first drug system to enter
+  structure preparation and PM6 pre-optimization.
+
+- Starting state:
+  The COOH-GQD baseline workflow had completed PM6 optimization, B3LYP
+  optimization/frequency validation, scientific acceptance, provenance
+  capture, and immutable archive closure.
+
+  The computational workflow already specified the intended drug sequence:
+
+      Erlotinib
+      Gefitinib
+      Venetoclax
+      ABT-737
+
+  However, `docs/scientific_scope.md` still listed:
+
+      DRUG SET STATUS: PENDING FINAL SCOPE LOCK
+
+  No tracked drug PM6 calculations had been launched.
+
+  The structure directories contained no drug structures:
+
+      structures/raw/.gitkeep
+      structures/prepared/.gitkeep
+
+- Commands / actions performed:
+  Inspected all Phase I calculation directories and files.
+
+  Confirmed that no existing Erlotinib, Gefitinib, Venetoclax, or ABT-737
+  calculation files, Gaussian inputs, logs, checkpoints, provenance records,
+  QC summaries, or archived drug runs existed.
+
+  Inspected:
+
+      config/systems.yml
+      docs/computational_workflow.md
+      docs/scientific_scope.md
+      structures/raw/
+      structures/prepared/
+
+  Confirmed the configured Phase I drug set:
+
+      Erlotinib — EGFR
+      Gefitinib — EGFR
+      Venetoclax (ABT-199) — Bcl-2
+      ABT-737 — Bcl-2
+
+  Confirmed the intended computational order:
+
+      Erlotinib
+      Gefitinib
+      Venetoclax
+      ABT-737
+
+  Updated `docs/scientific_scope.md` so:
+
+      DRUG SET STATUS: LOCKED
+
+  Added explicit language requiring a documented scientific rationale and
+  Git-tracked scope amendment for any later drug substitution, removal, or
+  addition.
+
+- Files changed:
+      docs/scientific_scope.md
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  No Gaussian job was submitted during this entry.
+
+  No drug RUN_ID was assigned yet.
+
+- Validation performed:
+  Confirmed the drug set matches `config/systems.yml`.
+
+  Confirmed the locked set matches the sequence defined in
+  `docs/computational_workflow.md`.
+
+  Confirmed no drug structure files currently exist in:
+
+      structures/raw/
+      structures/prepared/
+
+  Confirmed no pre-existing drug Gaussian input or output files are present
+  in the Phase I calculation directories.
+
+- Result:
+  The Phase I drug set is now formally locked as:
+
+      Erlotinib
+      Gefitinib
+      Venetoclax (ABT-199)
+      ABT-737
+
+  Erlotinib is confirmed as the first drug system to enter the tracked
+  structure-preparation and computational workflow.
+
+- Problems encountered:
+  The drug systems were fully documented in configuration and workflow files,
+  but the scientific-scope document remained in a provisional state.
+
+  No drug source or prepared structures had yet been added to the repository.
+
+- Root cause:
+  The COOH-GQD baseline workflow was completed before activation of the drug
+  branch of Phase I.
+
+- Correction:
+  Formally locked the existing four-drug Phase I set in
+  `docs/scientific_scope.md`.
+
+  Established Erlotinib as the first drug to enter structure acquisition,
+  preparation, and PM6 pre-optimization.
+
+- Why the correction was justified:
+  The scope document explicitly required formal drug-set confirmation before
+  tracked drug PM6 calculations were launched.
+
+  Locking the drug set prevents silent scientific-scope drift after
+  calculations begin and preserves traceability between the dissertation plan,
+  repository configuration, and actual production jobs.
+
+- Decision / advancement gate:
+  PASS.
+
+  The Phase I drug set is formally locked.
+
+  Erlotinib is cleared to advance to source-structure acquisition and
+  structure preparation.
+
+  No PM6 production job should be submitted until the Erlotinib source
+  structure, provenance, connectivity, charge, multiplicity, and prepared
+  geometry have been validated.
+
+- Archive / checksum status:
+  Not applicable for a new drug calculation yet.
+
+- What remains:
+  1. Acquire the Erlotinib source structure from PubChem CID 176870.
+  2. Preserve the original source structure under `structures/raw/`.
+  3. Prepare and validate the structure under `structures/prepared/`.
+  4. Confirm formula, atom count, charge, multiplicity, and connectivity.
+  5. Build the Erlotinib PM6 Gaussian input.
+  6. Assign the first Erlotinib PM6 RUN_ID.
+  7. Commit all pre-submission provenance before launching Gaussian.
+
+- Next action:
+  Acquire and validate the Erlotinib source structure before creating its PM6
+  production input.
+
+
+
+
+

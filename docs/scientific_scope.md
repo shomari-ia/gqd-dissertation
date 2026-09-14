@@ -125,16 +125,23 @@ The existing Computational Guide and Dissertation Execution Plan specify:
 
 ### Scope status
 
-DRUG SET STATUS: PENDING FINAL SCOPE LOCK
+DRUG SET STATUS: LOCKED
 
 These four drugs constitute the currently documented computational plan.
 
-Before tracked PM6 calculations for all drug systems are launched, the drug
-set will be formally confirmed in the Work Journal and this section will be
-changed from `PENDING FINAL SCOPE LOCK` to `LOCKED`.
+The Phase I drug set was formally locked before tracked drug PM6 calculations
+were launched.
 
-Once locked, substitution or removal of a drug requires a documented
-scientific rationale and Git-tracked scope amendment.
+The locked Phase I set is:
+
+    Erlotinib
+    Gefitinib
+    Venetoclax (ABT-199)
+    ABT-737
+
+The intended calculation order is Erlotinib, Gefitinib, Venetoclax, then
+ABT-737. Any later substitution, removal, or addition requires a documented
+scientific rationale and a Git-tracked scope amendment.
 
 ---
 
