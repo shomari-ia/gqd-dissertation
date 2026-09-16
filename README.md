@@ -11,7 +11,7 @@ repository and are indexed here by checksum — see `docs/storage_map.md`.
 
 ---
 
-## Scientific scope
+## Scientific Scope
 
 A carboxyl-functionalized graphene quantum dot (circumcoronene + one edge
 –COOH, 75 atoms) is evaluated as a pH-responsive nanocarrier for four
@@ -29,7 +29,7 @@ created when that work begins, not before.
 
 ---
 
-## Computational environment
+## Computational Environment 
 
 - **Cluster:** Maple, Mississippi Center for Supercomputing Research (MCSR)
 - **Scheduler:** OpenPBS (not Slurm)
@@ -41,7 +41,7 @@ Local analysis environment: `environments/environment.yml`.
 
 ---
 
-## Repository layout
+## Repository Layout
 
 ```
 config/systems.yml        systems, charges, multiplicities, route lines — one source of truth
@@ -57,7 +57,7 @@ run_notes.tsv             the one file you edit by hand
 
 ---
 
-## Reproducing a calculation
+## Reproducing a Calculation 
 
 Everything below runs from the repository root on Maple.
 
@@ -90,7 +90,7 @@ submitted, verified, and recorded exactly this way.
 
 ---
 
-## The run log
+## The Run Log
 
 `run_log.tsv` is **generated**, never hand-typed. Each job writes a provenance
 file about itself (job ID, node, commit, input and output checksums) and the QC
@@ -98,13 +98,13 @@ gate writes a summary (termination, optimization status, imaginary frequency
 count, energies). `scripts/build_run_log.sh` assembles both into the table.
 
 Hand annotations go in `run_notes.tsv`, joined on `run_id`. Rebuilding the log
-therefore never destroys anything you wrote.
+therefore never destroys anything one writes.
 
 Failed and superseded runs stay in the log permanently, with the reason
 recorded. A clean log with no failures in it is not evidence of good work; it
 is evidence of a deleted history.
 
-## Quality-control gates
+## Quality-Control Gates
 
 `scripts/verify_gaussian.sh` is the gate between stages. It exits non-zero on
 abnormal termination, an incomplete optimization, or any imaginary frequency,
@@ -113,7 +113,7 @@ script has passed on the log that produced it.
 
 ---
 
-## Reproducibility limitations
+## Reproducibility Limitations
 
 - Gaussian 16 is proprietary; exact reproduction requires a licensed copy and
   the same revision (Rev C.01).
@@ -122,7 +122,7 @@ script has passed on the log that produced it.
 - Checkpoint files are binary and version-specific; the plain-text inputs and
   the recorded geometries are the durable record.
 
-## Data availability
+## Data Availability 
 
 Large outputs (`.log`, `.chk`, `.fchk`, `.wfx`) are archived outside this
 repository and indexed by SHA-256 in `run_log.tsv`. A citable deposit with a DOI
