@@ -1209,4 +1209,188 @@ single-session format.*
 
 
 
+### Entry 007 — 2026-09-17 — Erlotinib raw-source acquisition and validation
+
+- Scientific/build objective:
+  Acquire the canonical Erlotinib source structure, preserve it as an immutable
+  provenance root, and validate molecular identity, composition, connectivity,
+  charge consistency, and source-file integrity before structure preparation.
+
+- Starting state:
+  The Phase I drug set had been formally locked.
+
+  Erlotinib was designated as the first drug system to enter the tracked
+  Phase I structure-preparation and computational workflow.
+
+  No Erlotinib source or prepared structures previously existed in the
+  repository.
+
+- Commands / actions performed:
+  Downloaded the PubChem 3D SDF record for:
+
+      Erlotinib
+      PubChem CID 176870
+
+  Source file:
+
+      structures/raw/erlotinib_pubchem_cid176870_3d.sdf
+
+  Recorded the SHA256 fingerprint.
+
+  Inspected the SDF atom and bond blocks.
+
+  Verified elemental composition directly from the atom block.
+
+  Inspected charge-related records.
+
+  Confirmed SDF termination and coordinate metadata.
+
+  Performed an independent graph-connectivity check using Python.
+
+  Counted bond orders and explicitly identified the triple bond.
+
+  Checked for Open Babel on Maple; neither `obabel` nor `babel` was available
+  in the login environment.
+
+- Files changed:
+      structures/raw/erlotinib_pubchem_cid176870_3d.sdf
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  No Gaussian job was submitted.
+
+  No computational RUN_ID was assigned.
+
+- Validation performed:
+  PubChem CID:
+
+      176870
+
+  Formula from SDF atom block:
+
+      C22H23N3O4
+
+  Element counts:
+
+      C = 22
+      H = 23
+      N = 3
+      O = 4
+
+  Total atoms:
+
+      52
+
+  Total bonds:
+
+      54
+
+  Bond-order distribution:
+
+      single bonds = 45
+      double bonds = 8
+      triple bonds = 1
+
+  Triple bond:
+
+      atoms 28-29
+
+  Graph-connectivity validation:
+
+      connected atoms = 52
+      connected components = 1
+      isolated atoms = none
+
+  Formal-charge validation:
+      no `M  CHG` formal-charge record was observed.
+
+  PubChem MMFF94 partial-charge data were present, but these represent
+  atom-level partial charges rather than a nonzero formal molecular charge.
+
+  SDF terminator:
+
+      $$$$
+
+  Raw source SHA256:
+
+      9e776f75f2a17693890715f5df6e0569ae73b0c8ed3fa150d099f8f0a047e1dc
+
+- Result:
+  The raw PubChem Erlotinib structure is internally consistent with the
+  intended neutral Erlotinib system.
+
+  The molecular graph contains all 52 atoms in one connected component,
+  contains no isolated atoms, and contains the expected single triple bond
+  associated with the ethynyl functionality.
+
+  The raw source file is accepted as the provenance root for the Erlotinib
+  computational branch.
+
+- Problems encountered:
+  The initial PubChem download attempt was executed from the home directory
+  rather than the repository root, so `structures/raw/` was not found.
+
+  Open Babel was not available in the Maple login environment.
+
+- Root cause:
+  The first download command was run before changing into
+  `~/gqd-dissertation`.
+
+  Open Babel is not installed or exposed in the current Maple login PATH.
+
+- Correction:
+  Re-ran the PubChem download from the repository root.
+
+  Used direct SDF inspection and a Python graph-connectivity check instead of
+  Open Babel for raw-source validation.
+
+- Why the correction was justified:
+  Raw-source validation requires confirmation of identity, composition, and
+  molecular connectivity, not a specific software package.
+
+  The independent graph check verified one connected molecular component with
+  the expected atom and bond counts, which was sufficient for the current
+  source-validation gate.
+
+- Decision / advancement gate:
+  PASS.
+
+  The Erlotinib raw-source structure is accepted as the immutable provenance
+  root for the Erlotinib Phase I workflow.
+
+  Erlotinib may advance to prepared-structure generation.
+
+  No PM6 production job should be submitted until the prepared structure is
+  generated, validated, and committed.
+
+- Archive / checksum status:
+  Raw source:
+
+      structures/raw/erlotinib_pubchem_cid176870_3d.sdf
+
+  SHA256:
+
+      9e776f75f2a17693890715f5df6e0569ae73b0c8ed3fa150d099f8f0a047e1dc
+
+  Git source commit:
+
+      8027ea9
+
+- What remains:
+  1. Generate the prepared Erlotinib structure.
+  2. Preserve the raw PubChem file unchanged.
+  3. Validate the prepared structure against the raw source.
+  4. Confirm formula, atom count, charge, multiplicity, and connectivity.
+  5. Build the Erlotinib PM6 Gaussian input.
+  6. Assign the first Erlotinib PM6 RUN_ID.
+  7. Commit all pre-submission files before launching Gaussian.
+
+- Next action:
+  Create and validate the prepared Erlotinib structure under
+  `structures/prepared/`.
+
+
+
+
+
 
