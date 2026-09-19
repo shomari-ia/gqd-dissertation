@@ -1964,6 +1964,166 @@ single-session format.*
 
 
 
+### Entry 011 — 2026-09-18 — PM6-ERLOTINIB-001 immutable archive closure
+
+- Scientific/build objective:
+  Preserve the accepted PM6-ERLOTINIB-001 production artifacts as immutable,
+  run-specific archive copies and extend the archive manifest so the new
+  Erlotinib artifacts resolve to their canonical RUN_ID.
+
+- Starting state:
+  PM6-ERLOTINIB-001 had passed scientific acceptance and was committed in:
+
+      ca591f7
+
+  Accepted working log:
+
+      archive/logs/erlotinib_pm6_opt_v01.log
+
+  Accepted working checkpoint:
+
+      archive/chk/erlotinib_pm6_opt_v01.chk
+
+  Output SHA256:
+
+      9a8cf2d2cb6b8c30fd8844a3339d8b39e11d40d4d4cd8298195c49e84af7fcf4
+
+  Checkpoint SHA256:
+
+      90d7869c00373ddae1b9921139d68f149410ed472a11d5671cace8ac3d3b309a
+
+- Commands / actions performed:
+  Created immutable run-specific archive copies:
+
+      archive/logs/erlotinib_pm6_opt_v01.run001.log
+      archive/chk/erlotinib_pm6_opt_v01.run001.chk
+
+  Verified that each immutable copy was byte-identical to its accepted
+  working artifact using SHA256.
+
+  Extended:
+
+      scripts/build_archive_manifest.sh
+
+  with Erlotinib PM6 RUN_ID mapping:
+
+      erlotinib_pm6_* -> PM6-ERLOTINIB-${run_number}
+
+  Rebuilt the archive manifest.
+
+  Verified all immutable archive artifacts.
+
+- Files changed:
+      scripts/build_archive_manifest.sh
+      archive_manifest.tsv
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+      RUN_ID: PM6-ERLOTINIB-001
+      PBS job: 7709167.maple
+
+- Validation performed:
+  Working log SHA256:
+
+      9a8cf2d2cb6b8c30fd8844a3339d8b39e11d40d4d4cd8298195c49e84af7fcf4
+
+  Immutable log SHA256:
+
+      9a8cf2d2cb6b8c30fd8844a3339d8b39e11d40d4d4cd8298195c49e84af7fcf4
+
+  Working checkpoint SHA256:
+
+      90d7869c00373ddae1b9921139d68f149410ed472a11d5671cace8ac3d3b309a
+
+  Immutable checkpoint SHA256:
+
+      90d7869c00373ddae1b9921139d68f149410ed472a11d5671cace8ac3d3b309a
+
+  Archive verification:
+
+      PASSED
+
+  Total immutable archive files verified:
+
+      10
+
+- Result:
+  The PM6-ERLOTINIB-001 log and checkpoint have been preserved as immutable,
+  run-specific archive artifacts.
+
+  The archive manifest now resolves the Erlotinib PM6 run-specific artifacts
+  to:
+
+      PM6-ERLOTINIB-001
+
+  without changing the existing COOH-GQD PM6 or B3LYP mappings.
+
+- Problems encountered:
+  An inspection command initially referenced:
+
+      archive/manifest.tsv
+
+  but the manifest builder writes:
+
+      archive_manifest.tsv
+
+  at the repository root.
+
+- Root cause:
+  The inspection command used an incorrect manifest path.
+
+- Correction:
+  Used the actual manifest filename:
+
+      archive_manifest.tsv
+
+- Why the correction was justified:
+  The manifest builder itself completed successfully and explicitly reported:
+
+      wrote archive_manifest.tsv (10 files)
+
+  Archive verification also passed for all 10 files.
+
+- Decision / advancement gate:
+  PASS.
+
+  PM6-ERLOTINIB-001 archive closure is complete.
+
+  The accepted PM6 geometry and its provenance are permanently preserved.
+
+  Erlotinib is cleared to advance to the B3LYP-D3(BJ)/6-31G(d,p),
+  SMD-water optimization/frequency stage.
+
+- Archive / checksum status:
+  IMMUTABLE ARCHIVE CLOSED.
+
+  Log:
+
+      archive/logs/erlotinib_pm6_opt_v01.run001.log
+
+  Checkpoint:
+
+      archive/chk/erlotinib_pm6_opt_v01.run001.chk
+
+  Archive manifest:
+
+      archive_manifest.tsv
+
+  Archive verification status:
+
+      PASS
+
+- What remains:
+  1. Commit the archive-manifest update and Entry 011.
+  2. Construct the Erlotinib B3LYP optimization/frequency input from the
+     accepted PM6 checkpoint.
+  3. Perform B3LYP preflight and lock the production input in Git before
+     submission.
+
+- Next action:
+  Commit the PM6 Erlotinib archive closure, then begin construction of the
+  Erlotinib B3LYP optimization/frequency production input.
+
 
 
 

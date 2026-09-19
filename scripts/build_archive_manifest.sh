@@ -48,6 +48,9 @@ if [[ -n "$run_number" ]]; then
         cooh_gqd_b3lyp_*)
             run_id="B3LYP-COOH-GQD-${run_number}"
             ;;
+        erlotinib_pm6_*)
+            run_id="PM6-ERLOTINIB-${run_number}"
+            ;;
         *)
             run_id="UNASSIGNED"
             ;;
