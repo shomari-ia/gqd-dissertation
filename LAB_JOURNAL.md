@@ -1560,6 +1560,208 @@ single-session format.*
 
 
 
+### Entry 009 — 2026-09-18 — PM6-ERLOTINIB-001 preflight and production-input lock
+
+- Scientific/build objective:
+  Construct and validate the first tracked Erlotinib PM6 production input,
+  confirm that the proposed RUN_ID and output paths are unused, and lock the
+  Gaussian input in Git before PBS submission.
+
+- Starting state:
+  The Erlotinib raw PubChem structure had passed identity and connectivity
+  validation.
+
+  The MMFF94-prepared Erlotinib structure had been accepted at:
+
+      structures/prepared/erlotinib_mmff94_prep_v01.mol
+
+  Prepared structure SHA256:
+
+      7342e15fce9c13a399dd6fa4b2bf14694011c708986a0a9bcdfc89886f34e701
+
+  Prepared-structure Git commit:
+
+      af99947
+
+  No tracked Erlotinib Gaussian calculation had yet been submitted.
+
+- Commands / actions performed:
+  Generated the Gaussian PM6 input directly from the validated prepared
+  Erlotinib coordinates.
+
+  Production input:
+
+      calculations/phase1_dft/pm6/inputs/erlotinib_pm6_opt_v01.com
+
+  Input header:
+
+      %chk=archive/chk/erlotinib_pm6_opt_v01.chk
+      %mem=8GB
+      %nprocshared=8
+      #p PM6 opt SCF=XQC
+
+  Gaussian title:
+
+      erlotinib PM6 pre-optimization | system=erlotinib charge=0 mult=1 | v01
+
+  Charge and multiplicity:
+
+      0 1
+
+  Counted Gaussian coordinate records and elemental composition.
+
+  Compared Gaussian coordinates directly against the prepared `.mol`
+  structure.
+
+  Checked for pre-existing Erlotinib RUN_ID records, checkpoints, logs,
+  provenance files, and QC summaries.
+
+- Files changed:
+      calculations/phase1_dft/pm6/inputs/erlotinib_pm6_opt_v01.com
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  Proposed RUN_ID:
+
+      PM6-ERLOTINIB-001
+
+  No PBS job submitted yet.
+
+- Validation performed:
+  Input atom count:
+
+      52
+
+  Element counts:
+
+      C = 22
+      H = 23
+      N = 3
+      O = 4
+
+  Charge:
+
+      0
+
+  Multiplicity:
+
+      1
+
+  Prepared-structure atom count:
+
+      52
+
+  Gaussian-input atom count:
+
+      52
+
+  Element ordering:
+
+      IDENTICAL
+
+  Maximum coordinate difference between prepared structure and Gaussian input:
+
+      0.0 Å
+
+  Therefore, the Gaussian coordinate block is an exact transfer of the
+  accepted prepared Erlotinib geometry.
+
+  Proposed checkpoint:
+
+      archive/chk/erlotinib_pm6_opt_v01.chk
+
+  Proposed output:
+
+      archive/logs/erlotinib_pm6_opt_v01.log
+
+  Existing PM6-ERLOTINIB RUN_ID records:
+
+      NONE
+
+  Existing Erlotinib PM6 checkpoint:
+
+      NONE
+
+  Existing Erlotinib PM6 log:
+
+      NONE
+
+  Existing PM6-ERLOTINIB-001 provenance:
+
+      NONE
+
+  Existing Erlotinib PM6 QC summary:
+
+      NONE
+
+  Input SHA256:
+
+      004dda6b08e68e6cb97aa9b1e068b73ace5fe8ac76f19fcc0d008b8dfba5572b
+
+- Result:
+  The first Erlotinib PM6 Gaussian input was generated successfully from the
+  accepted MMFF94-prepared structure.
+
+  Molecular composition, atom ordering, coordinates, charge, multiplicity,
+  checkpoint path, and output naming were validated.
+
+  No existing Erlotinib PM6 artifacts or RUN_ID records conflict with the
+  proposed production run.
+
+- Problems encountered:
+  None during PM6 input construction or collision checking.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS.
+
+  The Erlotinib PM6 production input is accepted for pre-submission Git
+  locking.
+
+  RUN_ID:
+
+      PM6-ERLOTINIB-001
+
+  may be used for the first tracked Erlotinib PM6 calculation.
+
+  PBS submission must occur only after the input and this journal record are
+  committed to Git so the production job can reference a fixed provenance
+  commit.
+
+- Archive / checksum status:
+  Production input:
+
+      calculations/phase1_dft/pm6/inputs/erlotinib_pm6_opt_v01.com
+
+  Input SHA256:
+
+      004dda6b08e68e6cb97aa9b1e068b73ace5fe8ac76f19fcc0d008b8dfba5572b
+
+  No production log or checkpoint exists yet.
+
+- What remains:
+  1. Commit the Erlotinib PM6 production input and Entry 009.
+  2. Record the resulting Git commit.
+  3. Submit PM6-ERLOTINIB-001 through OpenPBS.
+  4. Confirm job ID, execution host, provenance capture, and initial Gaussian
+     parsing.
+  5. Run the QC gate after job completion.
+  6. Preserve accepted log/checkpoint as run-specific archive artifacts if the
+     calculation passes.
+
+- Next action:
+  Commit the PM6 Erlotinib input and Entry 009, then submit
+  PM6-ERLOTINIB-001.
+
+
 
 
 
