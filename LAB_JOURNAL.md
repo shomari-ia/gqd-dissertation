@@ -2128,3 +2128,150 @@ single-session format.*
 
 
 
+### Entry 012 — 2026-09-19 — B3LYP-ERLOTINIB-001 preflight and production-input lock
+
+- Scientific/build objective:
+  Construct and validate the Erlotinib B3LYP-D3(BJ)/6-31G(d,p),
+  SMD-water optimization/frequency production input using the accepted
+  immutable PM6 checkpoint as the starting geometry.
+
+- Starting state:
+  PM6-ERLOTINIB-001 had passed scientific acceptance and immutable archive
+  closure.
+
+  Accepted PM6 checkpoint:
+
+      archive/chk/erlotinib_pm6_opt_v01.run001.chk
+
+  PM6 checkpoint SHA256:
+
+      90d7869c00373ddae1b9921139d68f149410ed472a11d5671cace8ac3d3b309a
+
+  PM6 archive closure commit:
+
+      396df99
+
+- Commands / actions performed:
+  Checked for existing B3LYP Erlotinib RUN_ID records, output logs,
+  checkpoints, provenance files, and summaries.
+
+  No collisions were found.
+
+  Constructed:
+
+      calculations/phase1_dft/b3lyp/inputs/erlotinib_b3lyp_optfreq_v01.com
+
+  using the accepted COOH-GQD B3LYP production input as the canonical syntax
+  template.
+
+- Files changed:
+      calculations/phase1_dft/b3lyp/inputs/erlotinib_b3lyp_optfreq_v01.com
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  Proposed RUN_ID:
+
+      B3LYP-ERLOTINIB-001
+
+  No PBS job submitted yet.
+
+- Validation performed:
+  Source checkpoint:
+
+      archive/chk/erlotinib_pm6_opt_v01.run001.chk
+
+  Source checkpoint SHA256:
+
+      90d7869c00373ddae1b9921139d68f149410ed472a11d5671cace8ac3d3b309a
+
+  New checkpoint:
+
+      archive/chk/erlotinib_b3lyp_optfreq_v01.chk
+
+  Route:
+
+      #p opt freq B3LYP/6-31G(d,p) EmpiricalDispersion=GD3BJ SCRF=(SMD,Solvent=Water) geom=check
+
+  Memory:
+
+      32GB
+
+  Shared processors:
+
+      16
+
+  Charge:
+
+      0
+
+  Multiplicity:
+
+      1
+
+  Geometry source:
+
+      accepted PM6 checkpoint via geom=check
+
+  Input SHA256:
+
+      10ad2235c7c2ab1a16007aca9fa63f6bdab137660db00b6301b8508e6cbe8fd6
+
+  Existing B3LYP-ERLOTINIB RUN_ID records:
+
+      NONE
+
+  Existing Erlotinib B3LYP checkpoint:
+
+      NONE
+
+  Existing Erlotinib B3LYP log:
+
+      NONE
+
+- Result:
+  The Erlotinib B3LYP optimization/frequency production input was constructed
+  successfully from the immutable accepted PM6 checkpoint.
+
+  The calculation follows the same validated B3LYP-D3(BJ)/6-31G(d,p),
+  SMD-water protocol used for the accepted COOH-GQD baseline.
+
+- Problems encountered:
+  None.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS.
+
+  B3LYP-ERLOTINIB-001 is approved for pre-submission Git locking.
+
+  PBS submission must occur only after this input and journal record are
+  committed so the production job can reference a fixed Git commit.
+
+- Archive / checksum status:
+  Source PM6 checkpoint is already preserved as an immutable run001 artifact.
+
+  B3LYP production input SHA256:
+
+      10ad2235c7c2ab1a16007aca9fa63f6bdab137660db00b6301b8508e6cbe8fd6
+
+  No B3LYP production log or checkpoint exists yet.
+
+- What remains:
+  1. Commit the B3LYP Erlotinib production input and Entry 012.
+  2. Record the resulting Git commit.
+  3. Submit B3LYP-ERLOTINIB-001.
+  4. Capture PBS job ID, node, Gaussian build, and production provenance.
+  5. Evaluate optimization completion and frequency results after execution.
+
+- Next action:
+  Lock the B3LYP Erlotinib production input in Git before submission.
+
+
