@@ -1764,5 +1764,207 @@ single-session format.*
 
 
 
+### Entry 010 — 2026-09-18 — PM6-ERLOTINIB-001 completion, QC, and scientific acceptance
+
+- Scientific/build objective:
+  Evaluate the completed PM6-ERLOTINIB-001 production calculation, verify
+  optimization success and provenance integrity, record the accepted PM6
+  geometry handoff, and determine whether Erlotinib may advance to the B3LYP
+  optimization/frequency stage.
+
+- Starting state:
+  PM6-ERLOTINIB-001 had been submitted from the validated MMFF94-prepared
+  Erlotinib geometry.
+
+  Production input:
+
+      calculations/phase1_dft/pm6/inputs/erlotinib_pm6_opt_v01.com
+
+  Production Git commit:
+
+      f677160
+
+  Input SHA256:
+
+      004dda6b08e68e6cb97aa9b1e068b73ace5fe8ac76f19fcc0d008b8dfba5572b
+
+- Commands / actions performed:
+  Submitted the tracked PM6 Erlotinib calculation through OpenPBS.
+
+  Confirmed production provenance capture.
+
+  Inspected the completed Gaussian output.
+
+  Verified Gaussian termination, geometry-optimization completion, and
+  stationary-point detection.
+
+  Inspected the formal QC summary.
+
+  Recorded the final PM6 SCF value.
+
+  Verified the production checkpoint and calculated its SHA256 checksum.
+
+  Rebuilt the machine-generated run ledger using:
+
+      scripts/build_run_log.sh --write
+
+- Job IDs / run IDs:
+      RUN_ID: PM6-ERLOTINIB-001
+      PBS job: 7709167.maple
+      execution host: cn037
+
+- Validation performed:
+  Gaussian build:
+
+      g16-c01-avx2
+
+  Gaussian termination:
+
+      NORMAL
+
+  Geometry optimization:
+
+      COMPLETED
+
+  Stationary point:
+
+      FOUND
+
+  System:
+
+      atoms = 52
+      charge = 0
+      multiplicity = 1
+
+  Gaussian exit:
+
+      0
+
+  QC exit:
+
+      0
+
+  QC status:
+
+      PASS
+
+  Production Git provenance:
+
+      git_commit = f677160
+      git_dirty = no
+
+- Result:
+  Final PM6 SCF value:
+
+      E(RPM6) = -0.367805799799E-01 Hartree
+
+  Gaussian CPU time:
+
+      0 days 0 hours 7 minutes 38.2 seconds
+
+  Gaussian elapsed time:
+
+      0 days 0 hours 1 minute 27.6 seconds
+
+  Output SHA256:
+
+      9a8cf2d2cb6b8c30fd8844a3339d8b39e11d40d4d4cd8298195c49e84af7fcf4
+
+  Checkpoint SHA256:
+
+      90d7869c00373ddae1b9921139d68f149410ed472a11d5671cace8ac3d3b309a
+
+- Interpretation:
+  The Erlotinib PM6 pre-optimization completed normally and reached a
+  stationary optimized geometry.
+
+  The PM6 calculation serves as a geometry-preparation step for subsequent
+  B3LYP-D3(BJ)/6-31G(d,p), SMD-water optimization and frequency analysis.
+
+  The PM6 energy is retained for reproducibility and bookkeeping only. It is
+  not comparable to the later DFT energies and will not enter binding-energy
+  calculations.
+
+- Problems encountered:
+  During early monitoring, an incomplete `qstat -f` command was cancelled
+  manually after Bash waited for continuation input.
+
+  This did not affect the PBS job, which had already been submitted
+  successfully and completed normally.
+
+- Root cause:
+  The shell continuation character was entered before the intended filtering
+  command was completed.
+
+- Correction:
+  Cancelled only the unfinished interactive shell command with Ctrl+C.
+
+  The active PBS job was not cancelled or altered.
+
+- Why the correction was justified:
+  The incomplete command existed only in the login shell and had no effect on
+  PBS job 7709167.maple.
+
+- Decision / advancement gate:
+  PASS.
+
+  PM6-ERLOTINIB-001 is accepted as the PM6-preoptimized Erlotinib geometry.
+
+  The calculation satisfied the required PM6 advancement criteria:
+
+      normal Gaussian termination,
+      completed geometry optimization,
+      stationary point found,
+      Gaussian exit code = 0,
+      QC exit code = 0,
+      formal QC status = PASS,
+      and complete Git-linked production provenance.
+
+  Scientific status:
+
+      ACCEPTED — PM6-ERLOTINIB-001
+
+  Erlotinib is cleared to advance to the B3LYP-D3(BJ)/6-31G(d,p),
+  SMD-water optimization/frequency stage after permanent run-specific PM6
+  archive preservation is completed.
+
+- Archive / checksum status:
+  Working production log:
+
+      archive/logs/erlotinib_pm6_opt_v01.log
+
+  Output SHA256:
+
+      9a8cf2d2cb6b8c30fd8844a3339d8b39e11d40d4d4cd8298195c49e84af7fcf4
+
+  Working production checkpoint:
+
+      archive/chk/erlotinib_pm6_opt_v01.chk
+
+  Checkpoint SHA256:
+
+      90d7869c00373ddae1b9921139d68f149410ed472a11d5671cace8ac3d3b309a
+
+  PERMANENT RUN-SPECIFIC ARCHIVE PRESERVATION PENDING.
+
+- What remains:
+  1. Commit the completed provenance, QC summary, run-log record, and this
+     scientific-acceptance entry.
+  2. Preserve the accepted PM6 log and checkpoint as immutable run001
+     artifacts.
+  3. Extend archive-manifest RUN_ID mapping to PM6-ERLOTINIB.
+  4. Verify the updated archive manifest.
+  5. Construct the Erlotinib B3LYP optimization/frequency input from the
+     accepted PM6 checkpoint.
+
+- Next action:
+  Commit the PM6 Erlotinib scientific-acceptance record before performing
+  permanent archive closure.
+
+
+
+
+
+
 
 

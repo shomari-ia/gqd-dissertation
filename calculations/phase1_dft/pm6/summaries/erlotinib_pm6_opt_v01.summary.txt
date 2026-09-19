@@ -1,0 +1,17 @@
+run_id          erlotinib_pm6_opt_v01
+log_file        archive/logs/erlotinib_pm6_opt_v01.log
+log_sha256      9a8cf2d2cb6b8c30fd8844a3339d8b39e11d40d4d4cd8298195c49e84af7fcf4
+verified_at     2026-09-18T22:41:40-05:00
+route           #p PM6 opt SCF=XQC
+charge_mult     Charge =  0 Multiplicity = 1
+n_atoms         52
+termination     NORMAL
+optimization    COMPLETED
+imag_freq       NA
+scf_hartree     -0.367805799799E-01
+zpe_hartree     NA
+gibbs_hartree   NA
+cp_corrected    NA
+cpu_time        Job cpu time:       0 days  0 hours  7 minutes 38.2 seconds.
+elapsed_time    Elapsed time:       0 days  0 hours  1 minutes 27.6 seconds.
+qc_status       PASS
