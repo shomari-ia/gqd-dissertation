@@ -1392,5 +1392,175 @@ single-session format.*
 
 
 
+### Entry 008 — 2026-09-18 — Erlotinib MMFF94 preparation and validation
+
+- Scientific/build objective:
+  Generate and validate the prepared Erlotinib geometry that will serve as the
+  starting structure for tracked PM6 pre-optimization.
+
+- Starting state:
+  The validated raw Erlotinib PubChem structure had been preserved at:
+
+      structures/raw/erlotinib_pubchem_cid176870_3d.sdf
+
+  Raw-source Git commit:
+
+      8027ea9
+
+  Raw-source SHA256:
+
+      9e776f75f2a17693890715f5df6e0569ae73b0c8ed3fa150d099f8f0a047e1dc
+
+  The raw structure had passed identity, composition, connectivity, and
+  source-integrity validation.
+
+- Commands / actions performed:
+  Loaded the Maple Open Babel module:
+
+      module load obabel/3.1.1
+
+  Verified the executable:
+
+      /usr/local/apps/obabel-3.1.1/bin/obabel
+
+  The executable reported:
+
+      Open Babel 3.1.0 -- Jul 22 2021
+
+  Verified that MMFF94 was available as a supported force field.
+
+  Generated the prepared Erlotinib structure with MMFF94 minimization:
+
+      obabel \
+        structures/raw/erlotinib_pubchem_cid176870_3d.sdf \
+        -O structures/prepared/erlotinib_mmff94_prep_v01.mol \
+        --minimize \
+        --ff MMFF94 \
+        --steps 500
+
+  Compared raw and prepared molecular identity using SMILES.
+
+  Compared atom count, bond count, elemental composition, atom ordering,
+  bond topology, coordinate displacement, and graph connectivity.
+
+- Files changed:
+      structures/prepared/erlotinib_mmff94_prep_v01.mol
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  No Gaussian job was submitted.
+
+  No production RUN_ID was assigned during this entry.
+
+- Validation performed:
+  Prepared structure:
+
+      structures/prepared/erlotinib_mmff94_prep_v01.mol
+
+  Prepared SHA256:
+
+      7342e15fce9c13a399dd6fa4b2bf14694011c708986a0a9bcdfc89886f34e701
+
+  Prepared atom count:
+
+      52
+
+  Prepared bond count:
+
+      54
+
+  Element counts:
+
+      C = 22
+      H = 23
+      N = 3
+      O = 4
+
+  Raw and prepared SMILES were identical:
+
+      O(c1c(OCCOC)cc2ncnc(Nc3cc(ccc3)C#C)c2c1)CCOC
+
+  Raw and prepared atom ordering:
+
+      IDENTICAL
+
+  Raw and prepared bond topology:
+
+      IDENTICAL
+
+  Same-index coordinate RMSD:
+
+      0.039226 Å
+
+  Prepared graph connectivity:
+
+      connected atoms = 52
+      connected components = 1
+      isolated atoms = none
+
+- Result:
+  MMFF94 preparation changed the Erlotinib coordinates slightly without
+  altering molecular identity, composition, atom ordering, or bond topology.
+
+  The prepared structure remains one connected neutral Erlotinib molecule and
+  is accepted as the starting geometry for PM6 pre-optimization.
+
+- Problems encountered:
+  Open Babel was initially thought to be unavailable because it was not present
+  in the default Maple PATH.
+
+- Root cause:
+  Open Babel is provided through the Maple module system rather than the
+  default login environment.
+
+- Correction:
+  Loaded:
+
+      obabel/3.1.1
+
+  The loaded executable reported Open Babel 3.1.0.
+
+- Why the correction was justified:
+  The canonical workflow specifies MMFF94 cleanup before PM6.
+
+  Using the Maple Open Babel module keeps structure preparation reproducible
+  while preserving the raw PubChem structure unchanged.
+
+- Decision / advancement gate:
+  PASS.
+
+  The prepared Erlotinib geometry is accepted for PM6 input construction.
+
+  The raw PubChem structure remains the immutable provenance root.
+
+  PM6 input generation may proceed after the prepared structure and journal
+  record are committed to Git.
+
+- Archive / checksum status:
+  Prepared structure:
+
+      structures/prepared/erlotinib_mmff94_prep_v01.mol
+
+  SHA256:
+
+      7342e15fce9c13a399dd6fa4b2bf14694011c708986a0a9bcdfc89886f34e701
+
+- What remains:
+  1. Commit the prepared Erlotinib structure and Entry 008.
+  2. Inspect the existing COOH-GQD PM6 input as the canonical template.
+  3. Generate the Erlotinib PM6 Gaussian input.
+  4. Assign RUN_ID PM6-ERLOTINIB-001.
+  5. Validate charge, multiplicity, coordinates, atom count, and checkpoint path.
+  6. Commit all pre-submission files before Gaussian submission.
+
+- Next action:
+  Commit the validated prepared Erlotinib structure and inspect the existing
+  PM6 input template before constructing PM6-ERLOTINIB-001.
+
+
+
+
+
+
 
 
