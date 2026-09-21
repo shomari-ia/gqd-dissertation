@@ -3416,3 +3416,138 @@ single-session format.*
   Commit the PM6 Gefitinib reproducibility archive closure.
 
 
+
+### Entry 020 — 2026-09-21 — Gefitinib B3LYP input construction and preflight
+
+- Scientific/build objective:
+  Construct and validate the Gefitinib B3LYP-D3(BJ)/6-31G(d,p),
+  SMD-water optimization and frequency-analysis input from the accepted
+  immutable PM6 checkpoint.
+
+- Starting state:
+  Gefitinib PM6 baseline had passed scientific acceptance and immutable
+  archive closure.
+
+  Accepted immutable PM6 checkpoint:
+
+      archive/chk/gefitinib_pm6_opt_v01.run001.chk
+
+  PM6 checkpoint SHA256:
+
+      4caf81939e1808f877c0360758b9274190af73655d69064d87fecda7bcaa2925
+
+  PM6 archive-closure commit:
+
+      24dbd86
+
+- Commands / actions performed:
+  Constructed:
+
+      calculations/phase1_dft/b3lyp/inputs/gefitinib_b3lyp_optfreq_v01.com
+
+  using the accepted Erlotinib B3LYP input as the production-method template.
+
+  The input reads geometry and wavefunction information from the immutable
+  Gefitinib PM6 checkpoint using:
+
+      %oldchk=archive/chk/gefitinib_pm6_opt_v01.run001.chk
+
+  The B3LYP working checkpoint is:
+
+      %chk=archive/chk/gefitinib_b3lyp_optfreq_v01.chk
+
+- Files changed:
+      calculations/phase1_dft/b3lyp/inputs/gefitinib_b3lyp_optfreq_v01.com
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+      Planned RUN_ID: B3LYP-GEFITINIB-001
+
+- Git commit:
+      input lock commit: pending
+
+- Validation performed:
+  Gefitinib B3LYP input SHA256:
+
+      8b54814e17859421125fcb4874f9e7ce0f8b66858ee8ea5f36d3db985a61342d
+
+  Immutable PM6 source-checkpoint SHA256:
+
+      4caf81939e1808f877c0360758b9274190af73655d69064d87fecda7bcaa2925
+
+  Compared against accepted Erlotinib B3LYP input template.
+
+  Validation results:
+
+      template_lines = 10
+      target_lines = 10
+      route_identical = True
+      memory_identical = True
+      nproc_identical = True
+      charge_mult_identical = True
+      nonblank_lines_after_charge_mult = 0
+
+  Route:
+
+      #p opt freq B3LYP/6-31G(d,p) EmpiricalDispersion=GD3BJ SCRF=(SMD,Solvent=Water) geom=check
+
+  Resources encoded in Gaussian input:
+
+      %mem=32GB
+      %nprocshared=16
+
+  Charge / multiplicity:
+
+      0 1
+
+  Collision preflight:
+  No existing Gefitinib B3LYP working log or checkpoint was found.
+
+  The existing occurrence of B3LYP-GEFITINIB-001 in LAB_JOURNAL.md is a
+  previously documented planned future action and is not an executed-run
+  record.
+
+- Result:
+  Gefitinib B3LYP production input is structurally consistent with the
+  previously accepted B3LYP workflow and points to the correct immutable
+  PM6 checkpoint.
+
+- Problems encountered:
+  None.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS.
+
+  The Gefitinib B3LYP input is approved for production locking in Git.
+
+  Submission must occur only after the input and this journal entry are
+  committed, pushed, and the repository is confirmed clean.
+
+- Archive / checksum status:
+  Source PM6 checkpoint is immutable and archive-verified.
+
+  B3LYP output archive artifacts do not yet exist because the production run
+  has not yet been submitted.
+
+- What remains:
+  1. Commit and push the validated Gefitinib B3LYP input.
+  2. Confirm repository synchronization and clean state.
+  3. Assign production RUN_ID B3LYP-GEFITINIB-001.
+  4. Submit the production calculation.
+  5. Validate optimization, frequencies, and thermochemistry after completion.
+
+- Next action:
+  Lock the Gefitinib B3LYP production input in Git.
+
+
+
+
