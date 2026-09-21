@@ -54,6 +54,9 @@ if [[ -n "$run_number" ]]; then
         erlotinib_b3lyp_*)
             run_id="B3LYP-ERLOTINIB-${run_number}"
             ;;
+        gefitinib_pm6_*)
+            run_id="PM6-GEFITINIB-${run_number}"
+            ;;
         *)
             run_id="UNASSIGNED"
             ;;

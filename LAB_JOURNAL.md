@@ -3270,3 +3270,149 @@ single-session format.*
   Commit the PM6 Gefitinib scientific-acceptance package before archive closure.
 
 
+
+### Entry 019 — 2026-09-21 — PM6-GEFITINIB-001 immutable archive closure
+
+- Scientific/build objective:
+  Preserve the accepted PM6-GEFITINIB-001 production log and checkpoint as
+  immutable run-specific archive artifacts and extend archive-manifest mapping
+  so the Gefitinib PM6 files resolve to their canonical RUN_ID.
+
+- Starting state:
+  PM6-GEFITINIB-001 had passed scientific acceptance and was committed in:
+
+      7a62911
+
+  Accepted working log:
+
+      archive/logs/gefitinib_pm6_opt_v01.log
+
+  Accepted working checkpoint:
+
+      archive/chk/gefitinib_pm6_opt_v01.chk
+
+  Log SHA256:
+
+      98369b71273ba9db221a7a02a3f55285240e2ccbb1de93041b1b48c66e7a1e68
+
+  Checkpoint SHA256:
+
+      4caf81939e1808f877c0360758b9274190af73655d69064d87fecda7bcaa2925
+
+- Commands / actions performed:
+  Created immutable run-specific copies:
+
+      archive/logs/gefitinib_pm6_opt_v01.run001.log
+      archive/chk/gefitinib_pm6_opt_v01.run001.chk
+
+  Verified each immutable copy was byte-identical to the accepted working
+  artifact using SHA256.
+
+  Extended:
+
+      scripts/build_archive_manifest.sh
+
+  with Gefitinib PM6 mapping:
+
+      gefitinib_pm6_* -> PM6-GEFITINIB-${run_number}
+
+  Rebuilt:
+
+      archive_manifest.tsv
+
+  Verified the complete immutable archive.
+
+- Files changed:
+      scripts/build_archive_manifest.sh
+      archive_manifest.tsv
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+      RUN_ID: PM6-GEFITINIB-001
+      PBS job: 7712055.maple
+
+- Validation performed:
+  Working log SHA256:
+
+      98369b71273ba9db221a7a02a3f55285240e2ccbb1de93041b1b48c66e7a1e68
+
+  Immutable log SHA256:
+
+      98369b71273ba9db221a7a02a3f55285240e2ccbb1de93041b1b48c66e7a1e68
+
+  Working checkpoint SHA256:
+
+      4caf81939e1808f877c0360758b9274190af73655d69064d87fecda7bcaa2925
+
+  Immutable checkpoint SHA256:
+
+      4caf81939e1808f877c0360758b9274190af73655d69064d87fecda7bcaa2925
+
+  Archive verification:
+
+      PASSED
+
+  Total immutable archive files verified:
+
+      14
+
+  Manifest entries for both Gefitinib PM6 run001 artifacts resolve to:
+
+      PM6-GEFITINIB-001
+
+- Result:
+  PM6-GEFITINIB-001 has been preserved as a fully traceable immutable archive
+  set.
+
+  The archive manifest correctly records both the production log and checkpoint
+  under the canonical Gefitinib PM6 RUN_ID.
+
+- Problems encountered:
+  None during archive closure.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS.
+
+  PM6-GEFITINIB-001 archive closure is complete.
+
+  Gefitinib may advance to B3LYP-D3(BJ)/6-31G(d,p), SMD-water optimization
+  and frequency analysis using the immutable PM6 checkpoint.
+
+- Archive / checksum status:
+  IMMUTABLE ARCHIVE CLOSED.
+
+  Log:
+
+      archive/logs/gefitinib_pm6_opt_v01.run001.log
+
+  Checkpoint:
+
+      archive/chk/gefitinib_pm6_opt_v01.run001.chk
+
+  Archive manifest:
+
+      archive_manifest.tsv
+
+  Archive verification:
+
+      PASS
+
+- What remains:
+  1. Commit the Gefitinib PM6 archive closure.
+  2. Construct the Gefitinib B3LYP input from the immutable PM6 checkpoint.
+  3. Preflight and lock the B3LYP production input.
+  4. Submit B3LYP-GEFITINIB-001.
+
+- Next action:
+  Commit the PM6 Gefitinib reproducibility archive closure.
+
+
