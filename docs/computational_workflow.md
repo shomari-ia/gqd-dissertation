@@ -18,8 +18,16 @@ A result advances only when its gate passes — not because an output file exist
 | **Gate** | COOH carbon has exactly three connections: ring bond, `=O`, `–OH`. Atom count is 75 for COOH-GQD. Charge 0, multiplicity 1 on every input. |
 | **On failure** | Re-open in Avogadro, fix connectivity, re-optimize with MMFF94. Do not proceed with a dangling hydrogen — it produces a valid-looking calculation of the wrong molecule. |
 
-Structures are prepared on Windows and committed as text. Nothing here needs
-the cluster.
+Structures are prepared using the appropriate reproducible preparation route.
+
+Manual molecular construction/editing:
+Avogadro when required, e.g. COOH-GQD functionalization.
+
+PubChem drug preparation:
+Open Babel MMFF94 cleanup using the documented Maple module environment.
+
+Raw PubChem files remain immutable.
+Prepared structures are validated and committed as text before Gaussian work.
 
 ---
 
