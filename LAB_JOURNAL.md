@@ -2275,3 +2275,247 @@ single-session format.*
   Lock the B3LYP Erlotinib production input in Git before submission.
 
 
+### Entry 013 — 2026-09-19 — B3LYP-ERLOTINIB-001 completion, frequency QC, and scientific acceptance
+
+- Scientific/build objective:
+  Evaluate the completed Erlotinib B3LYP-D3(BJ)/6-31G(d,p), SMD-water
+  optimization/frequency calculation, verify that the optimized structure is
+  a true minimum, confirm production provenance, and determine whether the
+  B3LYP Erlotinib baseline may be scientifically accepted.
+
+- Starting state:
+  B3LYP-ERLOTINIB-001 had been submitted from the immutable accepted PM6
+  checkpoint:
+
+      archive/chk/erlotinib_pm6_opt_v01.run001.chk
+
+  Production input:
+
+      calculations/phase1_dft/b3lyp/inputs/erlotinib_b3lyp_optfreq_v01.com
+
+  Production Git commit:
+
+      1c91891
+
+  Input SHA256:
+
+      10ad2235c7c2ab1a16007aca9fa63f6bdab137660db00b6301b8508e6cbe8fd6
+
+- Commands / actions performed:
+  Inspected the completed Gaussian log and automated QC summary.
+
+  Verified normal Gaussian termination.
+
+  Verified completed geometry optimization and stationary-point detection.
+
+  Counted all vibrational frequencies.
+
+  Confirmed the expected 3N-6 vibrational mode count for a nonlinear
+  52-atom system.
+
+  Checked for imaginary frequencies.
+
+  Extracted the final SCF energy, zero-point correction, Gibbs correction,
+  and thermochemical energies.
+
+  Verified the production checkpoint and calculated its SHA256 checksum.
+
+  Rebuilt the machine run ledger using:
+
+      scripts/build_run_log.sh --write
+
+- Files changed:
+      run_log.tsv
+      LAB_JOURNAL.md
+
+  Production provenance and QC files generated:
+
+      calculations/phase1_dft/b3lyp/prov/B3LYP-ERLOTINIB-001.prov
+      calculations/phase1_dft/b3lyp/summaries/erlotinib_b3lyp_optfreq_v01.summary.txt
+
+- Job IDs / run IDs:
+      RUN_ID: B3LYP-ERLOTINIB-001
+      PBS job: 7709220.maple
+      execution host: cn046
+
+- Validation performed:
+  Gaussian build:
+
+      g16-c01-avx2
+
+  Gaussian termination:
+
+      NORMAL
+
+  Geometry optimization:
+
+      COMPLETED
+
+  Stationary point:
+
+      FOUND
+
+  Gaussian exit:
+
+      0
+
+  QC exit:
+
+      0
+
+  QC status:
+
+      PASS
+
+  System:
+
+      atoms = 52
+      charge = 0
+      multiplicity = 1
+
+  Expected vibrational modes:
+
+      3N - 6 = 150
+
+  Observed vibrational modes:
+
+      150
+
+  Imaginary frequencies:
+
+      0
+
+  Lowest vibrational frequency:
+
+      14.3361 cm^-1
+
+  Production Git provenance:
+
+      git_commit = 1c91891
+      git_dirty = no
+
+- Result:
+  Final B3LYP electronic energy:
+
+      E(RB3LYP) = -1317.40085224 Hartree
+
+  Zero-point correction:
+
+      0.420518 Hartree
+
+  Thermal correction to Gibbs Free Energy:
+
+      0.359949 Hartree
+
+  Sum of electronic and zero-point energies:
+
+      -1316.980334 Hartree
+
+  Sum of electronic and thermal free energies:
+
+      -1317.040903 Hartree
+
+  Gaussian CPU time:
+
+      0 days 4 hours 49 minutes 2.5 seconds
+
+  Gaussian elapsed time:
+
+      0 days 0 hours 18 minutes 11.8 seconds
+
+  Output SHA256:
+
+      042787f2a35a5ff283eafb0d8fab152d3fcb02d8c123780b26f8358f4a7698a4
+
+  Checkpoint SHA256:
+
+      7b5414ef0a5ada369029e566a838758c1f7faaf68587bb53c2ab9fc4a610faf1
+
+- Interpretation:
+  B3LYP-ERLOTINIB-001 converged to a stationary structure with no imaginary
+  vibrational frequencies.
+
+  The exact expected number of vibrational modes was recovered:
+
+      150 of 150
+
+  with a lowest positive mode of:
+
+      14.3361 cm^-1
+
+  The absence of negative frequencies supports classification of the optimized
+  structure as a local minimum on the B3LYP-D3(BJ)/6-31G(d,p), SMD-water
+  potential-energy surface.
+
+  The lowest mode is soft but positive. It does not invalidate the optimized
+  minimum, although low-frequency vibrational modes should be treated with
+  appropriate caution when interpreting harmonic thermochemical quantities.
+
+- Problems encountered:
+  None during production execution or scientific QC.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS.
+
+  B3LYP-ERLOTINIB-001 is scientifically accepted.
+
+  Acceptance criteria satisfied:
+
+      normal Gaussian termination,
+      completed optimization,
+      stationary point found,
+      150 expected vibrational modes observed,
+      zero imaginary frequencies,
+      Gaussian exit code = 0,
+      QC exit code = 0,
+      QC status = PASS,
+      and complete Git-linked production provenance.
+
+  Scientific status:
+
+      ACCEPTED — B3LYP-ERLOTINIB-001
+
+  Erlotinib may advance to permanent run-specific archive closure.
+
+- Archive / checksum status:
+  Working production log:
+
+      archive/logs/erlotinib_b3lyp_optfreq_v01.log
+
+  Output SHA256:
+
+      042787f2a35a5ff283eafb0d8fab152d3fcb02d8c123780b26f8358f4a7698a4
+
+  Working production checkpoint:
+
+      archive/chk/erlotinib_b3lyp_optfreq_v01.chk
+
+  Checkpoint SHA256:
+
+      7b5414ef0a5ada369029e566a838758c1f7faaf68587bb53c2ab9fc4a610faf1
+
+  PERMANENT RUN-SPECIFIC ARCHIVE PRESERVATION PENDING.
+
+- What remains:
+  1. Commit the completed provenance, QC summary, run-log record, and Entry 013.
+  2. Preserve the accepted B3LYP log and checkpoint as immutable run001
+     artifacts.
+  3. Extend archive-manifest mapping for B3LYP-ERLOTINIB.
+  4. Verify archive integrity.
+  5. Continue to the next Phase I Erlotinib workflow stage after archive
+     closure.
+
+- Next action:
+  Commit the B3LYP Erlotinib scientific-acceptance package before immutable
+  archive closure.
+
+
