@@ -2519,3 +2519,153 @@ single-session format.*
   archive closure.
 
 
+
+
+### Entry 014 — 2026-09-19 — B3LYP-ERLOTINIB-001 immutable archive closure
+
+- Scientific/build objective:
+  Preserve the accepted B3LYP-ERLOTINIB-001 production artifacts as immutable,
+  run-specific archive copies and extend archive-manifest mapping so the new
+  Erlotinib B3LYP artifacts resolve to their canonical RUN_ID.
+
+- Starting state:
+  B3LYP-ERLOTINIB-001 had passed scientific acceptance and was committed in:
+
+      bde18ac
+
+  Accepted working log:
+
+      archive/logs/erlotinib_b3lyp_optfreq_v01.log
+
+  Accepted working checkpoint:
+
+      archive/chk/erlotinib_b3lyp_optfreq_v01.chk
+
+  Output SHA256:
+
+      042787f2a35a5ff283eafb0d8fab152d3fcb02d8c123780b26f8358f4a7698a4
+
+  Checkpoint SHA256:
+
+      7b5414ef0a5ada369029e566a838758c1f7faaf68587bb53c2ab9fc4a610faf1
+
+- Commands / actions performed:
+  Created immutable run-specific archive copies:
+
+      archive/logs/erlotinib_b3lyp_optfreq_v01.run001.log
+      archive/chk/erlotinib_b3lyp_optfreq_v01.run001.chk
+
+  Verified that each immutable copy was byte-identical to its accepted
+  working artifact using SHA256.
+
+  Extended:
+
+      scripts/build_archive_manifest.sh
+
+  with Erlotinib B3LYP RUN_ID mapping:
+
+      erlotinib_b3lyp_* -> B3LYP-ERLOTINIB-${run_number}
+
+  Rebuilt the archive manifest.
+
+  Verified all immutable archive artifacts.
+
+- Files changed:
+      scripts/build_archive_manifest.sh
+      archive_manifest.tsv
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+      RUN_ID: B3LYP-ERLOTINIB-001
+      PBS job: 7709220.maple
+
+- Validation performed:
+  Working log SHA256:
+
+      042787f2a35a5ff283eafb0d8fab152d3fcb02d8c123780b26f8358f4a7698a4
+
+  Immutable log SHA256:
+
+      042787f2a35a5ff283eafb0d8fab152d3fcb02d8c123780b26f8358f4a7698a4
+
+  Working checkpoint SHA256:
+
+      7b5414ef0a5ada369029e566a838758c1f7faaf68587bb53c2ab9fc4a610faf1
+
+  Immutable checkpoint SHA256:
+
+      7b5414ef0a5ada369029e566a838758c1f7faaf68587bb53c2ab9fc4a610faf1
+
+  Archive verification:
+
+      PASSED
+
+  Total immutable archive files verified:
+
+      12
+
+  Manifest entries for both Erlotinib B3LYP run001 artifacts resolve to:
+
+      B3LYP-ERLOTINIB-001
+
+- Result:
+  The B3LYP-ERLOTINIB-001 log and checkpoint have been preserved as immutable,
+  run-specific archive artifacts.
+
+  The archive manifest correctly records both files under the canonical
+  B3LYP Erlotinib RUN_ID.
+
+  Existing COOH-GQD and Erlotinib PM6 mappings remain intact.
+
+- Problems encountered:
+  None during this archive-closure stage.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS.
+
+  B3LYP-ERLOTINIB-001 archive closure is complete.
+
+  The isolated-molecule Erlotinib PM6 -> B3LYP baseline is now scientifically
+  accepted, reproducibly documented, and permanently archived.
+
+- Archive / checksum status:
+  IMMUTABLE ARCHIVE CLOSED.
+
+  Log:
+
+      archive/logs/erlotinib_b3lyp_optfreq_v01.run001.log
+
+  Checkpoint:
+
+      archive/chk/erlotinib_b3lyp_optfreq_v01.run001.chk
+
+  Archive manifest:
+
+      archive_manifest.tsv
+
+  Archive verification status:
+
+      PASS
+
+- What remains:
+  1. Commit the B3LYP Erlotinib archive closure.
+  2. Determine the next Phase I Erlotinib stage according to the canonical
+     computational workflow.
+  3. Preserve the accepted B3LYP structure as the reference isolated-drug
+     state for subsequent interaction calculations.
+
+- Next action:
+  Commit the B3LYP Erlotinib archive closure and inspect the canonical workflow
+  before beginning the next Erlotinib calculation stage.
+
+
+
