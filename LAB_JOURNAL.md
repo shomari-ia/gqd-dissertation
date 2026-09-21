@@ -2820,3 +2820,135 @@ single-session format.*
   Commit the accepted raw Gefitinib source and validation record.
 
 
+
+
+### Entry 016 — 2026-09-21 — Gefitinib MMFF94 preparation and validation
+
+- Scientific/build objective:
+  Generate a reproducibly prepared Gefitinib geometry from the accepted raw
+  PubChem structure using MMFF94 minimization and verify that molecular identity,
+  atom ordering, composition, and bonding remain unchanged.
+
+- Starting state:
+  The accepted immutable raw Gefitinib source was:
+
+      structures/raw/gefitinib_pubchem_cid123631_3d.sdf
+
+  PubChem CID:
+
+      123631
+
+  Raw-source acceptance commit:
+
+      3760ef3
+
+  Raw-source SHA256:
+
+      b8602df6114c41ef4de41d73209befd7cd84ff0a7431292f718a615fef7d6de9
+
+- Commands / actions performed:
+  Loaded the documented Open Babel Maple environment.
+
+  Performed MMFF94 minimization using:
+
+      obabel structures/raw/gefitinib_pubchem_cid123631_3d.sdf \
+        -O structures/prepared/gefitinib_mmff94_prep_v01.mol \
+        --minimize --ff MMFF94 --steps 500
+
+  Compared raw and prepared structures using:
+      atom count,
+      atom ordering,
+      bond topology,
+      SMILES,
+      and same-index Cartesian coordinate RMSD.
+
+- Files changed:
+      structures/prepared/gefitinib_mmff94_prep_v01.mol
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  No Gaussian RUN_ID assigned at this stage.
+
+- Git commit:
+  Pending.
+
+- Validation performed:
+  Raw atom count:
+
+      55
+
+  Prepared atom count:
+
+      55
+
+  Atom order identical:
+
+      True
+
+  Bond topology identical:
+
+      True
+
+  Raw SMILES:
+
+      Clc1cc(Nc2ncnc3c2cc(OCCCN2CCOCC2)c(OC)c3)ccc1F
+
+  Prepared SMILES:
+
+      Clc1cc(Nc2ncnc3c2cc(OCCCN2CCOCC2)c(OC)c3)ccc1F
+
+  Same-index coordinate RMSD:
+
+      0.08239655994584419 Å
+
+  Prepared structure SHA256:
+
+      03d3b29cb3f71befd0671c12746b0dbc95f842a6b1308928aaf3fe4d76fba85c
+
+  Open Babel environment:
+
+      module label: obabel/3.1.1
+      executable: /usr/local/apps/obabel-3.1.1/bin/obabel
+      reported version: Open Babel 3.1.0
+
+- Result:
+  MMFF94 minimization produced a modest geometry relaxation while preserving
+  the molecular identity, atom order, and complete bond topology of Gefitinib.
+
+- Problems encountered:
+  None.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS.
+
+  The prepared Gefitinib structure is accepted for Gaussian PM6 input
+  construction.
+
+- Archive / checksum status:
+  Prepared structure:
+
+      structures/prepared/gefitinib_mmff94_prep_v01.mol
+
+  SHA256:
+
+      03d3b29cb3f71befd0671c12746b0dbc95f842a6b1308928aaf3fe4d76fba85c
+
+- What remains:
+  1. Commit the validated prepared Gefitinib structure.
+  2. Construct the Gefitinib PM6 Gaussian input.
+  3. Validate exact coordinate transfer from the prepared MOL file.
+  4. Lock the production input in Git before submission.
+
+- Next action:
+  Commit the validated Gefitinib MMFF94 preparation.
+
+
