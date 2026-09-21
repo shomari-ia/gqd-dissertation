@@ -2669,3 +2669,154 @@ single-session format.*
 
 
 
+### Entry 015 — 2026-09-21 — Gefitinib raw PubChem source acquisition and validation
+
+- Scientific/build objective:
+  Acquire the canonical PubChem 3D structure for Gefitinib and validate its
+  identity, elemental composition, connectivity, charge state, and suitability
+  for reproducible molecular preparation.
+
+- Starting state:
+  Gefitinib is the second drug in the locked Phase I calculation order.
+
+  Canonical system definition:
+
+      PubChem CID: 123631
+      target context: EGFR
+      charge: 0
+      multiplicity: 1
+
+  No Gefitinib structure or calculation files existed in the repository before
+  this acquisition step.
+
+- Commands / actions performed:
+  Downloaded the PubChem 3D SDF for CID 123631.
+
+  Validated the structure using Open Babel and direct SDF parsing.
+
+  Checked:
+      molecular formula,
+      atom count,
+      bond count,
+      elemental composition,
+      molecular connectivity,
+      isolated atoms,
+      explicit SDF charge records,
+      PubChem conformer metadata,
+      and canonical molecular representation.
+
+- Files changed:
+      structures/raw/gefitinib_pubchem_cid123631_3d.sdf
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  No Gaussian RUN_ID assigned at this stage.
+
+- Git commit:
+  Pending.
+
+- Validation performed:
+  Raw source:
+
+      PubChem CID 123631
+
+  Molecular formula:
+
+      C22H24ClFN4O3
+
+  Atom count:
+
+      55
+
+  Bond count:
+
+      58
+
+  Element counts:
+
+      C  = 22
+      H  = 24
+      Cl = 1
+      F  = 1
+      N  = 4
+      O  = 3
+
+  Connected components:
+
+      1
+
+  Component size:
+
+      55 atoms
+
+  Isolated atoms:
+
+      none
+
+  Explicit M CHG records:
+
+      none
+
+  Open Babel SMILES:
+
+      Clc1cc(Nc2ncnc3c2cc(OCCCN2CCOCC2)c(OC)c3)ccc1F
+
+  PubChem MMFF94 conformer energy:
+
+      107.6811
+
+  Raw SDF SHA256:
+
+      b8602df6114c41ef4de41d73209befd7cd84ff0a7431292f718a615fef7d6de9
+
+  Open Babel environment:
+
+      module label: obabel/3.1.1
+      executable: /usr/local/apps/obabel-3.1.1/bin/obabel
+      reported version: Open Babel 3.1.0
+
+- Result:
+  The downloaded PubChem structure is internally consistent with Gefitinib,
+  contains the expected 55 atoms and molecular formula C22H24ClFN4O3, consists
+  of one connected molecular graph, and contains no isolated atoms or explicit
+  formal-charge records.
+
+- Problems encountered:
+  None.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS.
+
+  The PubChem CID 123631 3D SDF is accepted as the immutable raw Gefitinib
+  source structure.
+
+  Gefitinib may advance to reproducible MMFF94 preparation.
+
+- Archive / checksum status:
+  Raw source retained at:
+
+      structures/raw/gefitinib_pubchem_cid123631_3d.sdf
+
+  SHA256:
+
+      b8602df6114c41ef4de41d73209befd7cd84ff0a7431292f718a615fef7d6de9
+
+- What remains:
+  1. Commit the validated raw Gefitinib source.
+  2. Generate the MMFF94-prepared Gefitinib structure.
+  3. Validate atom order, connectivity, composition, and geometry preservation.
+  4. Construct the Gefitinib PM6 Gaussian input only after preparation passes.
+
+- Next action:
+  Commit the accepted raw Gefitinib source and validation record.
+
+
