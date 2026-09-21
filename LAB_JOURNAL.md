@@ -3106,3 +3106,167 @@ single-session format.*
   Commit the Gefitinib PM6 production input before submission.
 
 
+
+
+### Entry 018 — 2026-09-21 — PM6-GEFITINIB-001 completion and scientific acceptance
+
+- Scientific/build objective:
+  Evaluate the completed Gefitinib PM6 geometry optimization, confirm Gaussian
+  and QC success, verify the production checkpoint and provenance, and determine
+  whether the PM6 Gefitinib baseline may advance to B3LYP optimization.
+
+- Starting state:
+  Production input:
+
+      calculations/phase1_dft/pm6/inputs/gefitinib_pm6_opt_v01.com
+
+  Production RUN_ID:
+
+      PM6-GEFITINIB-001
+
+  Production Git commit:
+
+      4356191
+
+  Input SHA256:
+
+      065ac1eea119603f167ab3f0e5dd820fb04ff88fde6fddad5c23058d59c5eb9c
+
+- Commands / actions performed:
+  Inspected the completed Gaussian provenance record, QC summary, optimization
+  markers, production checkpoint, and run ledger.
+
+  Rebuilt:
+
+      run_log.tsv
+
+  using:
+
+      scripts/build_run_log.sh --write
+
+- Files changed:
+      run_log.tsv
+      LAB_JOURNAL.md
+
+  Production-generated records:
+
+      calculations/phase1_dft/pm6/prov/PM6-GEFITINIB-001.prov
+      calculations/phase1_dft/pm6/summaries/gefitinib_pm6_opt_v01.summary.txt
+
+- Job IDs / run IDs:
+      RUN_ID: PM6-GEFITINIB-001
+      PBS job: 7712055.maple
+      execution host: cn070
+
+- Git commit:
+      production input commit: 4356191
+      acceptance commit: pending
+
+- Validation performed:
+  Gaussian build:
+
+      g16-c01-avx2
+
+  Charge / multiplicity:
+
+      0 1
+
+  Atom count:
+
+      55
+
+  Gaussian termination:
+
+      NORMAL
+
+  Optimization:
+
+      COMPLETED
+
+  Stationary point:
+
+      FOUND
+
+  Gaussian exit:
+
+      0
+
+  QC exit:
+
+      0
+
+  QC status:
+
+      PASS
+
+  Final PM6 SCF energy:
+
+      -0.143959081671 Hartree
+
+  Production Git provenance:
+
+      git_commit = 4356191
+      git_dirty = no
+
+  Output SHA256:
+
+      98369b71273ba9db221a7a02a3f55285240e2ccbb1de93041b1b48c66e7a1e68
+
+  Checkpoint SHA256:
+
+      4caf81939e1808f877c0360758b9274190af73655d69064d87fecda7bcaa2925
+
+- Result:
+  Gefitinib PM6 optimization completed successfully and produced a valid
+  stationary geometry and checkpoint suitable for the B3LYP stage.
+
+- Problems encountered:
+  None during production execution or QC.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS.
+
+  PM6-GEFITINIB-001 is scientifically accepted.
+
+  Gefitinib may advance to B3LYP-D3(BJ)/6-31G(d,p), SMD-water optimization
+  and frequency analysis after immutable PM6 archive closure.
+
+- Archive / checksum status:
+  Working log:
+
+      archive/logs/gefitinib_pm6_opt_v01.log
+
+  Log SHA256:
+
+      98369b71273ba9db221a7a02a3f55285240e2ccbb1de93041b1b48c66e7a1e68
+
+  Working checkpoint:
+
+      archive/chk/gefitinib_pm6_opt_v01.chk
+
+  Checkpoint SHA256:
+
+      4caf81939e1808f877c0360758b9274190af73655d69064d87fecda7bcaa2925
+
+  Permanent run-specific archive preservation pending.
+
+- What remains:
+  1. Commit the PM6 Gefitinib acceptance package.
+  2. Preserve the accepted PM6 log and checkpoint as immutable run001 artifacts.
+  3. Extend archive-manifest mapping for Gefitinib PM6.
+  4. Verify archive integrity.
+  5. Construct the Gefitinib B3LYP input from the immutable PM6 checkpoint.
+
+- Next action:
+  Commit the PM6 Gefitinib scientific-acceptance package before archive closure.
+
+

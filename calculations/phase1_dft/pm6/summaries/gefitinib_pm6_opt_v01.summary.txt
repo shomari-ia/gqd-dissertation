@@ -1,0 +1,17 @@
+run_id          gefitinib_pm6_opt_v01
+log_file        archive/logs/gefitinib_pm6_opt_v01.log
+log_sha256      98369b71273ba9db221a7a02a3f55285240e2ccbb1de93041b1b48c66e7a1e68
+verified_at     2026-09-21T14:47:23-05:00
+route           #p PM6 opt SCF=XQC
+charge_mult     Charge =  0 Multiplicity = 1
+n_atoms         55
+termination     NORMAL
+optimization    COMPLETED
+imag_freq       NA
+scf_hartree     -0.143959081671
+zpe_hartree     NA
+gibbs_hartree   NA
+cp_corrected    NA
+cpu_time        Job cpu time:       0 days  0 hours  4 minutes 48.6 seconds.
+elapsed_time    Elapsed time:       0 days  0 hours  0 minutes 53.3 seconds.
+qc_status       PASS
