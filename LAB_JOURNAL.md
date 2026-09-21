@@ -2952,3 +2952,157 @@ single-session format.*
   Commit the validated Gefitinib MMFF94 preparation.
 
 
+### Entry 017 — 2026-09-21 — Gefitinib PM6 production input construction and preflight lock
+
+- Scientific/build objective:
+  Construct the Gefitinib PM6 production input from the accepted MMFF94-prepared
+  structure, verify exact coordinate transfer and production metadata, and
+  confirm that the proposed RUN_ID and output paths are collision-free before
+  submission.
+
+- Starting state:
+  Accepted prepared Gefitinib structure:
+
+      structures/prepared/gefitinib_mmff94_prep_v01.mol
+
+  Prepared-structure acceptance commit:
+
+      5156176
+
+  Prepared structure SHA256:
+
+      03d3b29cb3f71befd0671c12746b0dbc95f842a6b1308928aaf3fe4d76fba85c
+
+- Commands / actions performed:
+  Generated the Gaussian PM6 input:
+
+      calculations/phase1_dft/pm6/inputs/gefitinib_pm6_opt_v01.com
+
+  using the accepted prepared MOL coordinates without atom reordering.
+
+  Verified:
+      Gaussian route,
+      checkpoint path,
+      memory,
+      processor count,
+      title,
+      charge,
+      multiplicity,
+      atom count,
+      atom order,
+      exact coordinate transfer,
+      input SHA256,
+      RUN_ID collision status,
+      and output-path collision status.
+
+- Files changed:
+      calculations/phase1_dft/pm6/inputs/gefitinib_pm6_opt_v01.com
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  Proposed production RUN_ID:
+
+      PM6-GEFITINIB-001
+
+  PBS job:
+
+      not yet submitted
+
+- Git commit:
+  Pending.
+
+- Validation performed:
+  Gaussian header:
+
+      %chk=archive/chk/gefitinib_pm6_opt_v01.chk
+      %mem=8GB
+      %nprocshared=8
+      #p PM6 opt SCF=XQC
+
+  Title:
+
+      gefitinib PM6 pre-optimization | system=gefitinib charge=0 mult=1 | v01
+
+  Charge / multiplicity:
+
+      0 1
+
+  Prepared MOL atom count:
+
+      55
+
+  Gaussian input atom count:
+
+      55
+
+  Element order identical:
+
+      True
+
+  Maximum coordinate delta:
+
+      0.0 Å
+
+  Input SHA256:
+
+      065ac1eea119603f167ab3f0e5dd820fb04ff88fde6fddad5c23058d59c5eb9c
+
+  RUN_ID collision check:
+
+      no existing PM6-GEFITINIB-001 records
+
+  Working output collision check:
+
+      no existing archive/logs/gefitinib_pm6_opt_v01.log
+      no existing archive/chk/gefitinib_pm6_opt_v01.chk
+
+- Result:
+  The Gefitinib PM6 production input is internally consistent with the accepted
+  prepared structure and is ready to be locked in Git before submission.
+
+- Problems encountered:
+  An initial Python input-generation command used f-string syntax unsupported by
+  the Python version available on Maple.
+
+- Root cause:
+  The Maple Python interpreter does not support that f-string syntax.
+
+- Correction:
+  Replaced the f-string formatting with the older compatible .format() method
+  and regenerated the input.
+
+- Why the correction was justified:
+  The failure occurred before successful file generation. The corrected script
+  produced a 55-atom input with exact atom-order and coordinate preservation.
+
+- Decision / advancement gate:
+  PASS.
+
+  The Gefitinib PM6 input is approved for production lock.
+
+  Proposed production identifier:
+
+      PM6-GEFITINIB-001
+
+- Archive / checksum status:
+  Production input:
+
+      calculations/phase1_dft/pm6/inputs/gefitinib_pm6_opt_v01.com
+
+  SHA256:
+
+      065ac1eea119603f167ab3f0e5dd820fb04ff88fde6fddad5c23058d59c5eb9c
+
+  No production log or checkpoint exists yet.
+
+- What remains:
+  1. Commit the PM6 production input and Entry 017.
+  2. Verify clean Git state.
+  3. Submit PM6-GEFITINIB-001.
+  4. Capture PBS job ID and production provenance.
+  5. Perform scientific acceptance after completion.
+
+- Next action:
+  Commit the Gefitinib PM6 production input before submission.
+
+
