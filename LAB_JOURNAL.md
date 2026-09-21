@@ -3551,3 +3551,201 @@ single-session format.*
 
 
 
+### Entry 021 — 2026-09-21 — B3LYP-GEFITINIB-001 completion and scientific acceptance
+
+- Scientific/build objective:
+  Evaluate the completed Gefitinib B3LYP-D3(BJ)/6-31G(d,p),
+  SMD-water optimization and frequency analysis and determine whether the
+  optimized isolated-drug structure satisfies the Phase I acceptance criteria.
+
+- Starting state:
+  Production input:
+
+      calculations/phase1_dft/b3lyp/inputs/gefitinib_b3lyp_optfreq_v01.com
+
+  Production RUN_ID:
+
+      B3LYP-GEFITINIB-001
+
+  Production Git commit:
+
+      58199fe
+
+  Input SHA256:
+
+      8b54814e17859421125fcb4874f9e7ce0f8b66858ee8ea5f36d3db985a61342d
+
+- Commands / actions performed:
+  Inspected the production provenance, QC summary, Gaussian optimization
+  markers, vibrational frequencies, thermochemistry, and B3LYP checkpoint.
+
+  Counted all reported vibrational frequencies programmatically and checked
+  for negative frequencies.
+
+- Files changed:
+      run_log.tsv
+      LAB_JOURNAL.md
+
+  Production-generated records:
+
+      calculations/phase1_dft/b3lyp/prov/B3LYP-GEFITINIB-001.prov
+      calculations/phase1_dft/b3lyp/summaries/gefitinib_b3lyp_optfreq_v01.summary.txt
+
+- Job IDs / run IDs:
+      RUN_ID: B3LYP-GEFITINIB-001
+      PBS job: 7712077.maple
+      execution host: cn136
+
+- Git commit:
+      production input commit: 58199fe
+      acceptance commit: pending
+
+- Validation performed:
+  Gaussian build:
+
+      g16-c01-avx2
+
+  Charge / multiplicity:
+
+      0 1
+
+  Atom count:
+
+      55
+
+  Gaussian termination:
+
+      NORMAL
+
+  Optimization:
+
+      COMPLETED
+
+  Stationary point:
+
+      FOUND
+
+  Expected vibrational modes for nonlinear 55-atom molecule:
+
+      3N - 6 = 159
+
+  Observed frequencies:
+
+      159
+
+  Imaginary frequencies:
+
+      0
+
+  Lowest frequency:
+
+      15.9122 cm^-1
+
+  Highest frequency:
+
+      3643.7339 cm^-1
+
+  Final B3LYP SCF energy:
+
+      -1857.65516482 Hartree
+
+  Zero-point correction:
+
+      0.443494 Hartree
+
+  Thermal correction to Gibbs Free Energy:
+
+      0.382699 Hartree
+
+  Sum of electronic and zero-point Energies:
+
+      -1857.211671 Hartree
+
+  Gibbs free energy:
+
+      -1857.272466 Hartree
+
+  Gaussian exit:
+
+      0
+
+  QC exit:
+
+      0
+
+  QC status:
+
+      PASS
+
+  Production Git provenance:
+
+      git_commit = 58199fe
+      git_dirty = no
+
+  Output SHA256:
+
+      ff33af5564e89743737835f13fccf64ad581bcc38da7899104d9a4656c6f70f5
+
+  Checkpoint SHA256:
+
+      e25c56576ab5bdfad14b8fd215c0005f8137ec767932f69007a2487e5fe7082d
+
+- Result:
+  Gefitinib B3LYP optimization and frequency analysis completed successfully.
+
+  The optimized structure is a stationary point with no imaginary
+  frequencies and therefore satisfies the isolated-species minimum-energy
+  acceptance criterion for this stage.
+
+- Problems encountered:
+  None during production execution or scientific QC.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS.
+
+  B3LYP-GEFITINIB-001 is scientifically accepted.
+
+  The isolated Gefitinib B3LYP baseline is complete and may be preserved as
+  immutable archive artifacts.
+
+- Archive / checksum status:
+  Working log:
+
+      archive/logs/gefitinib_b3lyp_optfreq_v01.log
+
+  Log SHA256:
+
+      ff33af5564e89743737835f13fccf64ad581bcc38da7899104d9a4656c6f70f5
+
+  Working checkpoint:
+
+      archive/chk/gefitinib_b3lyp_optfreq_v01.chk
+
+  Checkpoint SHA256:
+
+      e25c56576ab5bdfad14b8fd215c0005f8137ec767932f69007a2487e5fe7082d
+
+  Permanent run-specific archive preservation pending.
+
+- What remains:
+  1. Rebuild run_log.tsv.
+  2. Commit the Gefitinib B3LYP acceptance package.
+  3. Create immutable run001 B3LYP log and checkpoint copies.
+  4. Extend archive-manifest mapping for Gefitinib B3LYP.
+  5. Verify the complete archive.
+  6. Advance to the next isolated drug baseline after archive closure.
+
+- Next action:
+  Rebuild the run ledger and commit the B3LYP Gefitinib scientific-acceptance package.
+
+
+
