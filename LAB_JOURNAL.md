@@ -3899,3 +3899,218 @@ single-session format.*
 
 
 
+### Entry 023 — 2026-09-21 — Venetoclax raw-source acceptance and 3D source limitation
+
+- Scientific/build objective:
+  Acquire and validate an authoritative raw Venetoclax molecular structure
+  suitable for reproducible preparation of the isolated-drug baseline.
+
+- Starting state:
+  Locked drug scope identifies:
+
+      Venetoclax
+      PubChem CID: 49846579
+      target: Bcl-2
+      charge: 0
+      multiplicity: 1
+
+  The established isolated-drug workflow normally begins from a PubChem
+  3D structure when available.
+
+- Commands / actions performed:
+  Attempted to retrieve a PubChem 3D SDF using PUG-REST.
+
+  The request returned an 82-byte error response rather than a molecular
+  structure:
+
+      Status: 404
+      Code: PUGREST.NotFound
+      Message: No records found for the given CID(s)
+
+  Open Babel rejected the file because it contained no valid MDL atom/bond
+  block.
+
+  The failed artifact was deleted.
+
+  Retrieved the PubChem 2D SDF instead:
+
+      structures/raw/venetoclax_pubchem_cid49846579_2d.sdf
+
+  Performed structural validation using Open Babel and direct SDF parsing.
+
+- Files changed:
+      structures/raw/venetoclax_pubchem_cid49846579_2d.sdf
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  Not applicable. This is a structure-preparation stage.
+
+- Git commit:
+      raw-source acceptance commit: pending
+
+- Validation performed:
+  PubChem CID:
+
+      49846579
+
+  Molecular formula:
+
+      C45H50ClN7O7S
+
+  Exact mass:
+
+      867.3180958
+
+  Molecular weight:
+
+      868.4
+
+  Atom count:
+
+      111
+
+  Heavy-atom count:
+
+      61
+
+  Bond count:
+
+      118
+
+  Element counts:
+
+      C45
+      H50
+      Cl1
+      N7
+      O7
+      S1
+
+  Connected components:
+
+      1
+
+  Component size:
+
+      111
+
+  Isolated atoms:
+
+      0
+
+  Bond orders:
+
+      single: 100
+      double: 18
+
+  Rotatable bonds reported by PubChem:
+
+      12
+
+  Total molecular charge:
+
+      0
+
+  Explicit SDF charge record:
+
+      M  CHG  2   8  -1  14   1
+
+  This corresponds to an internal charge-separated representation while the
+  complete molecular system remains neutral.
+
+  PubChem stereochemistry metadata:
+
+      defined atom stereo: 0
+      undefined atom stereo: 0
+      defined bond stereo: 0
+      undefined bond stereo: 0
+
+  Coordinate validation:
+
+      all_z_zero = True
+
+  Therefore the accepted PubChem file is an explicitly 2D molecular
+  representation and not a previously generated 3D conformer.
+
+  PubChem InChIKey:
+
+      LQBVNQSMGBZMKD-UHFFFAOYSA-N
+
+  Accepted raw-file SHA256:
+
+      9dff3ed26809ef2ebe54b2260e188e7fd2383f74fdbfd99137a91eecfe68bf04
+
+- Result:
+  The PubChem 2D record is chemically coherent and suitable as the
+  authoritative molecular-graph source for Venetoclax.
+
+  Connectivity, elemental composition, formal charge, component count,
+  and database identity are internally consistent.
+
+- Problems encountered:
+  1. PubChem did not return a usable 3D SDF for CID 49846579 through the
+     attempted PUG-REST 3D request.
+
+  2. Two separate downloads of the valid PubChem 2D record produced different
+     byte-level SHA256 hashes.
+
+- Root cause:
+  Problem 1:
+  A PubChem 3D record was not available through the attempted retrieval route.
+
+  Problem 2:
+  The generated OEChem SDF header contains a time-dependent generation string.
+  The observed files remained chemically equivalent but were not
+  byte-for-byte identical.
+
+- Correction:
+  Deleted the invalid 3D-response artifact.
+
+  Adopted the authoritative PubChem 2D record as the raw molecular source.
+
+  Selected and preserved one exact downloaded 2D instance with SHA256:
+
+      9dff3ed26809ef2ebe54b2260e188e7fd2383f74fdbfd99137a91eecfe68bf04
+
+- Why the correction was justified:
+  The 2D record preserves the required molecular identity, atoms, bonds,
+  bond orders, formal-charge representation, and PubChem metadata.
+
+  Reproducible 3D coordinates can therefore be generated downstream from
+  this locked molecular graph rather than relying on an unavailable database
+  conformer.
+
+- Decision / advancement gate:
+  PASS.
+
+  The PubChem 2D Venetoclax structure is accepted as the authoritative raw
+  source.
+
+  The molecule may advance to a separately documented reproducible
+  2D-to-3D conformer-generation stage.
+
+  No PM6 calculation will be started until the generated 3D structure has
+  passed connectivity, composition, charge, and geometry validation.
+
+- Archive / checksum status:
+  Raw source accepted:
+
+      structures/raw/venetoclax_pubchem_cid49846579_2d.sdf
+
+  SHA256:
+
+      9dff3ed26809ef2ebe54b2260e188e7fd2383f74fdbfd99137a91eecfe68bf04
+
+- What remains:
+  1. Commit and push the accepted raw PubChem 2D record.
+  2. Design a reproducible Venetoclax 2D-to-3D conformer-generation protocol.
+  3. Generate one or more candidate 3D conformers.
+  4. Perform MMFF94 preparation/conformer evaluation.
+  5. Validate connectivity and charge against the accepted raw source.
+  6. Select and document the production starting conformer before PM6.
+
+- Next action:
+  Lock the accepted Venetoclax raw PubChem 2D source in Git.
+
+
+
