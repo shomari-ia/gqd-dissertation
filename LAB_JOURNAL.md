@@ -4114,3 +4114,236 @@ single-session format.*
 
 
 
+### Entry 024 — 2026-09-22 — Venetoclax reproducible 3D conformer generation and MMFF94 selection
+
+- Scientific/build objective:
+  Generate and validate a reproducible three-dimensional starting structure
+  for Venetoclax from the accepted PubChem 2D molecular graph.
+
+- Starting state:
+  Accepted raw source:
+
+      structures/raw/venetoclax_pubchem_cid49846579_2d.sdf
+
+  PubChem CID:
+
+      49846579
+
+  Formula:
+
+      C45H50ClN7O7S
+
+  Charge:
+
+      0
+
+  Raw-source commit:
+
+      03fed70
+
+  PubChem did not provide a usable 3D SDF through the attempted PUG-REST
+  retrieval, so a reproducible 2D-to-3D procedure was required.
+
+- Commands / actions performed:
+  Evaluated the available Maple molecular-preparation environment.
+
+  Available Open Babel installation:
+
+      module: obabel/3.1.1
+      executable: /usr/local/apps/obabel-3.1.1/bin/obabel
+      reported version: Open Babel 3.1.0
+
+  Open Babel provided gen3D and MMFF94 but did not expose the separate
+  conformer or Confab operation plugins in the installed build.
+
+  Existing Python virtual environment:
+
+      /ddnlus/r2751/.venvs/gqd/bin/python
+      Python 3.11.3
+
+  Installed the pinned package:
+
+      rdkit==2024.3.2
+
+  No existing packages required replacement during installation.
+
+  Created:
+
+      scripts/prepare_venetoclax_rdkit.py
+
+  The production preparation protocol used:
+
+      RDKit 2024.03.2
+      ETKDGv3
+      100 requested conformers
+      random seed 20260922
+      prune RMS threshold 0.75 Å
+      small-ring torsions enabled
+      macrocycle torsions enabled
+      chirality enforcement enabled
+      one thread
+      MMFF94 optimization
+      maximum 2000 optimization iterations
+
+  The lowest-energy converged structure identified within the sampled
+  ensemble was selected as the production starting conformer.
+
+- Files changed:
+      scripts/prepare_venetoclax_rdkit.py
+      structures/prepared/venetoclax_rdkit_mmff94_prep_v01.sdf
+      structures/prepared/venetoclax_rdkit_mmff94_prep_v01.energies.tsv
+      environments/venetoclax_rdkit_2024.03.2.freeze.txt
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  Not applicable. Structure-preparation stage.
+
+- Git commit:
+  Pending.
+
+- Validation performed:
+  Conformers requested:
+
+      100
+
+  Conformers generated:
+
+      100
+
+  MMFF94-converged conformers:
+
+      100
+
+  Nonconverged conformers:
+
+      0
+
+  MMFF status codes:
+
+      0 for all 100 conformers
+
+  MMFF94 parameter coverage:
+
+      complete
+
+  Selected conformer:
+
+      conformer 24
+
+  Selected MMFF94 energy:
+
+      124.035453 kcal/mol
+
+  Energy range of sampled ensemble:
+
+      124.035453 to 154.116621 kcal/mol
+
+  Conformers within 5 kcal/mol of selected minimum:
+
+      6
+
+  Conformers within 10 kcal/mol:
+
+      19
+
+  Molecular identity validation:
+
+      raw formula:      C45H50ClN7O7S
+      prepared formula: C45H50ClN7O7S
+
+      raw charge:       0
+      prepared charge:  0
+
+      raw heavy atoms:      61
+      prepared heavy atoms: 61
+      prepared total atoms: 111
+
+      canonical SMILES match: True
+
+      raw InChIKey:
+      LQBVNQSMGBZMKD-UHFFFAOYSA-N
+
+      prepared InChIKey:
+      LQBVNQSMGBZMKD-UHFFFAOYSA-N
+
+      InChIKey match: True
+
+  Geometry validation:
+
+      conformer_is_3D = True
+      finite_coordinates = True
+      atoms_with_nonzero_z = 111
+      minimum bonded distance = 1.010150 Å
+      maximum bonded distance = 1.776597 Å
+
+  Reproducibility validation:
+  The production script was rerun using the same pinned environment,
+  random seed, and single-thread settings.
+
+  The regenerated SDF and energy-ranking table were byte-for-byte
+  identical to the preceding production run.
+
+- Result:
+  PASS.
+
+  A chemically consistent, reproducible 3D Venetoclax starting structure
+  was generated from the accepted PubChem 2D molecular graph.
+
+  The selected structure is conformer 24, the lowest-MMFF94-energy
+  conformer identified within the sampled 100-member ETKDGv3 ensemble.
+
+- Problems encountered:
+  PubChem did not supply a usable 3D SDF through the attempted retrieval.
+
+  The installed Maple Open Babel build did not expose dedicated conformer
+  or Confab operation plugins.
+
+  RDKit was initially unavailable in both the system Python environment and
+  the existing project virtual environment.
+
+- Root cause:
+  The available database and Maple software environment did not provide a
+  suitable pre-generated conformer ensemble for Venetoclax.
+
+- Correction:
+  Installed a pinned RDKit release inside the isolated existing GQD Python
+  virtual environment and implemented a version-controlled ETKDGv3/MMFF94
+  conformer-generation workflow.
+
+- Why the correction was justified:
+  Venetoclax contains 12 rotatable bonds and is substantially more
+  conformationally flexible than Erlotinib or Gefitinib.
+
+  Generating and ranking an explicit conformer ensemble provides a more
+  defensible starting geometry than accepting a single arbitrary 3D build.
+
+  Molecular identity, charge, formula, connectivity, force-field coverage,
+  geometry, convergence, and reproducibility were independently validated.
+
+- Decision / advancement gate:
+  PASS.
+
+  The selected Venetoclax structure is accepted as the production
+  pre-quantum starting geometry.
+
+  It may advance to PM6 geometry optimization.
+
+  The selected structure must be described as the lowest-energy conformer
+  identified within the sampled ETKDGv3/MMFF94 ensemble, not as a proven
+  global conformational minimum.
+
+- Archive / checksum status:
+  Production hashes to be recorded from final checksum output before commit.
+
+- What remains:
+  1. Record final checksums.
+  2. Commit and push the reproducible preparation package.
+  3. Construct the Venetoclax PM6 Gaussian input.
+  4. Validate coordinate transfer, charge, multiplicity, and atom count.
+  5. Lock the PM6 input before submission.
+
+- Next action:
+  Lock the accepted Venetoclax conformer-preparation package in Git.
+
+
+
