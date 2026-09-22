@@ -3749,3 +3749,153 @@ single-session format.*
 
 
 
+
+### Entry 022 — 2026-09-21 — B3LYP-GEFITINIB-001 immutable archive closure
+
+- Scientific/build objective:
+  Preserve the accepted B3LYP-GEFITINIB-001 production log and checkpoint as
+  immutable run-specific artifacts and extend archive-manifest mapping so the
+  Gefitinib B3LYP files resolve to their canonical RUN_ID.
+
+- Starting state:
+  B3LYP-GEFITINIB-001 had passed scientific acceptance and was committed in:
+
+      16eaf1d
+
+  Accepted working log:
+
+      archive/logs/gefitinib_b3lyp_optfreq_v01.log
+
+  Accepted working checkpoint:
+
+      archive/chk/gefitinib_b3lyp_optfreq_v01.chk
+
+  Log SHA256:
+
+      ff33af5564e89743737835f13fccf64ad581bcc38da7899104d9a4656c6f70f5
+
+  Checkpoint SHA256:
+
+      e25c56576ab5bdfad14b8fd215c0005f8137ec767932f69007a2487e5fe7082d
+
+- Commands / actions performed:
+  Created immutable run-specific copies:
+
+      archive/logs/gefitinib_b3lyp_optfreq_v01.run001.log
+      archive/chk/gefitinib_b3lyp_optfreq_v01.run001.chk
+
+  Verified each immutable copy was byte-identical to the accepted working
+  artifact using SHA256.
+
+  Extended:
+
+      scripts/build_archive_manifest.sh
+
+  with Gefitinib B3LYP mapping:
+
+      gefitinib_b3lyp_* -> B3LYP-GEFITINIB-${run_number}
+
+  Rebuilt:
+
+      archive_manifest.tsv
+
+  Verified the complete immutable archive.
+
+- Files changed:
+      scripts/build_archive_manifest.sh
+      archive_manifest.tsv
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+      RUN_ID: B3LYP-GEFITINIB-001
+      PBS job: 7712077.maple
+
+- Git commit:
+      scientific acceptance commit: 16eaf1d
+      archive closure commit: pending
+
+- Validation performed:
+  Working log SHA256:
+
+      ff33af5564e89743737835f13fccf64ad581bcc38da7899104d9a4656c6f70f5
+
+  Immutable log SHA256:
+
+      ff33af5564e89743737835f13fccf64ad581bcc38da7899104d9a4656c6f70f5
+
+  Working checkpoint SHA256:
+
+      e25c56576ab5bdfad14b8fd215c0005f8137ec767932f69007a2487e5fe7082d
+
+  Immutable checkpoint SHA256:
+
+      e25c56576ab5bdfad14b8fd215c0005f8137ec767932f69007a2487e5fe7082d
+
+  Archive verification:
+
+      PASSED
+
+  Total immutable archive files verified:
+
+      16
+
+  Manifest entries for both Gefitinib B3LYP run001 artifacts resolve to:
+
+      B3LYP-GEFITINIB-001
+
+- Result:
+  B3LYP-GEFITINIB-001 has been preserved as a fully traceable immutable archive
+  set.
+
+  The archive manifest correctly records both the production log and checkpoint
+  under the canonical Gefitinib B3LYP RUN_ID.
+
+- Problems encountered:
+  None during archive closure.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS.
+
+  B3LYP-GEFITINIB-001 archive closure is complete.
+
+  The Gefitinib isolated-species baseline is now fully closed.
+
+- Archive / checksum status:
+  IMMUTABLE ARCHIVE CLOSED.
+
+  Log:
+
+      archive/logs/gefitinib_b3lyp_optfreq_v01.run001.log
+
+  Checkpoint:
+
+      archive/chk/gefitinib_b3lyp_optfreq_v01.run001.chk
+
+  Archive manifest:
+
+      archive_manifest.tsv
+
+  Archive verification:
+
+      PASS
+
+- What remains:
+  1. Commit the Gefitinib B3LYP archive closure.
+  2. Begin the next isolated-drug baseline.
+  3. Prepare Venetoclax raw PubChem structure.
+  4. Continue the same raw -> MMFF94 -> PM6 -> B3LYP acceptance workflow.
+
+- Next action:
+  Commit the B3LYP Gefitinib reproducibility archive closure.
+
+
+
