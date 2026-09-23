@@ -4505,3 +4505,60 @@ single-session format.*
 
 
 
+### Entry 026 — 2026-09-22 — Venetoclax PM6 production acceptance
+- Scientific/build objective:
+  Validate and formally accept the production PM6 geometry optimization for isolated Venetoclax prior to advancement to the B3LYP-D3(BJ)/6-31G(d,p) SMD-water optimization/frequency stage.
+- Starting state:
+  Venetoclax PM6 input was locked at Git commit 395a72b with SHA256 98494cb1dc1e9608909aa689259911da18f92bde5cf83104f9c7157e1a0bb2ec. The input contained 111 atoms transferred exactly from the accepted RDKit ETKDGv3/MMFF94 prepared conformer.
+- Commands / actions performed:
+  Submitted PM6-VENETOCLAX-001 through scripts/run_gaussian.pbs on Maple. Monitored PBS execution, Gaussian log development, checkpoint generation, optimization convergence, provenance output, QC summary, and ledger entry.
+- Files changed:
+  run_log.tsv
+  calculations/phase1_dft/pm6/prov/PM6-VENETOCLAX-001.prov
+  calculations/phase1_dft/pm6/summaries/venetoclax_pm6_opt_v01.summary.txt
+  LAB_JOURNAL.md
+- Job IDs / run IDs:
+  RUN_ID: PM6-VENETOCLAX-001
+  PBS: 7727742.maple
+  Execution host: cn044
+- Git commit:
+  Production input commit: 395a72b
+- Validation performed:
+  Gaussian 16 C.01 terminated normally.
+  Optimization completed.
+  Stationary point found.
+  Final convergence criteria: Maximum Force YES; RMS Force YES; Maximum Displacement YES; RMS Displacement YES.
+  QC status PASS.
+  Charge 0; multiplicity 1.
+  Atom count 111.
+  Final PM6 SCF energy: -0.188235089884 Hartree.
+  Gaussian CPU time: 5 h 20 min 28.9 s.
+  Elapsed time: 41 min 26.7 s.
+  Gaussian exit code 0.
+  QC exit code 0.
+- Result:
+  PM6-VENETOCLAX-001 passed the scientific and reproducibility acceptance criteria and is accepted as the isolated Venetoclax PM6 baseline geometry.
+- Problems encountered:
+  The production wrapper generated the provenance and QC summary but did not automatically append the run to run_log.tsv. During manual ledger entry, the row was accidentally appended twice.
+- Root cause:
+  The ledger update required manual completion after the production run, and the append command was executed twice.
+- Correction:
+  Added the verified 14-column PM6-VENETOCLAX-001 row to run_log.tsv and removed the duplicate while retaining one validated entry.
+- Why the correction was justified:
+  The surviving ledger row matches the verified provenance file, QC summary, Gaussian log, production Git commit, PBS metadata, SCF energy, and SHA256 checksum.
+- Decision / advancement gate:
+  PASS. Venetoclax PM6 geometry is accepted. Advance only after immutable run001 archive copies and manifest verification are completed. B3LYP input construction remains blocked until archive closure.
+- Archive / checksum status:
+  Working log SHA256:
+  2bb87bd1095aa149bcf472299ad4ce2596d448ac97bdc9ca9879ca445326f335
+
+  Working checkpoint SHA256:
+  7435d942b3f2124eb72099430c77a57c839b35c571a79bcb55a62258e0a0837f
+
+  Immutable run001 copies not yet created.
+- What remains:
+  Create immutable Venetoclax PM6 .run001.log and .run001.chk copies, add archive-manifest mapping, rebuild and verify archive_manifest.tsv, commit archive closure, then construct the Venetoclax B3LYP input.
+- Next action:
+  Stage and commit the PM6 acceptance metadata and journal entry, then close the immutable PM6 archive.
+
+
