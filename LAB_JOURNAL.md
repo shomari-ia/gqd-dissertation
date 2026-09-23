@@ -4347,3 +4347,161 @@ single-session format.*
 
 
 
+### Entry 025 — 2026-09-22 — Venetoclax PM6 input construction and validation
+
+- Scientific/build objective:
+  Construct and validate the Gaussian PM6 geometry-optimization input for
+  isolated Venetoclax using the accepted RDKit ETKDGv3/MMFF94 production
+  conformer.
+
+- Starting state:
+  Accepted prepared structure:
+
+      structures/prepared/venetoclax_rdkit_mmff94_prep_v01.sdf
+
+  Preparation commit:
+
+      16fef56
+
+  Molecular formula:
+
+      C45H50ClN7O7S
+
+  Total atoms:
+
+      111
+
+  Charge:
+
+      0
+
+  Multiplicity:
+
+      1
+
+  Selected prepared conformer:
+
+      conformer 24
+
+  MMFF94 energy:
+
+      124.035453 kcal/mol
+
+- Commands / actions performed:
+  Generated the Gaussian PM6 input programmatically from the accepted
+  prepared SDF without manual coordinate copying.
+
+  Created:
+
+      calculations/phase1_dft/pm6/inputs/venetoclax_pm6_opt_v01.com
+
+  Gaussian route:
+
+      #p PM6 opt SCF=XQC
+
+  Resource directives:
+
+      %mem=32GB
+      %nprocshared=16
+
+  Checkpoint:
+
+      archive/chk/venetoclax_pm6_opt_v01.chk
+
+- Files changed:
+      calculations/phase1_dft/pm6/inputs/venetoclax_pm6_opt_v01.com
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  Planned production run:
+
+      PM6-VENETOCLAX-001
+
+- Git commit:
+  Pending input-lock commit.
+
+- Validation performed:
+  Prepared SDF atom count:
+
+      111
+
+  Gaussian input atom count:
+
+      111
+
+  Element/order comparison:
+
+      PASS
+
+  Maximum coordinate-transfer deviation:
+
+      0.000000000000 Å
+
+  Route validation:
+
+      PASS
+
+  Checkpoint directive validation:
+
+      PASS
+
+  Memory directive validation:
+
+      PASS
+
+  Processor directive validation:
+
+      PASS
+
+  Charge/multiplicity validation:
+
+      PASS
+
+  Gaussian charge and multiplicity:
+
+      0 1
+
+- Result:
+  PASS.
+
+  The PM6 input reproduces the accepted prepared Venetoclax coordinates
+  exactly and preserves atom identity and ordering.
+
+- Problems encountered:
+  None during PM6 input construction.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS.
+
+  The Venetoclax PM6 input is accepted for production submission.
+
+  No production job should be submitted from any modified input unless a
+  new checksum and validation record are created.
+
+- Archive / checksum status:
+  Final PM6 input SHA256:
+
+      <INSERT FINAL SHA256>
+
+- What remains:
+  1. Record final input checksum.
+  2. Commit and push the locked PM6 input.
+  3. Submit PM6-VENETOCLAX-001.
+  4. Record PBS job ID, host, Git commit, and working-tree state.
+  5. Validate Gaussian termination and optimization completion.
+  6. Archive immutable log/checkpoint outputs after acceptance.
+
+- Next action:
+  Lock the validated Venetoclax PM6 input in Git before production submission.
+
+
+
