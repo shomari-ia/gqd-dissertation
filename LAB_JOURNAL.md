@@ -4688,3 +4688,117 @@ single-session format.*
 
 
 
+### Entry 029 — 2026-09-24 — Venetoclax B3LYP production acceptance
+- Scientific/build objective:
+  Validate and formally accept the isolated Venetoclax B3LYP-D3(BJ)/6-31G(d,p) SMD-water optimization and frequency production run.
+- Starting state:
+  The validated B3LYP input was locked at Git commit 0ce200d and submitted as B3LYP-VENETOCLAX-001 using PBS job 7733231.maple.
+- Commands / actions performed:
+  Monitored Gaussian optimization progress and scheduler resource use.
+  Verified optimization completion, stationary-point identification, full vibrational analysis, absence of imaginary frequencies, Gaussian normal termination, PBS exit status, and wrapper QC status.
+  Verified production provenance and summary files.
+  Calculated final SHA256 checksums for the working log and checkpoint.
+  Added the missing B3LYP-VENETOCLAX-001 record manually to run_log.tsv and validated that exactly one 14-field row exists.
+- Files changed:
+  run_log.tsv
+  LAB_JOURNAL.md
+  calculations/phase1_dft/b3lyp/prov/B3LYP-VENETOCLAX-001.prov
+  calculations/phase1_dft/b3lyp/summaries/venetoclax_b3lyp_optfreq_v01.summary.txt
+- Job IDs / run IDs:
+  RUN_ID: B3LYP-VENETOCLAX-001
+  PBS job: 7733231.maple
+  Execution host: cn083
+- Git commit:
+  Production input commit: 0ce200d
+  Acceptance commit: pending
+- Validation performed:
+  Gaussian build: g16-c01-avx2.
+  Input SHA256:
+  15a0541181707340886882b0f0571e3d601696057b21dd9d7ad2ccbf0f8aada2
+
+  Start time:
+  2026-09-23T22:35:56-05:00
+
+  End time:
+  2026-09-24T04:24:49-05:00
+
+  Gaussian exit code: 0.
+  QC exit code: 0.
+  PBS Exit_status: 0.
+
+  Optimization completed count: 1.
+  Stationary point count: 1.
+  Error termination count: 0.
+  Vibrational frequency count: 327.
+  Expected vibrational frequency count for 111-atom nonlinear system: 327.
+  Imaginary frequency count: 0.
+  Lowest frequency: +9.9997 cm^-1.
+  Highest frequency: 3652.8508 cm^-1.
+
+  Final SCF energy:
+  -3513.36374367 Hartree
+
+  Zero-point correction:
+  0.910095 Hartree
+
+  Sum of electronic and zero-point energies:
+  -3512.453649 Hartree
+
+  Thermal correction to Gibbs free energy:
+  0.819342 Hartree
+
+  Sum of electronic and thermal free energies:
+  -3512.544402 Hartree
+
+  Final log SHA256:
+  21492babb3b95def7d9fcddc916e417ded8db3a3c4d71cc51c60d9905dcc2ad0
+
+  Final checkpoint SHA256:
+  0ccf1cb08cbaa9a3f89225415e9c25ccb5594d7fe486a32712affad150e22c31
+
+  PBS walltime:
+  05:48:54
+
+  PBS CPU time:
+  91:59:02
+
+  PBS resource use:
+  memory = 33554432 kb
+  vmem = 33554432 kb
+  requested memory = 33554432 kb
+
+  run_log.tsv:
+  exactly one B3LYP-VENETOCLAX-001 row
+  14 tab-separated fields
+  status = PASS
+  imag_freq = 0
+- Result:
+  B3LYP-VENETOCLAX-001 completed successfully. The optimized Venetoclax structure is a local minimum at the requested B3LYP-D3(BJ)/6-31G(d,p) SMD-water level, supported by a complete 327-mode vibrational analysis with zero imaginary frequencies.
+- Problems encountered:
+  The Gaussian/PBS output reported "Cgroup memsw limit exceeded" after the wrapper printed the PASS result.
+  The scheduler record showed both memory and virtual-memory use reaching the requested 32 GB ceiling.
+  The wrapper did not automatically append the run to run_log.tsv.
+- Root cause:
+  The production calculation reached the configured 32 GB cgroup memory limit.
+  The automatic run-log append step did not execute or complete, requiring a manual ledger update.
+- Correction:
+  No scientific rerun was performed because Gaussian completed normally, the full frequency calculation finished, the wrapper QC status was PASS, gaussian_exit=0, qc_exit=0, and PBS Exit_status=0.
+  The memory event was explicitly documented as a resource-limit warning.
+  The missing run_log.tsv row was added manually and validated for uniqueness and schema compliance.
+- Why the correction was justified:
+  Independent Gaussian, wrapper, provenance, summary, and scheduler records all confirm successful completion and valid scientific output despite the post-run cgroup memory warning.
+  Manual ledger insertion preserved the established 14-field schema and was verified to occur exactly once.
+- Decision / advancement gate:
+  PASS. B3LYP-VENETOCLAX-001 is scientifically accepted and may advance to immutable archive closure after the acceptance package is committed and pushed.
+- Archive / checksum status:
+  Working log and checkpoint hashes are finalized.
+  Immutable run001 archive copies have not yet been created.
+- What remains:
+  Commit and push the B3LYP acceptance package.
+  Create immutable run001 copies of the final log and checkpoint.
+  Update the archive manifest builder mapping for Venetoclax B3LYP.
+  Write and verify archive_manifest.tsv.
+- Next action:
+  Stage and inspect Entry 029, run_log.tsv, provenance, and summary files for the acceptance commit.
+
+
