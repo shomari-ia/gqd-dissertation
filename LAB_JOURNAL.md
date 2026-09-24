@@ -4623,3 +4623,68 @@ single-session format.*
   Commit the Venetoclax PM6 archive closure, return to a clean synchronized repository state, and begin B3LYP input construction.
 
 
+### Entry 028 — 2026-09-23 — Venetoclax B3LYP input construction and validation
+- Scientific/build objective:
+  Construct and validate the isolated Venetoclax B3LYP-D3(BJ)/6-31G(d,p) SMD-water optimization and frequency input using the accepted immutable PM6 geometry checkpoint.
+- Starting state:
+  PM6-VENETOCLAX-001 archive closure was completed and verified in Entry 027. The immutable PM6 run001 checkpoint was available at archive/chk/venetoclax_pm6_opt_v01.run001.chk.
+- Commands / actions performed:
+  Constructed calculations/phase1_dft/b3lyp/inputs/venetoclax_b3lyp_optfreq_v01.com using the accepted Erlotinib and Gefitinib B3LYP input architecture.
+  Validated the route, memory, processor count, charge/multiplicity, checkpoint references, title line, line count, and absence of coordinate content after the charge/multiplicity line.
+  Re-verified the immutable PM6 run001 checkpoint SHA256 before locking the B3LYP input.
+- Files changed:
+  calculations/phase1_dft/b3lyp/inputs/venetoclax_b3lyp_optfreq_v01.com
+  LAB_JOURNAL.md
+- Job IDs / run IDs:
+  Planned RUN_ID: B3LYP-VENETOCLAX-001
+- Git commit:
+  PM6 archive closure commit: fbe42f0
+  B3LYP input lock commit: pending
+- Validation performed:
+  B3LYP input line count: 10.
+  Accepted Gefitinib reference line count: 10.
+  Route match: True.
+  Memory match: True.
+  Processor-count match: True.
+  Charge/multiplicity match: True.
+  %oldchk path correct: True.
+  %chk path correct: True.
+  Title line correct: True.
+  Nonblank lines after charge/multiplicity: 0.
+
+  Route:
+  #p opt freq B3LYP/6-31G(d,p) EmpiricalDispersion=GD3BJ SCRF=(SMD,Solvent=Water) geom=check
+
+  Charge/multiplicity:
+  0 1
+
+  Immutable PM6 checkpoint:
+  archive/chk/venetoclax_pm6_opt_v01.run001.chk
+
+  Immutable PM6 checkpoint SHA256:
+  7435d942b3f2124eb72099430c77a57c839b35c571a79bcb55a62258e0a0837f
+
+  Venetoclax B3LYP input SHA256:
+  15a0541181707340886882b0f0571e3d601696057b21dd9d7ad2ccbf0f8aada2
+- Result:
+  The isolated Venetoclax B3LYP opt+freq input matches the accepted drug-level B3LYP protocol and is ready to be locked in Git before production submission.
+- Problems encountered:
+  The initial validation script used pathlib.Path.read_text(), which was unavailable in the default Maple Python environment.
+- Root cause:
+  The default Maple Python version lacks the pathlib.Path.read_text() method used in the first validator.
+- Correction:
+  Re-ran the validation using standard open() calls, which completed successfully.
+- Why the correction was justified:
+  The validation logic was unchanged; only the file-reading method was replaced for compatibility with the Maple Python environment.
+- Decision / advancement gate:
+  PASS. Venetoclax B3LYP input is validated. Production submission is permitted only after the input and journal entry are committed and pushed from a clean Git state.
+- Archive / checksum status:
+  PM6 source checkpoint remains immutable and verified.
+  B3LYP production outputs do not yet exist.
+- What remains:
+  Commit and push the validated B3LYP input, then submit B3LYP-VENETOCLAX-001 from the locked Git state.
+- Next action:
+  Stage and commit the Venetoclax B3LYP input and Entry 028.
+
+
+
