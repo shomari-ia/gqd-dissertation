@@ -4562,3 +4562,64 @@ single-session format.*
   Stage and commit the PM6 acceptance metadata and journal entry, then close the immutable PM6 archive.
 
 
+
+### Entry 027 — 2026-09-23 — Venetoclax PM6 immutable archive closure
+- Scientific/build objective:
+  Close the reproducibility archive for the accepted isolated Venetoclax PM6 production calculation before advancement to the B3LYP-D3(BJ)/6-31G(d,p) SMD-water stage.
+- Starting state:
+  PM6-VENETOCLAX-001 was scientifically accepted in Entry 026 with Gaussian normal termination, completed optimization, stationary point confirmation, all final convergence criteria satisfied, QC PASS, and production input provenance linked to Git commit 395a72b.
+- Commands / actions performed:
+  Created immutable run001 copies of the accepted Venetoclax PM6 Gaussian log and checkpoint.
+  Verified the immutable copies against the accepted working files using SHA256.
+  Added the venetoclax_pm6_* mapping to scripts/build_archive_manifest.sh.
+  Rebuilt archive_manifest.tsv using the established --write mode.
+  Verified all archived immutable scientific files using the established --verify mode.
+- Files changed:
+  archive_manifest.tsv
+  scripts/build_archive_manifest.sh
+  LAB_JOURNAL.md
+- Job IDs / run IDs:
+  RUN_ID: PM6-VENETOCLAX-001
+  PBS: 7727742.maple
+- Git commit:
+  PM6 acceptance commit: ba85818
+  Production input commit: 395a72b
+- Validation performed:
+  Immutable log:
+  archive/logs/venetoclax_pm6_opt_v01.run001.log
+
+  Immutable checkpoint:
+  archive/chk/venetoclax_pm6_opt_v01.run001.chk
+
+  Immutable log SHA256:
+  2bb87bd1095aa149bcf472299ad4ce2596d448ac97bdc9ca9879ca445326f335
+
+  Immutable checkpoint SHA256:
+  7435d942b3f2124eb72099430c77a57c839b35c571a79bcb55a62258e0a0837f
+
+  Working and immutable copies matched exactly by SHA256.
+  archive_manifest.tsv contains exactly two PM6-VENETOCLAX-001 records.
+  Archive manifest contains 18 immutable files total.
+  scripts/build_archive_manifest.sh --verify returned PASS for all 18 archived files.
+  Final result: Archive verification passed.
+- Result:
+  The accepted Venetoclax PM6 calculation is now reproducibly closed in the immutable archive and correctly mapped to PM6-VENETOCLAX-001.
+- Problems encountered:
+  Running scripts/build_archive_manifest.sh without an option emitted the prospective manifest to standard output but did not update archive_manifest.tsv.
+- Root cause:
+  The established manifest utility uses separate modes: the default invocation prints the manifest, --write updates archive_manifest.tsv, and --verify validates recorded checksums.
+- Correction:
+  Re-ran the manifest builder with --write, confirmed exactly two PM6-VENETOCLAX-001 entries, and then ran --verify.
+- Why the correction was justified:
+  The documented command interface explicitly defines --write as the persistent manifest-generation mode and --verify as the checksum-validation mode. The resulting recorded hashes match the independently verified immutable files.
+- Decision / advancement gate:
+  PASS. PM6-VENETOCLAX-001 archive closure is complete. Venetoclax may now advance to construction and validation of the isolated B3LYP-D3(BJ)/6-31G(d,p) SMD-water opt+freq input.
+- Archive / checksum status:
+  CLOSED and VERIFIED.
+  18/18 immutable archive files passed checksum verification.
+- What remains:
+  Commit and push the archive closure metadata, then construct and validate the Venetoclax B3LYP opt+freq input using the immutable PM6 run001 checkpoint as %oldchk.
+- Next action:
+  Commit the Venetoclax PM6 archive closure, return to a clean synchronized repository state, and begin B3LYP input construction.
+
+
