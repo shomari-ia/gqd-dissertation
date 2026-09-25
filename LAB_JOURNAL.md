@@ -5331,3 +5331,83 @@ single-session format.*
 
 
 
+
+### Entry 033 — 2026-09-25 — ABT-737 PM6 production input construction and validation
+- Scientific/build objective:
+  Construct and validate the isolated ABT-737 PM6 geometry-optimization input from the accepted reproducible RDKit/MMFF94 conformer.
+
+- Starting state:
+  ABT-737 reproducible conformer preparation accepted and committed at Git commit 29a8f05.
+  Accepted prepared structure:
+  structures/prepared/abt737_rdkit_mmff94_prep_v01.sdf
+  Selected conformer: 135
+  Selected MMFF94 energy: 144.688178 kcal/mol
+  Molecular formula: C42H45ClN6O5S2
+  Formal charge: 0
+  Multiplicity: 1
+
+- Commands / actions performed:
+  Generated Gaussian PM6 input directly from the accepted prepared SDF using RDKit.
+  Preserved atom ordering and Cartesian coordinates exactly.
+  Used the established isolated-drug PM6 production settings:
+  %mem=32GB
+  %nprocshared=16
+  #p PM6 opt SCF=XQC
+
+- Files changed:
+  calculations/phase1_dft/pm6/inputs/abt737_pm6_opt_v01.com
+
+- Job IDs / run IDs:
+  Planned run ID: PM6-ABT737-001
+  No job submitted yet.
+
+- Git commit:
+  Pending input-lock commit.
+
+- Validation performed:
+  Gaussian coordinate records: 101
+  Prepared SDF atoms: 101
+  Gaussian COM atoms: 101
+  Atom-symbol mismatches: 0
+  Maximum absolute coordinate difference: 0 Angstrom
+  Coordinate transfer validation: PASS
+
+  Header validation:
+  checkpoint = archive/chk/abt737_pm6_opt_v01.chk
+  memory = 32GB
+  processors = 16
+  route = #p PM6 opt SCF=XQC
+  charge/multiplicity = 0 1
+
+  Input SHA256:
+  7a815bca47d50a681ab83e54679c5f0cc405bb66d9ed71027ab47a35e13f949d
+
+- Result:
+  ABT-737 PM6 input constructed successfully from the accepted conformer with exact coordinate and atom-order preservation.
+
+- Problems encountered:
+  None during PM6 input construction or coordinate validation.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS — PM6 input is scientifically and structurally validated and may advance to input-lock commit before production submission.
+
+- Archive / checksum status:
+  Input checksum recorded.
+  No PM6 production log or checkpoint exists yet because the job has not been submitted.
+
+- What remains:
+  Commit and push the validated PM6 input and journal entry.
+  Submit PM6-ABT737-001 through the established Gaussian PBS workflow.
+  Validate optimization completion, convergence, provenance, summary, run ledger, and immutable archive artifacts.
+
+- Next action:
+  Stage, verify, commit, and push the validated ABT-737 PM6 production input.
