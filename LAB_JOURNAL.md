@@ -5012,3 +5012,322 @@ single-session format.*
 
 
 
+
+### Entry 032 — 2026-09-24 — ABT-737 reproducible 3D conformer generation and MMFF94 selection
+- Scientific/build objective:
+  Generate, evaluate, validate, and reproducibly select a three-dimensional ABT-737 starting structure from the accepted PubChem 2D molecular graph before PM6 geometry optimization.
+
+- Starting state:
+  The accepted raw ABT-737 source was:
+
+      structures/raw/abt737_pubchem_cid11228183_2d.sdf
+
+  PubChem CID:
+
+      11228183
+
+  Raw-source acceptance commit:
+
+      002d84a
+
+  Raw-source SHA256:
+
+      824fa864ba621ad3a73cc8ec354302590c989a0efc00c3500e02ba95575baa76
+
+  Molecular formula:
+
+      C42H45ClN6O5S2
+
+  Charge:
+
+      0
+
+  Multiplicity:
+
+      1
+
+  The validated PubChem source contains one defined R stereocenter and 18 rotatable bonds.
+
+  The attempted PubChem 3D retrieval returned no molecular record, so reproducible 2D-to-3D conformer generation was required.
+
+- Commands / actions performed:
+  Reused the validated RDKit ETKDGv3/MMFF94 architecture previously established for Venetoclax.
+
+  Confirmed MMFF94 parameter coverage before conformer generation:
+
+      MMFF94_all_params = True
+
+  Created:
+
+      scripts/prepare_abt737_rdkit.py
+
+  The ABT-737 preparation protocol used:
+
+      RDKit 2024.03.2
+      ETKDGv3
+      200 requested conformers
+      random seed 20260924
+      prune RMS threshold 0.75 Å
+      small-ring torsions enabled
+      macrocycle torsions enabled
+      chirality enforcement enabled
+      one thread
+      MMFF94 optimization
+      maximum 2000 optimization iterations
+
+  Generated and ranked the ETKDGv3/MMFF94 conformer ensemble.
+
+  Selected the lowest-MMFF94-energy converged conformer identified within the sampled ensemble.
+
+  Validated the prepared structure against the accepted raw PubChem source using formula, atom count, heavy-atom count, total formal charge, InChIKey, stereochemistry, and three-dimensional coordinate checks.
+
+  Preserved the first generated SDF and energy table temporarily, reran the complete preparation script using the same environment and parameters, and compared both production outputs byte-for-byte.
+
+- Files changed:
+      scripts/prepare_abt737_rdkit.py
+      structures/prepared/abt737_rdkit_mmff94_prep_v01.sdf
+      structures/prepared/abt737_rdkit_mmff94_prep_v01.energies.tsv
+      LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  Not applicable. Structure-preparation stage.
+
+- Git commit:
+  Raw-source acceptance commit:
+
+      002d84a
+
+  Prepared-structure acceptance commit:
+
+      pending
+
+- Validation performed:
+  RDKit version:
+
+      2024.03.2
+
+  MMFF94 parameter coverage:
+
+      True
+
+  Conformers requested:
+
+      200
+
+  Conformers generated after ETKDGv3 embedding/pruning:
+
+      197
+
+  MMFF94-converged conformers:
+
+      197
+
+  Nonconverged generated conformers:
+
+      0
+
+  Selected conformer:
+
+      135
+
+  Selected MMFF94 energy:
+
+      144.688178 kcal/mol
+
+  Second-ranked conformer:
+
+      144
+
+  Second-ranked MMFF94 energy:
+
+      145.399157 kcal/mol
+
+  Molecular identity validation:
+
+      raw formula:      C42H45ClN6O5S2
+      prepared formula: C42H45ClN6O5S2
+
+      raw atoms:        101
+      prepared atoms:   101
+
+      raw heavy atoms:      56
+      prepared heavy atoms: 56
+
+      raw charge:       0
+      prepared charge:  0
+
+  Raw InChIKey:
+
+      HPLNQCPCUACXLM-PGUFJCEWSA-N
+
+  Prepared InChIKey:
+
+      HPLNQCPCUACXLM-PGUFJCEWSA-N
+
+  InChIKey match:
+
+      True
+
+  Raw stereocenter:
+
+      atom index 25, R
+
+  Prepared stereocenter:
+
+      atom index 25, R
+
+  Stereochemistry preserved:
+
+      True
+
+  Geometry validation:
+
+      conformer_is_3D = True
+      finite_coordinates = True
+      atoms_with_nonzero_z = 101
+      minimum bonded distance = 1.013991 Å
+      maximum bonded distance = 1.835587 Å
+
+  Preparation script SHA256:
+
+      c53be7a995998fe93900f4776b66e84ac28de43028e49206bc882876106de774
+
+  Prepared SDF SHA256:
+
+      96595ae26cb5b3729e9720f40db586fc6b3a6afeb87152ab7123f80b877c9563
+
+  Energy-ranking TSV SHA256:
+
+      7c14bdff8ffec2aa0c30d074bcd202fb6ac3d6629cd1e086d85f22f2ca00d95f
+
+  Reproducibility validation:
+  The preparation script was executed twice using the same pinned RDKit environment, fixed random seed, one-thread execution, ETKDGv3 parameters, and MMFF94 settings.
+
+  Results from the second execution:
+
+      embedded conformers = 197
+      converged conformers = 197
+      selected conformer = 135
+      selected energy = 144.688178 kcal/mol
+
+  Byte-level comparison:
+
+      SDF_BYTE_IDENTICAL = YES
+      TSV_BYTE_IDENTICAL = YES
+
+  Existing pinned environment record reused:
+
+      environments/venetoclax_rdkit_2024.03.2.freeze.txt
+
+  Environment SHA256:
+
+      89af87318011dd47dca8580abcd2a349bbda2c36ea5dc49994b327b8d2653f35
+
+- Result:
+  PASS.
+
+  A chemically consistent and reproducible three-dimensional ABT-737 starting structure was generated from the accepted PubChem 2D molecular graph.
+
+  Conformer 135 is the lowest-MMFF94-energy conformer identified within the sampled 197-member generated ETKDGv3 ensemble.
+
+  Molecular formula, total formal charge, atom count, molecular identity, and the defined R stereocenter were preserved.
+
+  All 197 generated conformers converged under MMFF94.
+
+  Independent rerunning of the deterministic preparation procedure produced byte-identical SDF and energy-ranking outputs.
+
+- Problems encountered:
+  PubChem did not return a usable 3D molecular record through the attempted 3D retrieval.
+
+  ABT-737 contains 18 rotatable bonds and therefore requires broader conformational sampling than the previously prepared Venetoclax system.
+
+  During staging, Git reported that CRLF line endings in the generated
+  energy-ranking TSV would be normalized to LF because the repository
+  attributes specify text eol=lf for TSV files.
+
+- Root cause:
+  The accepted database record provides the molecular graph and stereochemistry but not a usable pre-generated 3D conformer through the tested retrieval route.
+
+  ABT-737 is also conformationally flexible, making selection of a single arbitrary generated geometry insufficiently defensible.
+
+  Python csv.writer uses CRLF as its default record terminator. The original
+  preparation script therefore generated a byte representation that differed
+  from the LF-normalized representation preserved by Git.
+
+- Correction:
+  Used the previously validated deterministic RDKit ETKDGv3/MMFF94 conformer-generation workflow.
+
+  Increased the requested ensemble from 100 conformers used for Venetoclax to 200 conformers for ABT-737 while retaining the same core preparation controls:
+
+      fixed random seed
+      chirality enforcement
+      0.75 Å pruning threshold
+      single-thread execution
+      MMFF94 optimization
+      2000 maximum optimization iterations
+
+   Updated the TSV writer to use an explicit LF line terminator:
+
+       writer = csv.writer(f, delimiter="\t", lineterminator="\n")
+
+  Regenerated the ABT-737 preparation outputs using the corrected script.
+
+  The scientific conformer result was unchanged, while the generated TSV now
+  matches the repository's canonical LF representation directly.
+
+
+- Why the correction was justified:
+  ABT-737 has 18 rotatable bonds compared with 12 for Venetoclax, supporting broader conformational sampling before quantum-mechanical optimization.
+
+  The approach preserves methodological continuity with the validated Venetoclax preparation while increasing sampling for the more flexible ABT-737 system.
+
+  Molecular identity, formal charge, stereochemistry, force-field coverage, geometry, convergence, and deterministic reproducibility were independently validated.
+
+  The correction changes only the text-file record terminator and does not
+  alter conformer generation, MMFF94 optimization, ranking, molecular
+  structure, selected conformer, or calculated energy.
+
+  Generating the canonical LF representation directly prevents Git from
+  silently transforming a checksummed reproducibility artifact during staging.
+
+- Decision / advancement gate:
+  PASS.
+
+  The selected ABT-737 conformer is accepted as the production pre-quantum starting geometry.
+
+  It may advance to PM6 geometry optimization after the preparation package is committed and pushed from a clean Git state.
+
+  The selected structure must be described as the lowest-MMFF94-energy conformer identified within the sampled ETKDGv3/MMFF94 ensemble, not as a proven global conformational minimum.
+
+- Archive / checksum status:
+  Preparation script SHA256:
+
+      2423edb3799cbd0309cf6752415f4b28d238b072732dc6dfbfc1206ff7d7c409
+
+  Prepared SDF SHA256:
+
+      96595ae26cb5b3729e9720f40db586fc6b3a6afeb87152ab7123f80b877c9563
+
+  Energy-ranking TSV SHA256:
+
+      e5d68b1e859fbf1529d1dff61cb3ab33debb0d6dd81702fc70f02cf90b980175
+
+  Existing pinned RDKit environment SHA256:
+
+      89af87318011dd47dca8580abcd2a349bbda2c36ea5dc49994b327b8d2653f35
+
+- What remains:
+  Commit and push the accepted ABT-737 conformer-preparation package.
+
+  Construct the ABT-737 PM6 Gaussian input from the accepted prepared SDF.
+
+  Validate exact coordinate transfer, atom order, formula, charge, multiplicity, checkpoint path, and RUN_ID collision status.
+
+  Lock the PM6 production input in Git before submission.
+
+- Next action:
+  Stage and validate the ABT-737 preparation package before committing it to Git.
+
+
+
+
