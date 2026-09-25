@@ -5661,3 +5661,105 @@ single-session format.*
 
 - Next action:
   Stage and commit the PM6-ABT737-002 acceptance package, then perform immutable archive closure.
+
+### Entry 036 — 2026-09-25 — ABT-737 PM6 immutable archive closure
+- Scientific/build objective:
+  Preserve the scientifically accepted PM6-ABT737-002 production outputs as immutable run-specific artifacts and close the ABT-737 PM6 stage before advancement to B3LYP.
+
+- Starting state:
+  PM6-ABT737-002 had passed scientific acceptance and was committed at:
+  961d8a2
+
+  Accepted working production outputs:
+  archive/logs/abt737_pm6_opt_v01.log
+  archive/chk/abt737_pm6_opt_v01.chk
+
+- Commands / actions performed:
+  Added ABT-737 PM6 run-ID mapping to scripts/build_archive_manifest.sh.
+
+  Added mapping:
+  abt737_pm6_* -> PM6-ABT737-${run_number}
+
+  Created immutable run-specific copies:
+  archive/logs/abt737_pm6_opt_v01.run002.log
+  archive/chk/abt737_pm6_opt_v01.run002.chk
+
+  Compared working and immutable files byte-for-byte.
+  Generated a prospective archive manifest.
+  Rebuilt archive_manifest.tsv using --write.
+  Verified the complete archive using --verify.
+
+- Files changed:
+  archive_manifest.tsv
+  scripts/build_archive_manifest.sh
+  LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  PM6-ABT737-002
+  PBS: 7738520.maple
+
+- Git commit:
+  Scientific acceptance commit: 961d8a2
+  Archive-closure commit: pending
+
+- Validation performed:
+  Immutable log copy: IDENTICAL to accepted production log.
+  Immutable checkpoint copy: IDENTICAL to accepted production checkpoint.
+
+  Immutable log SHA256:
+  2472e357cb4ea5ba080a0331fb5e60ff9bcccb110f354afe93bbe82d68f2fc53
+
+  Immutable checkpoint SHA256:
+  94e7fae8afc3dd245c5bb48bfd94d762c723df142f2f5b50cf030c2c01e9893e
+
+  archive_manifest.tsv contains exactly two PM6-ABT737-002 records:
+  one Gaussian checkpoint and one Gaussian log.
+
+  archive_manifest.tsv line count:
+  23 total lines = 1 header + 22 immutable files.
+
+  scripts/build_archive_manifest.sh --verify:
+  PASS for all 22 recorded immutable files.
+  Final result: Archive verification passed.
+
+  archive_manifest.tsv SHA256 before this journal update:
+  bcf62a87a85083e94a39b2bb0f1187bac9b8dc14683079a44475e81cb3f9eaa0
+
+  scripts/build_archive_manifest.sh SHA256:
+  c3911ecdd67678693b24ae739d348e91c311dfea92440ded510750067d1c07d2
+
+- Result:
+  The accepted PM6-ABT737-002 log and checkpoint are preserved as immutable .run002 artifacts.
+
+  The archive manifest deterministically maps both immutable ABT-737 PM6 artifacts to PM6-ABT737-002 and verifies their stored sizes and SHA-256 checksums.
+
+- Problems encountered:
+  The manifest builder was initially referenced using an incorrect .py filename during inspection.
+
+- Root cause:
+  The existing repository utility is scripts/build_archive_manifest.sh rather than scripts/build_archive_manifest.py.
+
+- Correction:
+  Located the actual archive utility, inspected its existing mapping logic, and extended the established shell-script mapping pattern for ABT-737.
+
+- Why the correction was justified:
+  The existing builder is the canonical repository mechanism for deterministic immutable archive inventory, manifest writing, and checksum verification.
+
+- Decision / advancement gate:
+  PASS — PM6-ABT737-002 immutable archive closure is complete.
+
+  ABT-737 may advance to construction and validation of the isolated B3LYP-D3(BJ)/6-31G(d,p) SMD-water optimization/frequency input using the accepted PM6 geometry/checkpoint.
+
+- Archive / checksum status:
+  PM6-ABT737-002 immutable log: archived and verified.
+  PM6-ABT737-002 immutable checkpoint: archived and verified.
+  archive_manifest.tsv: rebuilt and verified.
+  Complete immutable archive: 22 files, all PASS.
+
+- What remains:
+  Commit and push the archive-closure metadata.
+  Construct the ABT-737 B3LYP production input from the accepted immutable PM6 checkpoint.
+  Validate route section, checkpoint linkage, charge/multiplicity, and production provenance before submission.
+
+- Next action:
+  Commit and push the PM6-ABT737-002 archive closure, then begin ABT-737 B3LYP input construction.
