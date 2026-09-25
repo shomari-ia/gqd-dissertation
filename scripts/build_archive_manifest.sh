@@ -63,6 +63,9 @@ if [[ -n "$run_number" ]]; then
         abt737_pm6_*)
             run_id="PM6-ABT737-${run_number}"
             ;;
+        abt737_b3lyp_*)
+            run_id="B3LYP-ABT737-${run_number}"
+            ;;
         venetoclax_b3lyp_*)
             run_id="B3LYP-VENETOCLAX-${run_number}"
             ;;

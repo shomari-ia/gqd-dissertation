@@ -5998,3 +5998,108 @@ single-session format.*
 
 - Next action:
   Stage and commit the B3LYP-ABT737-001 scientific acceptance package, then perform immutable archive closure.
+
+### Entry 039 — 2026-09-25 — ABT-737 B3LYP immutable archive closure
+- Scientific/build objective:
+  Preserve the scientifically accepted B3LYP-ABT737-001 production outputs as immutable run-specific artifacts and formally close the isolated ABT-737 baseline stage.
+
+- Starting state:
+  B3LYP-ABT737-001 had passed scientific acceptance and was committed at:
+  3ed15c0
+
+  Accepted working production outputs:
+  archive/logs/abt737_b3lyp_optfreq_v01.log
+  archive/chk/abt737_b3lyp_optfreq_v01.chk
+
+- Commands / actions performed:
+  Added ABT-737 B3LYP run-ID mapping to scripts/build_archive_manifest.sh.
+
+  Added mapping:
+  abt737_b3lyp_* -> B3LYP-ABT737-${run_number}
+
+  Created immutable run-specific copies:
+  archive/logs/abt737_b3lyp_optfreq_v01.run001.log
+  archive/chk/abt737_b3lyp_optfreq_v01.run001.chk
+
+  Compared working and immutable files byte-for-byte.
+  Generated a prospective archive manifest.
+  Rebuilt archive_manifest.tsv using --write.
+  Verified the complete archive using --verify.
+
+- Files changed:
+  archive_manifest.tsv
+  scripts/build_archive_manifest.sh
+  LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  B3LYP-ABT737-001
+  PBS: 7738543.maple
+
+- Git commit:
+  Scientific acceptance commit: 3ed15c0
+  Archive-closure commit: pending
+
+- Validation performed:
+  Immutable log copy: IDENTICAL to accepted production log.
+  Immutable checkpoint copy: IDENTICAL to accepted production checkpoint.
+
+  Immutable log SHA256:
+  ed69563c3e9d40a8653da370ff54ddaa9d6111111dc0d3e19b369db54c8ec9ef
+
+  Immutable checkpoint SHA256:
+  fa501e2f57dd228080de4daeee246d3f15fa4ae8dbc4c4b5ee97bad78f792d1f
+
+  archive_manifest.tsv contains exactly two B3LYP-ABT737-001 records:
+  one Gaussian checkpoint and one Gaussian log.
+
+  archive_manifest.tsv line count:
+  25 total lines = 1 header + 24 immutable files.
+
+  scripts/build_archive_manifest.sh --verify:
+  PASS for all 24 recorded immutable files.
+  Final result: Archive verification passed.
+
+  archive_manifest.tsv SHA256:
+  84ce94b68c811ba793858ce8739d6c2f0916714ef307ff80bc6751b91a01fd72
+
+  scripts/build_archive_manifest.sh SHA256:
+  33197fbc369cd0cb3eded1193782608b7f0cd2c2051d9753b6670b166c8f5435
+
+- Result:
+  The accepted B3LYP-ABT737-001 log and checkpoint are preserved as immutable .run001 artifacts.
+
+  The archive manifest deterministically maps both immutable ABT-737 B3LYP artifacts to B3LYP-ABT737-001 and verifies their stored sizes and SHA-256 checksums.
+
+  The isolated ABT-737 PM6 -> B3LYP baseline workflow is now fully accepted, archived, reproducible, and closed.
+
+- Problems encountered:
+  None during B3LYP archive closure.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS — B3LYP-ABT737-001 immutable archive closure is complete.
+
+  The isolated ABT-737 baseline is formally closed.
+
+  With Erlotinib, Gefitinib, Venetoclax, and ABT-737 isolated B3LYP baselines complete, the Phase I isolated-drug baseline set is complete and the project may advance to the next scientifically authorized stage.
+
+- Archive / checksum status:
+  B3LYP-ABT737-001 immutable log: archived and verified.
+  B3LYP-ABT737-001 immutable checkpoint: archived and verified.
+  archive_manifest.tsv: rebuilt and verified.
+  Complete immutable archive: 24 files, all PASS.
+
+- What remains:
+  Commit and push the B3LYP archive-closure metadata.
+  Review the completed isolated-species baseline set and confirm the next advancement stage before constructing GQD-drug complexes.
+
+- Next action:
+  Commit and push the B3LYP-ABT737-001 archive closure, then perform a Phase I isolated-baseline completion review before beginning complex construction.
