@@ -4802,3 +4802,88 @@ single-session format.*
   Stage and inspect Entry 029, run_log.tsv, provenance, and summary files for the acceptance commit.
 
 
+### Entry 030 — 2026-09-24 — Venetoclax B3LYP reproducibility archive closure
+- Scientific/build objective:
+  Close the reproducibility archive for the accepted B3LYP-VENETOCLAX-001 production calculation.
+- Starting state:
+  B3LYP-VENETOCLAX-001 was scientifically accepted in Entry 029 and committed at Git commit 17c3ec0.
+  Final working log and checkpoint hashes were already established.
+- Commands / actions performed:
+  Created immutable run001 copies of the accepted Venetoclax B3LYP log and checkpoint.
+  Verified that the immutable copies were byte-identical to the accepted working artifacts using SHA256.
+  Updated scripts/build_archive_manifest.sh with a Venetoclax B3LYP mapping.
+  Validated the manifest-builder script syntax.
+  Ran the archive builder prospectively and confirmed correct B3LYP-VENETOCLAX-001 assignment.
+  Confirmed no immutable archive files were assigned UNASSIGNED.
+  Rebuilt archive_manifest.tsv using --write.
+  Verified the complete immutable archive using --verify.
+- Files changed:
+  LAB_JOURNAL.md
+  scripts/build_archive_manifest.sh
+  archive_manifest.tsv
+  archive/logs/venetoclax_b3lyp_optfreq_v01.run001.log
+  archive/chk/venetoclax_b3lyp_optfreq_v01.run001.chk
+- Job IDs / run IDs:
+  RUN_ID: B3LYP-VENETOCLAX-001
+  PBS job: 7733231.maple
+- Git commit:
+  Production input commit: 0ce200d
+  Acceptance commit: 17c3ec0
+  Archive closure commit: pending
+- Validation performed:
+  Immutable log:
+  archive/logs/venetoclax_b3lyp_optfreq_v01.run001.log
+
+  Immutable log SHA256:
+  21492babb3b95def7d9fcddc916e417ded8db3a3c4d71cc51c60d9905dcc2ad0
+
+  Immutable checkpoint:
+  archive/chk/venetoclax_b3lyp_optfreq_v01.run001.chk
+
+  Immutable checkpoint SHA256:
+  0ccf1cb08cbaa9a3f89225415e9c25ccb5594d7fe486a32712affad150e22c31
+
+  Immutable checkpoint size:
+  153907200 bytes
+
+  Immutable log size:
+  6101446 bytes
+
+  Manifest mapping:
+  venetoclax_b3lyp_* -> B3LYP-VENETOCLAX-${run_number}
+
+  archive_manifest.tsv file count:
+  20 files
+
+  B3LYP-VENETOCLAX-001 manifest record count:
+  2
+
+  UNASSIGNED manifest records:
+  0
+
+  Archive verification:
+  PASS for all 20 immutable files.
+  Final result: Archive verification passed.
+- Result:
+  The B3LYP-VENETOCLAX-001 working outputs are preserved as immutable run001 artifacts and fully registered in the verified archive manifest.
+- Problems encountered:
+  No archive-integrity problems were encountered during closure.
+- Root cause:
+  Not applicable.
+- Correction:
+  Not applicable.
+- Why the correction was justified:
+  Not applicable.
+- Decision / advancement gate:
+  PASS. B3LYP-VENETOCLAX-001 archive closure is complete. The isolated Venetoclax PM6 -> B3LYP baseline workflow is fully accepted and reproducibly archived.
+- Archive / checksum status:
+  COMPLETE.
+  Immutable log and checkpoint hashes match the accepted working artifacts.
+  archive_manifest.tsv verifies all 20 immutable files.
+- What remains:
+  Commit and push the archive closure package.
+  After repository synchronization, advance to the next isolated drug baseline: ABT-737.
+- Next action:
+  Stage and inspect the archive closure changes, commit them, push to origin/main, and return to a clean synchronized repository state.
+
+
