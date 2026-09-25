@@ -4887,3 +4887,128 @@ single-session format.*
   Stage and inspect the archive closure changes, commit them, push to origin/main, and return to a clean synchronized repository state.
 
 
+
+### Entry 031 — 2026-09-24 — ABT-737 PubChem source acquisition and raw-structure validation
+- Scientific/build objective:
+  Acquire and validate the authoritative PubChem source structure for isolated ABT-737 before deterministic 3D preparation.
+- Starting state:
+  Venetoclax PM6 and B3LYP isolated baselines were fully accepted, reproducibly archived, and closed at Git commit 07e4c1a.
+  ABT-737 was the next isolated drug baseline in the locked Phase I sequence.
+  config/systems.yml specifies ABT-737, PubChem CID 11228183, Bcl-2 target, charge 0, multiplicity 1.
+  No prior ABT-737 raw, prepared, PM6, or B3LYP files existed in the repository.
+- Commands / actions performed:
+  Queried PubChem PUG REST for a 3D SDF record for CID 11228183.
+  The 3D request returned HTTP 404 with the message "No records found for the given CID(s)".
+  Deleted the temporary 82-byte error payload.
+  Retrieved the PubChem 2D SDF record for CID 11228183.
+  Parsed and validated the structure with RDKit.
+  Compared RDKit-derived identity information with PubChem metadata in the SDF.
+  Examined explicit formal charges, stereochemistry, connectivity, molecular formula, fragment count, and coordinate dimensionality.
+- Files changed:
+  structures/raw/abt737_pubchem_cid11228183_2d.sdf
+  LAB_JOURNAL.md
+- Job IDs / run IDs:
+  Not applicable.
+- Git commit:
+  Previous archive closure commit: 07e4c1a
+  ABT-737 raw-source commit: pending
+- Validation performed:
+  PubChem CID:
+  11228183
+
+  3D PubChem request:
+  HTTP 404
+  Message: No records found for the given CID(s)
+
+  2D PubChem request:
+  HTTP 200
+
+  Raw file:
+  structures/raw/abt737_pubchem_cid11228183_2d.sdf
+
+  Raw file size:
+  12559 bytes
+
+  Raw SHA256:
+  824fa864ba621ad3a73cc8ec354302590c989a0efc00c3500e02ba95575baa76
+
+  Atom count:
+  101
+
+  Bond count:
+  106
+
+  Molecular formula:
+  C42H45ClN6O5S2
+
+  Molecular weight:
+  approximately 813.4 g/mol
+
+  Heavy-atom count:
+  56
+
+  Molecular fragments:
+  1
+
+  Formal charge:
+  0
+
+  Explicit charge-separated atoms:
+  atom 7 = O, formal charge -1
+  atom 14 = N, formal charge +1
+
+  PubChem total charge:
+  0
+
+  Rotatable bonds:
+  18
+
+  Defined stereocenters:
+  1
+
+  RDKit stereocenter:
+  atom index 25 (zero-based), R configuration
+
+  PubChem stereochemical representation:
+  [C@H] in the isomeric SMILES and (1R) in the traditional name.
+
+  PubChem InChIKey:
+  HPLNQCPCUACXLM-PGUFJCEWSA-N
+
+  RDKit-derived InChIKey:
+  HPLNQCPCUACXLM-PGUFJCEWSA-N
+
+  Coordinate dimensionality:
+  max absolute Z coordinate = 0.0
+  RDKit conformer Is3D = False
+
+  PubChem 3D source:
+  unavailable through the tested PUG REST 3D request for CID 11228183.
+- Result:
+  The PubChem 2D SDF for ABT-737 CID 11228183 is accepted as the immutable raw molecular source for downstream 3D preparation.
+  Formula, total charge, connectivity, InChIKey, and defined R stereochemistry are internally consistent between PubChem metadata and RDKit parsing.
+- Problems encountered:
+  PubChem returned no 3D record for the locked CID.
+  RDKit emitted a "Charges were rearranged" warning during InChI generation.
+- Root cause:
+  The PubChem 3D PUG REST request returned no record for CID 11228183; no additional cause is asserted.
+  The RDKit warning occurred during InChI normalization of the charge-separated molecular representation.
+- Correction:
+  Used the valid PubChem 2D record as the immutable source instead of fabricating or substituting an external 3D structure.
+  Verified molecular identity by matching the RDKit-derived InChIKey to the PubChem-provided InChIKey and by confirming formula, charge, stereochemistry, and connectivity metadata.
+- Why the correction was justified:
+  A deterministic 3D conformer can be generated reproducibly from the validated PubChem 2D molecular graph while retaining the locked chemical identity and stereochemistry.
+- Decision / advancement gate:
+  PASS. The ABT-737 raw 2D PubChem structure is accepted and may advance to deterministic 3D conformer generation and MMFF94 preparation.
+- Archive / checksum status:
+  Raw PubChem source SHA256 established.
+  Prepared 3D structure does not yet exist.
+- What remains:
+  Lock the validated raw source in Git.
+  Create a deterministic ABT-737 RDKit ETKDGv3 + MMFF94 preparation workflow.
+  Validate formula, charge, stereochemistry, InChIKey, convergence, and deterministic reproducibility of the selected 3D conformer.
+- Next action:
+  Commit and push the validated ABT-737 raw PubChem source before generating prepared structures.
+
+
+
