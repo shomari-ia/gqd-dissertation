@@ -1,0 +1,18 @@
+run_id          abt737_pm6_opt_v01
+log_file        archive/logs/abt737_pm6_opt_v01.log
+log_sha256      92281568580c8bdf45415ac973bd23a997118426b1beb02abd1f44401eeb9b12
+verified_at     2026-09-25T00:37:04-05:00
+route           #p PM6 opt SCF=XQC
+charge_mult     Charge =  0 Multiplicity = 1
+n_atoms         NA
+termination     ABNORMAL
+optimization    NOT_COMPLETED
+imag_freq       NA
+scf_hartree     NA
+zpe_hartree     NA
+gibbs_hartree   NA
+cp_corrected    NA
+cpu_time        Job cpu time:       0 days  0 hours  0 minutes  5.9 seconds.
+elapsed_time    Elapsed time:       0 days  0 hours  0 minutes  0.4 seconds.
+qc_status       FAILED
+error_line       Error termination via Lnk1e in /usr/local/apps/gaussian/g16-c01-avx2/g16/l101.exe at Fri Sep 25 00:37:03 2026.

@@ -5411,3 +5411,126 @@ single-session format.*
 
 - Next action:
   Stage, verify, commit, and push the validated ABT-737 PM6 production input.
+
+### Entry 034 — 2026-09-25 — PM6-ABT737-001 failed input-formatting attempt and correction
+- Scientific/build objective:
+  Diagnose the failed first ABT-737 PM6 submission, preserve its provenance, and correct the production input without altering the molecular structure or computational method.
+
+- Starting state:
+  ABT-737 PM6 input was locked at Git commit baf40eb with SHA256:
+  7a815bca47d50a681ab83e54679c5f0cc405bb66d9ed71027ab47a35e13f949d
+
+  Planned production run:
+  PM6-ABT737-001
+
+- Commands / actions performed:
+  Submitted PM6-ABT737-001 through scripts/run_gaussian.pbs.
+  PBS job ID:
+  7738511.maple
+
+  Inspected PBS history, Gaussian log, QC summary, provenance, checkpoint, and final input bytes.
+  Preserved failed-run binary artifacts under:
+  archive/failed_runs/PM6-ABT737-001/
+
+  Preserved failed-run textual records under:
+  calculations/phase1_dft/pm6/failed_runs/PM6-ABT737-001/
+
+  Added archive/failed_runs/ to .gitignore to keep failed binary Gaussian artifacts outside Git.
+
+  Corrected the production input by adding the required blank line after the final Cartesian coordinate.
+
+- Files changed:
+  .gitignore
+  calculations/phase1_dft/pm6/inputs/abt737_pm6_opt_v01.com
+  calculations/phase1_dft/pm6/failed_runs/PM6-ABT737-001/PM6-ABT737-001.prov
+  calculations/phase1_dft/pm6/failed_runs/PM6-ABT737-001/abt737_pm6_opt_v01.failed.summary.txt
+  LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  Failed run ID: PM6-ABT737-001
+  PBS: 7738511.maple
+  Execution host: cn080
+  Planned corrected run ID: PM6-ABT737-002
+
+- Git commit:
+  Failed input production commit: baf40eb
+  Corrected input lock commit: pending
+
+- Validation performed:
+  PBS historical status:
+  job_state = F
+  Exit_status = 1
+  walltime = 00:00:02
+  cput = 00:00:06
+
+  Gaussian QC summary:
+  termination = ABNORMAL
+  optimization = NOT_COMPLETED
+  qc_status = FAILED
+
+  Gaussian error:
+  End of file in ZSymb.
+  Error termination via Lnk1e in Gaussian l101.exe.
+
+  Failed log SHA256:
+  92281568580c8bdf45415ac973bd23a997118426b1beb02abd1f44401eeb9b12
+
+  Failed checkpoint SHA256:
+  1abf4d40ef9910a80aab004c591593790402e687fe93da17282327473c37e687
+
+  Failed summary SHA256:
+  00e251ba8e83282e241279f06b264fbeea68e1e2eabc5f5fb8dbe2511e77a5e2
+
+  Failed provenance SHA256:
+  647ed11bf2a016f0ed160106bc3f060d3218b343f6a540808c79acd1272c2d76
+
+  Input-format comparison showed:
+  failed ABT-737 input ended with one newline byte: 0a
+  successful prior Venetoclax input ended with a blank record: 0a 0a
+
+  Corrected ABT-737 input now ends with:
+  0a 0a
+
+  Coordinate count after correction:
+  101
+
+  Corrected input SHA256:
+  9fa1c7995f43b7543639ad18de03bc228d8f03111b41fe52918d3798a8be6a79
+
+- Result:
+  PM6-ABT737-001 is classified as an input-formatting failure, not a scientific PM6 failure.
+
+  The molecular geometry, atom ordering, charge, multiplicity, PM6 method, SCF settings, memory, and processor settings were not changed.
+
+  The only production-input correction was addition of the required terminating blank line after the molecular specification.
+
+- Problems encountered:
+  The generated Gaussian input lacked a terminating blank line after the final Cartesian coordinate.
+
+- Root cause:
+  The input-generation logic produced a file ending with only a single newline after the final coordinate. Gaussian requires a blank record to terminate the molecular specification.
+
+- Correction:
+  Added one newline byte so the file ends with two consecutive newline bytes (0a 0a), creating the required blank line.
+
+- Why the correction was justified:
+  The correction is purely syntactic and does not change the molecular structure or computational model.
+
+  Comparison with the previously successful Venetoclax PM6 input confirmed the required terminating blank-line convention.
+
+- Decision / advancement gate:
+  PASS FOR RESUBMISSION — PM6-ABT737-001 remains preserved as the failed first attempt. The corrected input may advance to a new lock commit and then be submitted as PM6-ABT737-002.
+
+- Archive / checksum status:
+  Failed full log and checkpoint preserved outside Git under archive/failed_runs/PM6-ABT737-001/.
+  Failed textual provenance and summary preserved for Git tracking.
+  Corrected production input checksum recorded.
+
+- What remains:
+  Stage and verify the corrected input, failed-run text records, journal entry, and .gitignore update.
+  Commit and push the corrected input lock.
+  Submit PM6-ABT737-002.
+  Validate Gaussian termination, optimization completion, convergence, provenance, QC, ledger entry, and immutable archive closure.
+
+- Next action:
+  Lock the corrected ABT-737 PM6 input and failed-run documentation in Git before resubmission.

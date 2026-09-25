@@ -47,3 +47,6 @@ __pycache__/
 *.key
 credentials*
 archive/chk/*.chk
+
+# Failed Gaussian binary/full-output archives
+archive/failed_runs/
