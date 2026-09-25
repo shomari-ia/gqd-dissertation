@@ -1,0 +1,17 @@
+run_id          abt737_pm6_opt_v01
+log_file        archive/logs/abt737_pm6_opt_v01.log
+log_sha256      2472e357cb4ea5ba080a0331fb5e60ff9bcccb110f354afe93bbe82d68f2fc53
+verified_at     2026-09-25T01:25:57-05:00
+route           #p PM6 opt SCF=XQC
+charge_mult     Charge =  0 Multiplicity = 1
+n_atoms         101
+termination     NORMAL
+optimization    COMPLETED
+imag_freq       NA
+scf_hartree     -0.392804361086E-01
+zpe_hartree     NA
+gibbs_hartree   NA
+cp_corrected    NA
+cpu_time        Job cpu time:       0 days  0 hours 34 minutes 37.3 seconds.
+elapsed_time    Elapsed time:       0 days  0 hours  3 minutes  4.7 seconds.
+qc_status       PASS

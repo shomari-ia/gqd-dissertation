@@ -5534,3 +5534,130 @@ single-session format.*
 
 - Next action:
   Lock the corrected ABT-737 PM6 input and failed-run documentation in Git before resubmission.
+
+### Entry 035 — 2026-09-25 — PM6-ABT737-002 scientific acceptance
+- Scientific/build objective:
+  Validate and formally accept the corrected production PM6 geometry optimization for isolated ABT-737 before advancement to the B3LYP-D3(BJ)/6-31G(d,p) SMD-water optimization/frequency stage.
+
+- Starting state:
+  PM6-ABT737-001 had been preserved as a failed input-formatting attempt caused by a missing terminating blank line in the Gaussian molecular specification.
+
+  The corrected ABT-737 PM6 input was locked at Git commit:
+  29a5939
+
+  Corrected input SHA256:
+  9fa1c7995f43b7543639ad18de03bc228d8f03111b41fe52918d3798a8be6a79
+
+  The corrected input retained the same 101-atom geometry, atom order, charge, multiplicity, PM6 method, SCF settings, memory allocation, and processor allocation as the failed first attempt.
+
+- Commands / actions performed:
+  Submitted PM6-ABT737-002 through scripts/run_gaussian.pbs on Maple.
+  Monitored PBS execution, Gaussian log progression, checkpoint creation, optimization convergence, provenance output, QC summary, and run ledger entry.
+
+- Files changed:
+  run_log.tsv
+  calculations/phase1_dft/pm6/prov/PM6-ABT737-002.prov
+  calculations/phase1_dft/pm6/summaries/abt737_pm6_opt_v01.summary.txt
+  LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  RUN_ID: PM6-ABT737-002
+  PBS: 7738520.maple
+  Execution host: cn070
+
+- Git commit:
+  Production input commit: 29a5939
+
+- Validation performed:
+  Gaussian 16 C.01 completed with gaussian_exit=0.
+  PBS Exit_status=0.
+  QC exit=0.
+  QC status PASS.
+
+  Charge: 0
+  Multiplicity: 1
+  Atom count: 101
+
+  Gaussian normal termination confirmed.
+  Optimization completed.
+  Stationary point found.
+
+  Final convergence criteria:
+  Maximum Force: YES
+  RMS Force: YES
+  Maximum Displacement: YES
+  RMS Displacement: YES
+
+  Final PM6 SCF energy:
+  -0.392804361086E-01 Hartree
+
+  Gaussian CPU time:
+  0 days 0 hours 34 minutes 37.3 seconds
+
+  Gaussian elapsed time:
+  0 days 0 hours 3 minutes 4.7 seconds
+
+  PBS historical resources:
+  cput = 00:34:38
+  walltime = 00:03:11
+  mem = 1100500kb
+  vmem = 1100500kb
+  ncpus = 16
+
+  Production log SHA256:
+  2472e357cb4ea5ba080a0331fb5e60ff9bcccb110f354afe93bbe82d68f2fc53
+
+  Production checkpoint SHA256:
+  94e7fae8afc3dd245c5bb48bfd94d762c723df142f2f5b50cf030c2c01e9893e
+
+  Provenance SHA256:
+  1865f0fbf8336db1c700f5d73fec9f4e62a4b60ae39fd21ae500f0b13a17d1fc
+
+  QC summary SHA256:
+  ba18de00e97cf4c44d4f98028cd7247127066ef7818e1d000b7233c64f8233bc
+
+  run_log.tsv:
+  PM6-ABT737-002 recorded exactly once.
+  Ledger field count: 14.
+  Ledger status: PASS.
+
+- Result:
+  PM6-ABT737-002 passed the scientific and reproducibility acceptance criteria and is accepted as the isolated ABT-737 PM6 baseline geometry.
+
+  The successful run confirms that the prior PM6-ABT737-001 failure was syntactic input formatting rather than a failure of the molecular model or PM6 optimization.
+
+- Problems encountered:
+  No scientific or computational failure occurred during PM6-ABT737-002.
+
+  The only prior issue was the missing terminating blank line documented in Entry 034 and corrected before this run.
+
+- Root cause:
+  Not applicable to PM6-ABT737-002.
+
+- Correction:
+  Not applicable to PM6-ABT737-002.
+
+- Why the correction was justified:
+  The preceding formatting correction altered only the Gaussian input terminator and did not alter the molecular geometry or computational method.
+
+- Decision / advancement gate:
+  PASS — PM6-ABT737-002 is scientifically accepted.
+
+  ABT-737 may advance to immutable PM6 archive closure and, after archive verification, to construction of the isolated B3LYP-D3(BJ)/6-31G(d,p) SMD-water optimization/frequency input.
+
+- Archive / checksum status:
+  Accepted working production log and checkpoint hashes recorded.
+  Provenance and QC summary hashes recorded.
+  Ledger row validated.
+
+  Immutable run-specific archive copies have not yet been created.
+
+- What remains:
+  Preserve the accepted PM6 production log and checkpoint as immutable run-specific artifacts.
+  Update archive_manifest.tsv mapping for ABT-737 PM6.
+  Verify archive checksums and manifest integrity.
+  Commit and push PM6 acceptance and archive-closure records.
+  Construct and validate the isolated ABT-737 B3LYP-D3(BJ)/6-31G(d,p) SMD-water opt+freq input.
+
+- Next action:
+  Stage and commit the PM6-ABT737-002 acceptance package, then perform immutable archive closure.
