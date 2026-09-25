@@ -5763,3 +5763,101 @@ single-session format.*
 
 - Next action:
   Commit and push the PM6-ABT737-002 archive closure, then begin ABT-737 B3LYP input construction.
+
+### Entry 037 — 2026-09-25 — ABT-737 B3LYP production input construction and validation
+- Scientific/build objective:
+  Construct and validate the isolated ABT-737 B3LYP-D3(BJ)/6-31G(d,p) SMD-water optimization/frequency production input from the scientifically accepted and immutable PM6-ABT737-002 checkpoint.
+
+- Starting state:
+  PM6-ABT737-002 scientific acceptance was committed at:
+  961d8a2
+
+  PM6 immutable archive closure was committed at:
+  2731225
+
+  Accepted immutable PM6 checkpoint:
+  archive/chk/abt737_pm6_opt_v01.run002.chk
+
+  Immutable PM6 checkpoint SHA256:
+  94e7fae8afc3dd245c5bb48bfd94d762c723df142f2f5b50cf030c2c01e9893e
+
+- Commands / actions performed:
+  Used the accepted Venetoclax isolated-drug B3LYP input as the production template.
+
+  Created:
+  calculations/phase1_dft/b3lyp/inputs/abt737_b3lyp_optfreq_v01.com
+
+  Configured the ABT-737 input to read geometry from the immutable PM6 run002 checkpoint using geom=check.
+
+- Files changed:
+  calculations/phase1_dft/b3lyp/inputs/abt737_b3lyp_optfreq_v01.com
+  LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  Planned production RUN_ID:
+  B3LYP-ABT737-001
+
+- Git commit:
+  Production-input lock commit: pending
+
+- Validation performed:
+  %oldchk:
+  archive/chk/abt737_pm6_opt_v01.run002.chk
+
+  %chk:
+  archive/chk/abt737_b3lyp_optfreq_v01.chk
+
+  Resources:
+  %mem=32GB
+  %nprocshared=16
+
+  Route:
+  #p opt freq B3LYP/6-31G(d,p) EmpiricalDispersion=GD3BJ SCRF=(SMD,Solvent=Water) geom=check
+
+  Charge: 0
+  Multiplicity: 1
+
+  The immutable PM6 checkpoint exists and its SHA256 matches the accepted archive record.
+
+  The ABT-737 route section is identical to the accepted Venetoclax isolated-drug B3LYP production route.
+
+  The ABT-737 memory and processor directives are identical to the accepted Venetoclax B3LYP production settings.
+
+  Gaussian input termination was checked at the byte level and ends with:
+  0 1 followed by the required blank line.
+
+  ABT-737 B3LYP input SHA256:
+  033e2c15b2af9d495345dc45a05e30e92d2b5418faf876c692d953996d9b132b
+
+- Result:
+  The isolated ABT-737 B3LYP production input is structurally and methodologically consistent with the established Phase I isolated-drug workflow.
+
+- Problems encountered:
+  None during B3LYP input construction or validation.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS FOR PRODUCTION LOCK.
+
+  The ABT-737 B3LYP input may be committed as the immutable production-input definition before PBS submission.
+
+- Archive / checksum status:
+  PM6 source checkpoint is immutable and verified.
+  B3LYP input SHA256 recorded.
+  No B3LYP output archive exists yet because the production calculation has not been submitted.
+
+- What remains:
+  Commit and push the validated B3LYP production input.
+  Submit B3LYP-ABT737-001 through the canonical Gaussian PBS wrapper.
+  Monitor execution and validate optimization, frequency analysis, stationary-point status, imaginary-frequency count, thermochemistry, scheduler exit, Gaussian exit, and QC exit.
+
+- Next action:
+  Lock the ABT-737 B3LYP production input in Git before submission.
