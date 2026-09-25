@@ -1,0 +1,17 @@
+run_id          abt737_b3lyp_optfreq_v01
+log_file        archive/logs/abt737_b3lyp_optfreq_v01.log
+log_sha256      ed69563c3e9d40a8653da370ff54ddaa9d6111111dc0d3e19b369db54c8ec9ef
+verified_at     2026-09-25T08:00:06-05:00
+route           #p opt freq B3LYP/6-31G(d,p) EmpiricalDispersion=GD3BJ SCRF=(SMD,Solve
+charge_mult     Charge =  0 Multiplicity = 1
+n_atoms         101
+termination     NORMAL
+optimization    COMPLETED
+imag_freq       0
+scf_hartree     -3588.99456165
+zpe_hartree     0.819707
+gibbs_hartree   -3588.264881
+cp_corrected    NA
+cpu_time        Job cpu time:       1 days  1 hours 47 minutes  5.7 seconds.
+elapsed_time    Elapsed time:       0 days  1 hours 36 minutes 49.9 seconds.
+qc_status       PASS

@@ -5861,3 +5861,140 @@ single-session format.*
 
 - Next action:
   Lock the ABT-737 B3LYP production input in Git before submission.
+
+### Entry 038 — 2026-09-25 — B3LYP-ABT737-001 scientific acceptance
+- Scientific/build objective:
+  Formally validate and accept the isolated ABT-737 B3LYP-D3(BJ)/6-31G(d,p) SMD-water optimization/frequency result before immutable archive closure.
+
+- Starting state:
+  The ABT-737 B3LYP production input was locked at Git commit:
+  1d8f7ef
+
+  Input SHA256:
+  033e2c15b2af9d495345dc45a05e30e92d2b5418faf876c692d953996d9b132b
+
+  The calculation used the accepted immutable PM6 checkpoint:
+  archive/chk/abt737_pm6_opt_v01.run002.chk
+
+- Commands / actions performed:
+  Submitted and monitored B3LYP-ABT737-001 through scripts/run_gaussian.pbs.
+  Validated Gaussian termination, optimization convergence, stationary-point status, harmonic frequency analysis, thermochemistry, scheduler exit status, provenance, QC summary, and run ledger entry.
+
+- Files changed:
+  run_log.tsv
+  calculations/phase1_dft/b3lyp/prov/B3LYP-ABT737-001.prov
+  calculations/phase1_dft/b3lyp/summaries/abt737_b3lyp_optfreq_v01.summary.txt
+  LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  RUN_ID: B3LYP-ABT737-001
+  PBS: 7738543.maple
+  Execution host: cn080
+
+- Git commit:
+  Production input commit: 1d8f7ef
+
+- Validation performed:
+  Gaussian normal termination confirmed.
+  Gaussian exit: 0
+  QC exit: 0
+  PBS Exit_status: 0
+  QC status: PASS
+
+  Charge: 0
+  Multiplicity: 1
+  Atom count: 101
+
+  Optimization completed.
+  Stationary point found.
+
+  Optimization-completion convergence criteria:
+  Maximum Force: YES
+  RMS Force: YES
+  Maximum Displacement: YES
+  RMS Displacement: YES
+
+  A later block showing Maximum Displacement = NO was explicitly labeled:
+  Non-Optimized Parameters
+
+  It therefore does not supersede the completed optimization acceptance block.
+
+  Imaginary frequencies:
+  0
+
+  Final SCF energy:
+  -3588.99456165 Hartree
+
+  Zero-point correction:
+  0.819707 Hartree
+
+  Sum of electronic and thermal Free Energies:
+  -3588.264881 Hartree
+
+  Gaussian CPU time:
+  1 days 1 hours 47 minutes 5.7 seconds
+
+  Gaussian elapsed time:
+  0 days 1 hours 36 minutes 49.9 seconds
+
+  PBS historical resources:
+  cput = 88:39:59
+  walltime = 05:36:29
+  mem = 27392744kb
+  vmem = 27392744kb
+  ncpus = 16
+
+  Production log SHA256:
+  ed69563c3e9d40a8653da370ff54ddaa9d6111111dc0d3e19b369db54c8ec9ef
+
+  Production checkpoint SHA256:
+  fa501e2f57dd228080de4daeee246d3f15fa4ae8dbc4c4b5ee97bad78f792d1f
+
+  Provenance SHA256:
+  c321a5067078e695b3d4fe70c74bf82e3d04f2dca44f380c85bc79b23c9288bf
+
+  QC summary SHA256:
+  a0ac6f4ed96e8635a632c080240e4016452a6f9c30f2d885ab3daeecf42713ba
+
+  run_log.tsv:
+  B3LYP-ABT737-001 recorded exactly once.
+  Ledger field count: 14.
+  Ledger status: PASS.
+
+- Result:
+  B3LYP-ABT737-001 passed the scientific and reproducibility acceptance criteria.
+
+  The isolated ABT-737 structure is accepted as a B3LYP-D3(BJ)/6-31G(d,p) SMD-water stationary minimum with zero imaginary frequencies.
+
+- Problems encountered:
+  A later convergence-style block showed Maximum Displacement = NO and required interpretation.
+
+- Root cause:
+  The later block was not the optimization acceptance block. It was explicitly labeled Non-Optimized Parameters.
+
+- Correction:
+  Inspected the actual Optimization completed / Stationary point found context and verified that all four convergence criteria were YES at the accepted geometry.
+
+- Why the correction was justified:
+  Scientific acceptance must be based on the actual completed optimization block rather than a later non-optimized parameter section.
+
+- Decision / advancement gate:
+  PASS — B3LYP-ABT737-001 is scientifically accepted.
+
+  The result may advance to immutable B3LYP archive closure.
+
+- Archive / checksum status:
+  Accepted working production log and checkpoint hashes recorded.
+  Provenance and QC summary hashes recorded.
+  Ledger row validated.
+
+  Immutable B3LYP run-specific archive copies have not yet been created.
+
+- What remains:
+  Preserve the accepted B3LYP log and checkpoint as immutable .run001 artifacts.
+  Add ABT-737 B3LYP mapping to the archive-manifest builder.
+  Rebuild and verify archive_manifest.tsv.
+  Commit and push the B3LYP acceptance and archive-closure records.
+
+- Next action:
+  Stage and commit the B3LYP-ABT737-001 scientific acceptance package, then perform immutable archive closure.
