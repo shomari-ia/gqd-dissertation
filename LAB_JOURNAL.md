@@ -6103,3 +6103,134 @@ single-session format.*
 
 - Next action:
   Commit and push the B3LYP-ABT737-001 archive closure, then perform a Phase I isolated-baseline completion review before beginning complex construction.
+
+### Entry 040 — 2026-09-27 — Complex-construction workflow initialization and Erlotinib pilot mapping
+- Scientific/build objective:
+  Establish provenance-clean accepted monomer coordinates and identify the atom mappings required for deterministic COOH-GQD–Erlotinib complex construction.
+
+- Starting state:
+  Phase I isolated-species B3LYP baselines were complete, accepted, archived, and verified.
+
+  Repository baseline:
+  5030dcc — Close ABT-737 B3LYP immutable archive
+
+- Commands / actions performed:
+  Added scripts/export_final_xyz.py to export final optimized coordinates directly from accepted immutable Gaussian logs using cclib while preserving atom order.
+
+  Exported accepted COOH-GQD and Erlotinib B3LYP geometries to XYZ.
+
+  Added scripts/inspect_drug.py to inspect the accepted Erlotinib geometry, perceive connectivity/rings, detect the fused quinazoline core, and report polar-contact candidates without automatically making the final chemical choice.
+
+  Inspected the accepted COOH-GQD geometry to identify the exact carboxyl atoms and graphene scaffold.
+
+- Files changed:
+  scripts/export_final_xyz.py
+  scripts/inspect_drug.py
+  structures/accepted/cooh_gqd_b3lyp_accepted.xyz
+  structures/accepted/erlotinib_b3lyp_accepted.xyz
+  LAB_JOURNAL.md
+
+- Job IDs / run IDs:
+  Source GQD run:
+  B3LYP-COOH-GQD-001
+
+  Source Erlotinib run:
+  B3LYP-ERLOTINIB-001
+
+- Git commit:
+  Pending
+
+- Validation performed:
+  Source COOH-GQD immutable log SHA256:
+  bcc0062f2341239b8cc12a2f92ef14f714c558ca4acf3b2e7d73c92b5d1c8467
+
+  Source Erlotinib immutable log SHA256:
+  042787f2a35a5ff283eafb0d8fab152d3fcb02d8c123780b26f8358f4a7698a4
+
+  Exported COOH-GQD XYZ:
+  atoms = 75
+  formula = C55H18O2
+  SHA256 = 6f1067c16342a9b42c0798898771a72a93077667ebe8fd31b604d891b0d3511f
+
+  Exported Erlotinib XYZ:
+  atoms = 52
+  formula = C22H23N3O4
+  SHA256 = d203adfb4d245f8ef5e9a33248612e348e64ad49f5b1673711fec87cc68c939a
+
+  export_final_xyz.py SHA256:
+  cbbd57d19cc6a138c42e8b625d0dd0de092d1689f9fd6b7b515f6937900e8963
+
+  inspect_drug.py SHA256:
+  0713d981f9ea8250541473016bd1e2e7bc120b9f9acd78a41d984c61c677220f
+
+  Erlotinib unique quinazoline core:
+  --drug-core 6 7 8 9 10 11 12 13 14 18
+
+  Erlotinib quinazoline-N edge candidates:
+  atom 6
+  atom 7
+
+  Working pilot edge-polar choice:
+  --drug-polar 6
+
+  This remains subject to required visual confirmation of the accepted geometry before production submission.
+
+  COOH-GQD functional-group mapping:
+  carboxyl carbon = C58
+  carbonyl oxygen = O73
+  hydroxyl oxygen = O74
+  hydroxyl hydrogen = H75
+
+  Accepted B3LYP bond lengths:
+  C58-O74 = 1.3952 A
+  O74-H75 = 0.9711 A
+  C58-O73 = 1.2543 A
+
+  Graphene scaffold carbons:
+  54
+  status = PASS
+
+- Result:
+  The two authoritative monomer geometries required for the Erlotinib pilot have been exported directly from accepted immutable B3LYP logs with atom order preserved.
+
+  The exact GQD COOH donor atoms and Erlotinib quinazoline core indices are now known.
+
+- Problems encountered:
+  None during coordinate export or structural mapping.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  The previous planned Open Babel geometry export was replaced by direct cclib extraction from the accepted Gaussian logs to preserve atom ordering and source provenance explicitly.
+
+  PM6 remains excluded from scientific complex-basin decisions. Complex construction will proceed deterministically from accepted B3LYP monomers to B3LYP-D3(BJ) production calculations.
+
+- Why the correction was justified:
+  The complex-construction stage requires exact fragment atom ordering for reproducibility and later BSSE/counterpoise analysis. Direct extraction from the accepted Gaussian source minimizes unnecessary coordinate reinterpretation.
+
+  Dispersion is central to GQD-drug adsorption, so adsorption-basin and orientation decisions must be made at the dispersion-corrected B3LYP-D3(BJ) level rather than plain PM6.
+
+- Decision / advancement gate:
+  PASS — authoritative COOH-GQD and Erlotinib monomer coordinate sources are validated.
+
+  PASS — Erlotinib quinazoline core mapping is structurally resolved.
+
+  CONDITIONAL — Erlotinib atom 6 is the working edge-polar choice and requires visual confirmation before production submission.
+
+  The workflow may advance to deterministic complex-builder implementation and validation.
+
+- Archive / checksum status:
+  Source Gaussian logs remain preserved in the immutable archive.
+  Derived accepted XYZ checksums are recorded above.
+
+- What remains:
+  Implement and validate the corrected deterministic build_complex.py.
+  Generate flat, slipped, and edge Erlotinib starting structures.
+  Perform automated geometry QC.
+  Visually confirm the three structures and Erlotinib edge-contact atom before submission.
+  Update docs/computational_workflow.md and the complex-construction protocol with the finalized implementation and methodological rationale.
+  Record the PM6-to-direct-DFT refinement explicitly as a reproducibility/methodological improvement rather than a dissertation-scope change.
+
+- Next action:
+  Commit the validated exporter, inspector, and accepted monomer XYZ files, then implement the corrected deterministic complex builder.
