@@ -6234,3 +6234,215 @@ single-session format.*
 
 - Next action:
   Commit the validated exporter, inspector, and accepted monomer XYZ files, then implement the corrected deterministic complex builder.
+
+### Entry 041 — 2026-09-28 — COOH-GQD baseline geometry/topology audit and rebuild decision
+- Scientific/build objective:
+  Validate the accepted COOH-GQD structure before using it as the adsorption surface for Phase I drug-complex calculations.
+
+- Starting state:
+  The isolated COOH-GQD B3LYP run B3LYP-COOH-GQD-001 had previously passed optimization/frequency acceptance and archive closure.
+
+  The corrected complex-construction workflow began with COOH-GQD–Erlotinib flat, slipped, and edge starting hypotheses.
+
+- Commands / actions performed:
+  Constructed preliminary Erlotinib flat, slipped, and edge complexes using the deterministic development builder.
+
+  Performed automated interfragment clash analysis.
+
+  Audited the canonicalized COOH-GQD graphene scaffold for planarity.
+
+  Traced the warped geometry backward through the accepted B3LYP calculation to the PM6 source geometry and original PM6 Gaussian input.
+
+  Performed distance-derived scaffold topology analysis.
+
+  Tested minimal graph-repair hypotheses against the expected circumcoronene graph invariants, including six-membered-ring count.
+
+- Files changed:
+  LAB_JOURNAL.md
+
+  Development artifacts currently remain untracked and have not been accepted:
+  scripts/build_complex.py
+  structures/complexes/erlotinib/*
+  calculations/phase1_dft/b3lyp/inputs/cooh_gqd_erlotinib_*_b3lyp_optfreq_v01.com
+
+- Job IDs / run IDs:
+  Existing accepted source baseline:
+  B3LYP-COOH-GQD-001
+
+  No GQD-drug complex Gaussian jobs were submitted.
+
+- Git commit:
+  Pending
+
+- Validation performed:
+  Preliminary Erlotinib complex construction:
+  flat:
+    total atoms = 127
+    core plane = 0.000 degrees
+    nominal core z = 3.400 A
+    minimum heavy-atom interfragment distance = 0.733 A
+    status = FAIL_HEAVY_CLASH
+
+  slipped:
+    total atoms = 127
+    core plane = 0.000 degrees
+    nominal core z = 3.400 A
+    minimum heavy-atom interfragment distance = 0.829 A
+    status = FAIL_HEAVY_CLASH
+
+  edge:
+    total atoms = 127
+    core plane angle = 80.000 degrees
+    O...N contact = 3.000 A
+    O-H...N angle = 180.000 degrees
+    minimum heavy-atom interfragment distance = 2.925 A
+    construction status = PASS
+
+  Despite the edge construction pass, all complex work was placed on hold because the GQD surface itself required validation.
+
+  Canonicalized final B3LYP COOH-GQD graphene scaffold:
+    scaffold carbons = 54
+    z_min = -2.2562 A
+    z_max = +3.8493 A
+    z_span = 6.1055 A
+    plane RMS = 1.6887 A
+
+  Geometry entering B3LYP:
+    plane RMS = 1.5598 A
+    z_span = 5.6912 A
+
+  PM6-source geometry -> B3LYP first scaffold RMSD:
+    0.000000 A
+
+  Original PM6 input:
+    plane RMS = 1.5598 A
+    z_span = 5.6912 A
+
+  Therefore the strong nonplanarity was already present in the original PM6 input geometry and was not created by the B3LYP optimization.
+
+  Distance-derived original scaffold topology:
+    formula = C55H18O2
+    scaffold carbons = 54
+    scaffold C-H bonds = 17
+    carboxyl attachment = one scaffold carbon
+    perceived scaffold C-C edges = 73
+
+  Expected circumcoronene scaffold:
+    scaffold carbons = 54
+    scaffold C-C edges = 72
+    C-C degree 2 = 18
+    C-C degree 3 = 36
+    cycle rank = 19
+    six-membered carbon rings = 19
+
+  Observed distance-derived degree distribution:
+    C-C degree 2 = 18
+    C-C degree 3 = 34
+    C-C degree 4 = 2
+
+  Degree-4 scaffold carbons:
+    C4
+    C14
+
+  C4 and C14 are not directly bonded:
+    C4...C14 distance = 3.7773 A
+
+  Notable long perceived C-C contacts:
+    C4-C19 = 1.6246 A
+    C14-C54 = 1.6796 A
+
+  Observed scaffold graph:
+    V = 54
+    E = 73
+    cycle rank = 20
+
+  Minimal topology-repair search:
+    tested all allowed two-remove/one-add candidates associated with the two degree-4 carbons.
+
+    Every tested candidate restored:
+      E = 72
+      degree-2 count = 18
+      degree-3 count = 36
+      cycle rank = 19
+      connected graph = yes
+
+    However, none restored the full expected circumcoronene six-membered-ring signature.
+
+    Candidate six-cycle counts ranged from 12 to 15.
+
+    signature-passing candidates = 0
+
+- Result:
+  The existing COOH-GQD geometry is not suitable for continued use as the authoritative circumcoronene adsorption surface.
+
+  The problem predates PM6 and B3LYP optimization and is present in the original starting geometry.
+
+  The structure cannot be defensibly repaired by a minimal manual bond or coordinate correction.
+
+- Problems encountered:
+  Flat and slipped Erlotinib construction produced severe interfragment clashes even though the nominal aromatic-core separation was 3.4 A.
+
+  Investigation showed that the assumed graphene basal surface itself spans more than 6 A in the direction normal to its best-fit plane.
+
+  Distance-derived topology is also inconsistent with the expected circumcoronene scaffold.
+
+- Root cause:
+  Upstream COOH-GQD starting-geometry construction/model implementation.
+
+  The exact historical construction operation that produced the malformed starting coordinates has not yet been established, but the malformed geometry is demonstrably present before the archived PM6/B3LYP optimization sequence.
+
+- Correction:
+  Do not repair the warped structure manually.
+
+  Preserve the original calculations and archives as provenance.
+
+  Generate a new deterministic ideal circumcoronene C54H18 scaffold from a validated graphene lattice.
+
+  Validate the unfunctionalized scaffold topology and geometry before functionalization.
+
+  Replace one defined peripheral hydrogen with COOH to obtain C55H18O2.
+
+  Validate formula, connectivity, edge count, degree distribution, cycle rank, ring topology, planarity, atom ordering, and functional-group connectivity before any quantum-chemical calculation.
+
+  Recompute the corrected isolated COOH-GQD baseline before restarting complex construction.
+
+- Why the correction was justified:
+  Zero imaginary frequencies demonstrate that an optimization reached a local minimum for the supplied structure, but they do not establish that the supplied molecular model correctly represents the intended circumcoronene GQD.
+
+  Phase I adsorption calculations require a scientifically valid GQD surface. Continuing with the malformed structure would propagate the starting-model defect into adsorption geometry, binding-energy, charge-transfer, pH, docking, and MD interpretations.
+
+  A deterministic rebuild is more reproducible and defensible than manually manipulating the warped coordinates.
+
+- Decision / advancement gate:
+  FAIL — existing COOH-GQD geometry is not authorized for new complex calculations.
+
+  HOLD — all preliminary Erlotinib complex structures, including the geometrically passing edge pose, remain development artifacts only.
+
+  PASS — investigation established that the defect predates the PM6/B3LYP sequence.
+
+  PASS — manual minimal topology repair is rejected.
+
+  AUTHORIZED NEXT STEP — build and validate a new deterministic circumcoronene C54H18 scaffold before adding COOH.
+
+- Archive / checksum status:
+  Previously accepted COOH-GQD PM6/B3LYP source files and immutable archives are retained unchanged for provenance.
+
+  No previously archived file is deleted or overwritten.
+
+  No preliminary GQD-drug complex job was submitted.
+
+- What remains:
+  Build deterministic ideal circumcoronene C54H18.
+  Validate C54 graph before hydrogenation acceptance.
+  Validate C54H18 formula and peripheral hydrogens.
+  Select and document the COOH substitution site.
+  Generate C55H18O2.
+  Validate corrected COOH-GQD geometry and topology.
+  Establish new PM6/B3LYP run IDs without overwriting historical runs.
+  Supersede the old GQD baseline explicitly rather than deleting it.
+  Update docs/computational_workflow.md.
+  Update docs/complex_construction_protocol.md.
+  Resume Erlotinib complex construction only after the corrected GQD baseline passes all gates.
+
+- Next action:
+  Implement a deterministic ideal circumcoronene scaffold generator and validate its graph before performing any QM calculation.
