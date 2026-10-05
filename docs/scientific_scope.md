@@ -63,31 +63,53 @@ Primary dissertation model:
 A single edge hydrogen of circumcoronene is replaced by a carboxyl
 functional group (-COOH).
 
-### Current accepted structure
+### Current structure status
 
-Accepted tracked pre-optimization:
+Historical isolated COOH-GQD lineage:
 
-    RUN_ID: PM6-COOH-GQD-005
+    PM6-COOH-GQD-005
+    B3LYP-COOH-GQD-001
 
-The optimized structure contains:
+These runs remain immutable provenance records, but the isolated COOH-GQD
+baseline derived from the historical starting geometry is scientifically
+superseded.
 
-    75 total atoms
-    55 carbon atoms
-    18 hydrogen atoms
-    2 oxygen atoms
+A later geometry/topology audit established that the historical carbon
+framework was already strongly warped before the accepted B3LYP calculation
+and did not reproduce the required ideal circumcoronene graph. Numerical
+optimization and frequency acceptance therefore did not establish correctness
+of the underlying molecular model.
 
-Direct Cartesian validation of the accepted PM6 geometry identified:
+Corrected deterministic rebuild:
 
-    carboxyl carbon: Gaussian atom 58
-    oxygen atoms: Gaussian atoms 73 and 74
+    parent circumcoronene: C54H18
+    parent atom count: 72
+    parent scaffold C-C edges: 72
+    degree-2 scaffold carbons: 18
+    degree-3 scaffold carbons: 36
+    six-membered cycles: 19
 
-Distances:
+The 18 peripheral C-H positions form two symmetry-distinct substitution
+classes. One deterministic representative from each class has been constructed
+and independently validated:
 
-    C58-O73 = 1.2096 Å
-    C58-O74 = 1.3796 Å
-    C58-C40 = 1.4618 Å
+    Class 1 representative: C1/H55
+    Class 2 representative: C3/H57
 
-The geometry therefore passes the current COOH-GQD connectivity gate.
+Both corrected monocarboxylated candidates have:
+
+    molecular formula: C55H18O2
+    total atoms: 75
+    graphene scaffold atoms: C1-C54
+    retained edge hydrogens: H55-H71
+    carboxyl carbon: C72
+    carbonyl oxygen: O73
+    hydroxyl oxygen: O74
+    acidic hydrogen: H75
+
+Neither symmetry class is yet designated the authoritative isolated COOH-GQD
+baseline. Final selection requires quantum-chemical comparison of the two
+validated corrected candidates.
 
 ---
 
@@ -194,6 +216,13 @@ Software:
 
 PM6 structures are not used as substitutes for final DFT energetic results.
 Their primary role is geometry preparation and workflow validation.
+
+For the corrected isolated COOH-GQD candidates, PM6 pre-optimization remains
+part of the canonical monomer workflow. Gaussian convergence alone is not an
+advancement gate. Before a corrected GQD candidate may advance from PM6 to
+B3LYP, its final PM6 geometry must independently retain the intended molecular
+formula, circumcoronene scaffold topology, single COOH connectivity, and
+absence of unintended bonds or severe geometric distortion.
 
 ### Primary DFT optimization and frequency level
 
@@ -448,15 +477,17 @@ For a scope change:
 
 ## Current Scope Status
 
-GQD model:                 DEFINED
-COOH connectivity:         VALIDATED
-PM6 COOH-GQD structure:    ACCEPTED
-Primary DFT protocol:      DEFINED
-Solvent model:             DEFINED
-Phase I endpoints:         DEFINED
-Phase II endpoints:        DEFINED
-Phase III endpoints:       DEFINED
-Protein targets:           DEFINED
-Final drug set:            PENDING SCOPE LOCK
+GQD model:                         DEFINED
+COOH connectivity:                 VALIDATED
+Historical COOH-GQD v01 baseline:  SUPERSEDED
+Corrected COOH-GQD candidates:     VALIDATED FOR QM START
+Authoritative COOH-GQD baseline:   PENDING QM COMPARISON
+Primary DFT protocol:              DEFINED
+Solvent model:                     DEFINED
+Phase I endpoints:                 DEFINED
+Phase II endpoints:                DEFINED
+Phase III endpoints:               DEFINED
+Protein targets:                   DEFINED
+Final drug set:                    LOCKED
 
 

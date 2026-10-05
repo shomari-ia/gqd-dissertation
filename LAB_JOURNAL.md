@@ -6909,3 +6909,162 @@ single-session format.*
 
 - Next action:
   Commit the validated two-class COOH-GQD construction checkpoint before creating new Gaussian inputs.
+
+### Entry 044 — 2026-10-04 — Reconcile scientific scope and computational workflow after GQD rebuild
+- Scientific/build objective:
+  Reconcile the canonical scientific-scope and computational-workflow documents with the corrected circumcoronene rebuild and two-class COOH-GQD construction before generating any new quantum-chemical inputs.
+
+- Starting state:
+  The historical isolated COOH-GQD lineage had previously passed numerical PM6/B3LYP quality-control gates.
+
+  Subsequent geometry/topology auditing established that the historical GQD starting structure did not reproduce the intended ideal circumcoronene scaffold.
+
+  The corrected deterministic rebuild produced a validated C54H18 parent and two independently validated C55H18O2 monocarboxylated candidates representing the two symmetry-distinct edge-site classes.
+
+  The two-class construction milestone was committed and remotely closed at Git commit 5ff3437.
+
+- Commands / actions performed:
+  Reviewed the existing GQD structure-status language in docs/scientific_scope.md.
+
+  Reviewed the existing Phase I preparation, PM6, and B3LYP advancement rules in docs/computational_workflow.md.
+
+  Replaced the obsolete description of PM6-COOH-GQD-005 as the current accepted structural baseline.
+
+  Preserved PM6-COOH-GQD-005 and B3LYP-COOH-GQD-001 as immutable historical provenance records while explicitly marking the associated historical v01 structural baseline as scientifically superseded.
+
+  Added the corrected deterministic C54H18 parent and the validated Class-1 and Class-2 C55H18O2 candidates to the canonical scope description.
+
+  Added the standardized corrected functional-group atom mapping:
+    C1-C54 = graphene scaffold.
+    H55-H71 = retained edge hydrogens.
+    C72 = carboxyl carbon.
+    O73 = carbonyl oxygen.
+    O74 = hydroxyl oxygen.
+    H75 = acidic hydroxyl hydrogen.
+
+  Updated the current scope-status table:
+    historical COOH-GQD v01 baseline = SUPERSEDED.
+    corrected COOH-GQD candidates = VALIDATED FOR QM START.
+    authoritative COOH-GQD baseline = PENDING QM COMPARISON.
+    final drug set = LOCKED.
+
+  Replaced the old generic/manual GQD-preparation description in the computational workflow with the deterministic script-based rebuild path.
+
+  Updated the PM6 workflow to use versioned input naming and explicitly identify the corrected GQD work as a new v02 lineage.
+
+  Added a mandatory post-PM6 molecular-model advancement gate for corrected COOH-GQD candidates.
+
+  Updated the B3LYP workflow to require a post-DFT molecular-model audit in addition to normal termination, completed optimization, and zero imaginary frequencies.
+
+  Preserved the established primary DFT method:
+    B3LYP-D3(BJ)/6-31G(d,p)
+    EmpiricalDispersion=GD3BJ
+    SMD water
+
+  Preserved the established PM6-to-B3LYP transition rule:
+    use the corresponding PM6 checkpoint geometry through %oldchk and geom=check.
+    do not carry guess=read across the PM6-to-DFT method change.
+
+  Clarified that the previously accepted isolated drug baselines remain valid and are not recomputed solely because the GQD structural model was rebuilt.
+
+  Removed wording that described the historical v01 GQD lineage as manually prepared because the exact historical construction operation was not established by the audit.
+
+- Files changed:
+  LAB_JOURNAL.md
+  docs/scientific_scope.md
+  docs/computational_workflow.md
+
+- Job IDs / run IDs:
+  No Gaussian jobs were created or submitted.
+
+- Git commit:
+  Pending
+
+- Validation performed:
+  git diff --check returned no output.
+
+  docs/scientific_scope.md now records:
+    historical COOH-GQD v01 baseline = SUPERSEDED.
+    corrected COOH-GQD candidates = VALIDATED FOR QM START.
+    authoritative COOH-GQD baseline = PENDING QM COMPARISON.
+    final drug set = LOCKED.
+
+  docs/computational_workflow.md now records:
+    deterministic corrected GQD preparation.
+    corrected GQD v02 PM6/B3LYP lineage.
+    independent post-PM6 topology/geometry audit.
+    post-DFT molecular-model audit.
+    Class-1 versus Class-2 corrected isolated-GQD comparison.
+
+  Historical-construction wording was checked and corrected to:
+    historical v01 GQD lineage is retained for provenance but is
+    not reused as the corrected structural baseline.
+
+- Result:
+  The canonical scientific-scope and computational-workflow documents now match the corrected GQD rebuild state.
+
+  Historical numerical acceptance is preserved as provenance without being treated as proof that the historical molecular model was structurally correct.
+
+  The corrected two-class GQD candidates are now the only structures authorized to enter the new isolated-GQD QM comparison.
+
+- Problems encountered:
+  The prior canonical documents still described the historical PM6 GQD geometry as the accepted current structure.
+
+  The prior workflow advanced PM6 structures based primarily on Gaussian convergence and did not require an independent post-PM6 molecular-model audit.
+
+  One draft reconciliation sentence initially described the historical v01 lineage as manually prepared even though the exact historical construction operation had not been established.
+
+- Root cause:
+  The canonical documentation predated the geometry/topology audit and deterministic GQD rebuild.
+
+- Correction:
+  Reconcile the canonical scope and workflow with the validated rebuild while retaining all historical calculations as immutable provenance.
+
+  Require independent molecular-model validation after PM6 and again after B3LYP for corrected COOH-GQD candidates.
+
+  Avoid unsupported statements about the exact historical construction method.
+
+- Why the correction was justified:
+  Numerical optimization, normal termination, and frequency acceptance do not by themselves establish that the intended molecular model was constructed correctly.
+
+  The corrected workflow now separates computational convergence from molecular-model validity.
+
+  Retaining historical runs while explicitly superseding their structural baseline preserves reproducibility without rewriting prior scientific history.
+
+- Decision / advancement gate:
+  PASS — canonical scientific scope reconciled with corrected GQD rebuild.
+
+  PASS — canonical Phase I workflow reconciled with corrected GQD rebuild.
+
+  PASS — corrected isolated-GQD work designated as a new v02 QM lineage.
+
+  PASS — post-PM6 topology/geometry validation required before B3LYP advancement.
+
+  PASS — post-B3LYP molecular-model validation required before scientific acceptance.
+
+  HOLD — neither Class 1 nor Class 2 is yet the authoritative COOH-GQD baseline.
+
+  HOLD — drug-complex construction remains unauthorized.
+
+  AUTHORIZED NEXT STEP — commit the documentation-reconciliation checkpoint, then define and generate the corrected Class-1 and Class-2 PM6 v02 inputs and run identifiers.
+
+- Archive / checksum status:
+  No historical archive file was modified or overwritten.
+
+  No new Gaussian input or checkpoint was created during this reconciliation.
+
+  No Gaussian job was submitted.
+
+- What remains:
+  Commit and remotely close the documentation-reconciliation checkpoint.
+  Freeze corrected PM6 and B3LYP run identifiers for Class 1 and Class 2.
+  Generate corrected PM6 v02 Gaussian inputs from the validated XYZ candidates.
+  Independently validate the generated Gaussian inputs before submission.
+  Submit PM6 candidates.
+  Audit final PM6 geometries before B3LYP advancement.
+  Generate and run corrected B3LYP v02 calculations only after PM6 advancement gates pass.
+  Compare the two symmetry-class candidates and select the authoritative corrected COOH-GQD baseline.
+  Resume complex construction only after corrected baseline acceptance.
+
+- Next action:
+  Stage and review the reconciliation checkpoint before commit.

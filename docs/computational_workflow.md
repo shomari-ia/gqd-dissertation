@@ -12,22 +12,23 @@ A result advances only when its gate passes — not because an output file exist
 
 | | |
 |---|---|
-| **Input** | PubChem SDFs (CIDs in `config/systems.yml`) |
-| **Tools** | Avogadro 1.2 (COOH addition, MMFF94 clean-up), Open Babel (format conversion) |
-| **Output** | `structures/prepared/*.mol`, `calculations/phase1_dft/pm6/inputs/*.com` |
-| **Gate** | COOH carbon has exactly three connections: ring bond, `=O`, `–OH`. Atom count is 75 for COOH-GQD. Charge 0, multiplicity 1 on every input. |
-| **On failure** | Re-open in Avogadro, fix connectivity, re-optimize with MMFF94. Do not proceed with a dangling hydrogen — it produces a valid-looking calculation of the wrong molecule. |
+| **Input** | Deterministically rebuilt circumcoronene parent for COOH-GQD; PubChem SDFs for the locked drug set |
+| **Tools** | `scripts/build_circumcoronene.py`, `scripts/hydrogenate_circumcoronene.py`, `scripts/functionalize_circumcoronene_cooh.py` for corrected GQD construction; Open Babel for documented drug preparation |
+| **Output** | validated text structures in `structures/prepared/`; Gaussian inputs in `calculations/phase1_dft/pm6/inputs/` |
+| **Gate** | For COOH-GQD: C55H18O2, 75 atoms, intact C54 circumcoronene scaffold with 72 C-C edges, 18 degree-2 carbons, 36 degree-3 carbons, 19 six-membered cycles, exactly one COOH substituent, standardized C72/O73/O74/H75 functional-group mapping, charge 0, multiplicity 1. |
+| **On failure** | Return to the deterministic preparation step and identify the construction defect. Do not hand-repair a malformed GQD geometry or advance a structure merely because a quantum-chemistry input can be generated. |
 
 Structures are prepared using the appropriate reproducible preparation route.
 
-Manual molecular construction/editing:
-Avogadro when required, e.g. COOH-GQD functionalization.
+Corrected COOH-GQD preparation is deterministic and script-based. The
+historical v01 GQD lineage is retained for provenance but is
+not reused as the corrected structural baseline.
 
-PubChem drug preparation:
-Open Babel MMFF94 cleanup using the documented Maple module environment.
+PubChem drug preparation uses the documented Open Babel/MMFF94 route.
 
 Raw PubChem files remain immutable.
-Prepared structures are validated and committed as text before Gaussian work.
+Prepared structures are independently validated and committed as text before
+Gaussian work.
 
 ---
 
@@ -35,11 +36,15 @@ Prepared structures are validated and committed as text before Gaussian work.
 
 | | |
 |---|---|
-| **Input** | `pm6/inputs/<system>_pm6_opt_v01.com`, `%chk=archive/chk/<system>_pm6_opt_v01.chk` |
+| **Input** | `pm6/inputs/<system>_pm6_opt_<version>.com`; corrected COOH-GQD symmetry-class candidates use the new v02 lineage |
 | **Resources** | 8 cores, 8 GB, ≤4 h |
-| **Output** | `archive/logs/<system>_pm6_opt_v01.log`, checkpoint in `archive/chk/` |
-| **Gate** | `scripts/verify_gaussian.sh` exits 0: normal termination **and** "Optimization completed". |
-| **On failure** | Inspect the last geometry in the log. Most PM6 failures on these systems are bad starting connectivity — go back to Step 1 rather than adding convergence keywords. |
+| **Output** | run-specific PM6 log and checkpoint in `archive/logs/` and `archive/chk/` |
+| **Gate** | `scripts/verify_gaussian.sh` exits 0 with normal termination and "Optimization completed". For corrected COOH-GQD, the final PM6 geometry must additionally pass an independent topology/geometry audit before B3LYP advancement. |
+| **On failure** | Inspect the final geometry and determine whether the problem is convergence or molecular-model integrity. A topology/connectivity failure returns to Step 1; it is not corrected by adding convergence keywords. |
+
+For corrected COOH-GQD, the post-PM6 audit must confirm the intended
+C55H18O2 composition, intact C54 circumcoronene scaffold, single COOH
+attachment, and absence of unintended bonding or severe scaffold distortion.
 
 The checkpoint is the deliverable here, not the energy. PM6 energies are
 recorded for completeness but are **not comparable** to DFT energies and never
@@ -51,17 +56,22 @@ enter a binding-energy expression.
 
 | | |
 |---|---|
-| **Input** | `b3lyp/inputs/<system>_b3lyp_optfreq_v01.com` with `%oldchk=` PM6 checkpoint and `geom=check` |
+| **Input** | `b3lyp/inputs/<system>_b3lyp_optfreq_<version>.com` with `%oldchk=` from the corresponding PM6 checkpoint and `geom=check`; corrected COOH-GQD symmetry-class candidates use the new v02 lineage |
 | **Level** | B3LYP-D3(BJ)/6-31G(d,p), SMD water |
 | **Resources** | 16 cores, 32 GB, one node |
 | **Output** | optimized geometry, SCF energy, thermal free-energy correction |
-| **Gate** | normal termination, optimization completed, **zero imaginary frequencies** |
+| **Gate** | normal termination, optimization completed, **zero imaginary frequencies**. Corrected COOH-GQD candidates must also pass a post-DFT molecular-model audit before scientific acceptance. |
 | **On failure — imaginary mode** | Displace the geometry along the imaginary mode and re-optimize as a new `run_id`. Record the original as `FAILED` with the mode frequency in `run_notes.tsv`; never delete it. |
 | **On failure — walltime** | Resubmit with `geom=check guess=read` from the *same-level* checkpoint (valid here: same method, same basis). Expected for venetoclax and ABT-737. |
 | **On failure — SCF convergence** | `scf=xqc`, or `scf=(maxcycle=256)`. New `run_id`; note the reason. |
 
-Submission order is deliberate: COOH-GQD first as the pilot, then erlotinib and
-gefitinib, then venetoclax and ABT-737 last.
+The corrected isolated COOH-GQD rebuild is evaluated as a controlled comparison
+between the validated Class-1 and Class-2 symmetry representatives. Neither
+candidate becomes the authoritative GQD baseline until its PM6 and B3LYP gates
+pass and the two corrected candidates have been compared.
+
+The previously accepted isolated drug baselines remain valid and are not
+recomputed solely because the GQD structural model was rebuilt.
 
 **Do not carry `guess=read` across a method change.** A PM6 wavefunction is not
 a valid starting guess for a DFT calculation, and reading one across differing
