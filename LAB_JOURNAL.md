@@ -6446,3 +6446,241 @@ single-session format.*
 
 - Next action:
   Implement a deterministic ideal circumcoronene scaffold generator and validate its graph before performing any QM calculation.
+
+### Entry 042 — 2026-10-02 — Deterministic circumcoronene rebuild and parent-structure validation
+- Scientific/build objective:
+  Rebuild the circumcoronene parent structure from a deterministic graphene lattice after the previous COOH-GQD starting geometry failed the topology and planarity audit.
+
+- Starting state:
+  Entry 041 established that the previous COOH-GQD baseline was unsuitable for continued adsorption calculations and authorized a deterministic rebuild from an ideal circumcoronene C54 scaffold.
+
+  Existing preliminary Erlotinib complex structures and scripts remain quarantined and are not part of this rebuild checkpoint.
+
+- Commands / actions performed:
+  Constructed an ideal shell-radius-2 hexagonal graphene lattice corresponding to 19 fused six-membered rings.
+
+  Implemented scripts/build_circumcoronene.py with deterministic atom ordering and fail-before-write graph validation.
+
+  Generated structures/prepared/circumcoronene_c54_scaffold_v01.xyz only after the internal C54 graph/lattice gate passed.
+
+  Independently reconstructed the C-C graph from the written XYZ coordinates and validated the scaffold without importing the generator.
+
+  Implemented scripts/hydrogenate_circumcoronene.py to add one hydrogen to each of the 18 degree-2 boundary carbons.
+
+  Preserved C1-C54 ordering and appended the 18 hydrogens deterministically from ascending boundary-carbon index.
+
+  Generated structures/prepared/circumcoronene_c54h18_v01.xyz only after the hydrogenation gate passed.
+
+  Independently reconstructed C-C and C-H connectivity from the written C54H18 XYZ and validated the complete parent molecule.
+
+  Performed a D6 edge-site symmetry audit.
+
+  Performed a representative Class-1 versus Class-2 steric-exposure audit.
+
+  Prototyped monocarboxylation at one representative site from each symmetry class.
+
+  Performed a 10-degree rigid torsional-clearance scan about the parent-C--C(COOH) axis for both site classes.
+
+- Files changed:
+  LAB_JOURNAL.md
+  scripts/build_circumcoronene.py
+  scripts/hydrogenate_circumcoronene.py
+  structures/prepared/circumcoronene_c54_scaffold_v01.xyz
+  structures/prepared/circumcoronene_c54h18_v01.xyz
+
+- Job IDs / run IDs:
+  No Gaussian jobs were submitted.
+
+- Git commit:
+  Pending
+
+- Validation performed:
+  C54 generator-internal validation:
+    hexagonal cells = 19
+    carbon vertices = 54
+    C-C edges = 72
+    degree-2 carbons = 18
+    degree-3 carbons = 36
+    boundary carbons = 18
+    connected graph = yes
+    cycle rank = 19
+    six-membered cycles = 19
+    C-C edge length = 1.420000 A
+    z span = 0.000000 A
+    maximum C...C span = 12.379273 A
+    C54 GRAPH/LATTICE GATE = PASS
+
+  Independent written-XYZ C54 validation:
+    formula = C54
+    C-C edges = 72
+    degree-2 carbons = 18
+    degree-3 carbons = 36
+    cycle rank = 19
+    six-membered cycles = 19
+    nearest nonbonded C...C = 2.45951214 A
+    centrosymmetric coordinates = yes
+    INDEPENDENT C54 XYZ GATE = PASS
+
+  C54 generator SHA256:
+    326b59d972b372ffb8fb997184ec048275692afa0c8adadfea412b4b02cb3413
+
+  C54 scaffold XYZ SHA256:
+    c48d2b9c3f7ac58d59cbda613d3304c9b823737f551aa2179bb341bf9de0203f
+
+  C54H18 hydrogenation validation:
+    input carbons = 54
+    C-C edges = 72
+    boundary carbons = 18
+    interior carbons = 36
+    hydrogens generated = 18
+    total atoms = 72
+    formula = C54H18
+    C-H min/max = 1.09000000 A
+    H-C-C min/max = 120.000000 degrees
+    nearest-H-parent check = true
+    nearest non-parent H...C = 2.179977 A
+    minimum H...H = 2.459512 A
+    z span = 0.00000000 A
+    centrosymmetric coordinates = yes
+    C54H18 HYDROGENATION GATE = PASS
+
+  Independent written-XYZ C54H18 validation:
+    declared atoms = 72
+    parsed atoms = 72
+    formula = C54H18
+    C1-C54 ordering = true
+    H55-H72 ordering = true
+    unique coordinates = true
+    C-C edges = 72
+    C-degree 2 = 18
+    C-degree 3 = 36
+    boundary carbons = 18
+    interior carbons = 36
+    connected = true
+    cycle rank = 19
+    six-membered cycles = 19
+    C-H bonds = 18
+    hydrogens with exactly one carbon parent = 18
+    boundary carbons with one H = 18
+    interior carbons with H = 0
+    all 54 carbons total degree = 3
+    INDEPENDENT C54H18 XYZ GATE = PASS
+
+  C54H18 hydrogenation-script SHA256:
+    16fe093342acc19f6905691b3cb3d2786be59e1aaf8e853d3af957e5288773c5
+
+  C54H18 XYZ SHA256:
+    226f0401e0a690645ca9d5d85304ebac51da41321fc953c5148a74ab938b072b
+
+  Edge-site symmetry audit:
+    peripheral C-H sites = 18
+    symmetry classes = 2
+
+    Class 1:
+      size = 12
+      representative = C1/H55
+      boundary-carbon radius = 6.18963650 A
+
+    Class 2:
+      size = 6
+      representative = C3/H57
+      boundary-carbon radius = 5.68000000 A
+
+    EDGE-SITE SYMMETRY AUDIT = PASS
+
+  Representative radial steric-exposure comparison:
+    Class 1 and Class 2 showed essentially identical outward-ray nearest-contact distances.
+
+    The small difference in neighbor counts was not considered sufficient evidence to select one class as chemically preferred.
+
+  Initial planar COOH prototypes:
+    both representatives produced C55H18O2 with correct internal starting geometry.
+
+    Class 1 planar shortest oxygen contact:
+      1.72461591 A
+
+    Class 2 planar shortest oxygen contact:
+      1.67606682 A
+
+    Therefore a coplanar initial COOH geometry was rejected as the production starting orientation.
+
+  Rigid COOH torsional-clearance scan:
+    scan increment = 10 degrees
+
+    Class 1 best:
+      torsion = 90 or 270 degrees
+      O-min = 2.866025 A
+      acid-H-min = 3.267988 A
+      heavy-min = 2.359174 A
+
+    Class 2 best:
+      torsion = 90 or 270 degrees
+      O-min = 2.866025 A
+      acid-H-min = 3.267988 A
+      heavy-min = 2.359174 A
+
+    The +90 and 270 degree solutions are mirror-related orientations relative to the planar parent structure.
+
+- Result:
+  A deterministic and independently validated circumcoronene C54H18 parent structure has been established.
+
+  The corrected parent does not inherit the strong nonplanarity or topology defect of the previous COOH-GQD starting model.
+
+  The 18 peripheral C-H positions separate into two symmetry-distinct substitution classes: one 12-site class and one 6-site class.
+
+  Steric diagnostics do not justify declaring either site class chemically preferred before quantum-chemical comparison.
+
+- Problems encountered:
+  Initial planar COOH prototypes produced short oxygen-edge contacts.
+
+- Root cause:
+  The initial carboxyl group was placed coplanar with the graphene scaffold, producing avoidable steric proximity to neighboring edge hydrogens.
+
+- Correction:
+  Use an out-of-plane initial COOH torsion.
+
+  Retain one representative monocarboxylated structure from each of the two symmetry-distinct edge-site classes.
+
+  Use +90 degrees as the deterministic starting torsion convention because +90 and 270 degrees give equivalent clearance and are mirror-related relative to the planar parent scaffold.
+
+- Why the correction was justified:
+  Selecting a symmetry class solely from radial position or simple steric counts would impose an unsupported chemical preference.
+
+  Comparing one representative from each symmetry class reduces the 18 nominal substitution sites to the two genuinely distinct parent-site environments while preserving scientific completeness.
+
+  The out-of-plane starting torsion substantially improves initial oxygen-edge clearance without altering the internal carboxylic-acid geometry.
+
+- Decision / advancement gate:
+  PASS — deterministic C54 scaffold accepted.
+
+  PASS — independently validated C54 scaffold accepted.
+
+  PASS — deterministic C54H18 parent accepted.
+
+  PASS — independently validated C54H18 parent accepted.
+
+  PASS — two symmetry-distinct edge-site classes established.
+
+  HOLD — no single COOH substitution class is yet designated the authoritative COOH-GQD model.
+
+  AUTHORIZED NEXT STEP — construct one C55H18O2 candidate from Class 1 and one from Class 2 using the deterministic +90-degree initial COOH torsion, then independently validate both structures before any QM calculation.
+
+- Archive / checksum status:
+  No previous archive was overwritten.
+
+  No new Gaussian calculation was submitted.
+
+  Parent rebuild artifacts remain local pending this checkpoint commit.
+
+- What remains:
+  Implement deterministic COOH functionalization script.
+  Generate Class-1 and Class-2 C55H18O2 candidates.
+  Independently validate both written XYZ structures.
+  Establish atom mapping for scaffold, carboxyl group, and remaining hydrogens.
+  Create new PM6/B3LYP calculation versions without overwriting historical GQD runs.
+  Compare the two symmetry-class candidates quantum chemically.
+  Select and document the authoritative COOH-GQD baseline.
+  Resume drug-complex construction only after corrected COOH-GQD acceptance.
+
+- Next action:
+  Commit the validated circumcoronene parent-rebuild checkpoint, then implement deterministic two-class monocarboxylation.
