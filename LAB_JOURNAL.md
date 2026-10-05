@@ -6684,3 +6684,228 @@ single-session format.*
 
 - Next action:
   Commit the validated circumcoronene parent-rebuild checkpoint, then implement deterministic two-class monocarboxylation.
+
+### Entry 043 — 2026-10-04 — Two-class COOH-GQD construction and independent validation
+- Scientific/build objective:
+  Construct and independently validate one monocarboxylated circumcoronene candidate from each of the two symmetry-distinct peripheral C-H site classes identified in Entry 042.
+
+- Starting state:
+  The deterministic C54 scaffold and C54H18 circumcoronene parent were validated and committed at 7c3f770.
+
+  The 18 peripheral C-H sites had been reduced by symmetry to:
+    Class 1 — 12 equivalent sites; representative C1/H55.
+    Class 2 — 6 equivalent sites; representative C3/H57.
+
+  A torsional-clearance scan established +90 degrees as the deterministic initial COOH torsion convention.
+
+  No symmetry class had yet been selected as the authoritative COOH-GQD baseline.
+
+- Commands / actions performed:
+  Implemented scripts/functionalize_circumcoronene_cooh.py.
+
+  The script verifies the SHA256 of the validated C54H18 parent before construction.
+
+  Constructed one Class-1 candidate by replacing source H55 attached to C1.
+
+  Constructed one Class-2 candidate by replacing source H57 attached to C3.
+
+  Preserved C1-C54 graphene coordinates exactly.
+
+  Preserved the 17 retained edge-hydrogen coordinates exactly.
+
+  Standardized the output atom ordering for both candidates:
+    C1-C54 = graphene scaffold.
+    H55-H71 = retained edge hydrogens in source order.
+    C72 = carboxyl carbon.
+    O73 = carbonyl oxygen.
+    O74 = hydroxyl oxygen.
+    H75 = acidic hydroxyl hydrogen.
+
+  Used identical deterministic starting COOH geometry for both candidates:
+    parent-C--C72 = 1.49 A.
+    C72=O73 = 1.23 A.
+    C72-O74 = 1.36 A.
+    O74-H75 = 0.97 A.
+    Cparent-C72-O angles = 120 degrees.
+    O73-C72-O74 = 120 degrees.
+    C72-O74-H75 = 108 degrees.
+    COOH/scaffold starting plane angle = 90 degrees.
+
+  Generated:
+    structures/prepared/cooh_gqd_class1_c1_v01.xyz
+    structures/prepared/cooh_gqd_class2_c3_v01.xyz
+
+  Independently audited both written XYZ files without importing the functionalization script.
+
+- Files changed:
+  LAB_JOURNAL.md
+  scripts/functionalize_circumcoronene_cooh.py
+  structures/prepared/cooh_gqd_class1_c1_v01.xyz
+  structures/prepared/cooh_gqd_class2_c3_v01.xyz
+
+- Job IDs / run IDs:
+  No Gaussian jobs were submitted.
+
+- Git commit:
+  Pending
+
+- Validation performed:
+  Functionalization script SHA256:
+    a9bd98d63ea15abe3e36400864213857810c91ce74a07a2926fcf2620f12c507
+
+  Class 1 candidate:
+    representative = C1/H55
+    formula = C55H18O2
+    atoms = 75
+    standardized output ordering = PASS
+    C1-C54 scaffold unchanged = PASS
+    retained parent-H coordinates unchanged = PASS
+    initial COOH construction gate = PASS
+
+    XYZ SHA256:
+      33cda2addb0a7962dacab5fe3816a1935a520dbf8f183a57058c145c8ac01571
+
+    Independent written-XYZ audit:
+      lines = 77
+      declared atoms = 75
+      parsed atoms = 75
+      formula = C55H18O2
+      standard atom ordering = true
+      provenance comment = true
+      C1-C54 scaffold unchanged = true
+      17 retained-H coordinates preserved = true
+      total distance-derived bonds = 93
+      C-C bonds = 73
+      C-H bonds = 17
+      C-O bonds = 2
+      O-H bonds = 1
+      connected = true
+      full cycle rank = 19
+      graphene C-C edges = 72
+      graphene degree-2 carbons = 18
+      graphene degree-3 carbons = 36
+      six-membered cycles = 19
+      recovered substitution carbon = C1
+      expected substitution carbon = C1
+      all scaffold carbons total degree 3 = true
+      C72 degree = 3
+      O73 degree = 1
+      O74 degree = 2
+      H75 degree = 1
+      all retained edge hydrogens degree 1 = true
+      standardized COOH connectivity only = true
+      C1-C72 = 1.49000000 A
+      C72-O73 = 1.23000000 A
+      C72-O74 = 1.36000000 A
+      O74-H75 = 0.97000000 A
+      COOH/scaffold plane angle = 90.000000 degrees
+      scaffold z span = 0.00000000 A
+      INDEPENDENT CLASS1 COOH XYZ GATE = PASS
+
+  Class 2 candidate:
+    representative = C3/H57
+    formula = C55H18O2
+    atoms = 75
+    standardized output ordering = PASS
+    C1-C54 scaffold unchanged = PASS
+    retained parent-H coordinates unchanged = PASS
+    initial COOH construction gate = PASS
+
+    XYZ SHA256:
+      c1c4856b9f7dc618ec4757dc131c844a82bbee473ddd114a3457ef8fe7815b73
+
+    Independent written-XYZ audit:
+      lines = 77
+      declared atoms = 75
+      parsed atoms = 75
+      formula = C55H18O2
+      standard atom ordering = true
+      provenance comment = true
+      C1-C54 scaffold unchanged = true
+      17 retained-H coordinates preserved = true
+      total distance-derived bonds = 93
+      C-C bonds = 73
+      C-H bonds = 17
+      C-O bonds = 2
+      O-H bonds = 1
+      connected = true
+      full cycle rank = 19
+      graphene C-C edges = 72
+      graphene degree-2 carbons = 18
+      graphene degree-3 carbons = 36
+      six-membered cycles = 19
+      recovered substitution carbon = C3
+      expected substitution carbon = C3
+      all scaffold carbons total degree 3 = true
+      C72 degree = 3
+      O73 degree = 1
+      O74 degree = 2
+      H75 degree = 1
+      all retained edge hydrogens degree 1 = true
+      standardized COOH connectivity only = true
+      C3-C72 = 1.49000000 A
+      C72-O73 = 1.23000000 A
+      C72-O74 = 1.36000000 A
+      O74-H75 = 0.97000000 A
+      COOH/scaffold plane angle = 90.000000 degrees
+      scaffold z span = 0.00000000 A
+      INDEPENDENT CLASS2 COOH XYZ GATE = PASS
+
+  The shortest reported nonbonded distances involving C72/H75 and O73/O74 are intrafunctional-group geometric relationships and did not correspond to unintended graphene-edge bonds.
+
+- Result:
+  Two independently validated C55H18O2 starting structures now represent the two genuinely distinct monocarboxylation site classes of the validated C54H18 parent.
+
+  Both candidates use the same functional-group atom indices and the same deterministic starting geometry, allowing a controlled quantum-chemical comparison.
+
+  Neither Class 1 nor Class 2 is presently designated as the authoritative COOH-GQD baseline.
+
+- Problems encountered:
+  No construction or topology failure occurred in the permanent two-class build.
+
+  The earlier planar COOH starting orientation had produced unnecessarily short edge contacts; this was corrected before permanent candidate generation.
+
+- Root cause:
+  The planar prototype placed the carboxyl group in an unfavorable starting orientation relative to neighboring edge hydrogens.
+
+- Correction:
+  Use the reproducibly selected +90-degree out-of-plane starting torsion for both symmetry classes.
+
+- Why the correction was justified:
+  The +90-degree orientation was selected from an explicit torsional-clearance scan and gives the same maximum clearance as its mirror-related 270-degree orientation.
+
+  Applying the same convention to both symmetry classes avoids introducing an orientation bias into the subsequent energy comparison.
+
+- Decision / advancement gate:
+  PASS — Class-1 C55H18O2 construction accepted as a validated QM starting candidate.
+
+  PASS — Class-2 C55H18O2 construction accepted as a validated QM starting candidate.
+
+  PASS — common C72/O73/O74/H75 functional-group mapping established.
+
+  HOLD — neither symmetry class is yet the authoritative isolated COOH-GQD baseline.
+
+  HOLD — drug-complex construction remains unauthorized.
+
+  AUTHORIZED NEXT STEP — create new isolated-GQD quantum-chemical comparison inputs for both candidates without overwriting or reusing the historical malformed GQD calculation lineage.
+
+- Archive / checksum status:
+  Historical GQD calculations remain immutable and are not overwritten.
+
+  No new Gaussian job has yet been submitted.
+
+  New Class-1 and Class-2 starting XYZ files remain local pending this checkpoint commit.
+
+- What remains:
+  Commit the two-class functionalization checkpoint.
+  Define new run/version identifiers for corrected Class-1 and Class-2 isolated-GQD calculations.
+  Prepare quantum-chemical inputs for both symmetry classes.
+  Validate all generated Gaussian inputs before submission.
+  Optimize and compare the two symmetry-class candidates.
+  Confirm topology, planarity/geometry behavior, convergence, frequencies, and relative energy.
+  Select and document the authoritative corrected COOH-GQD baseline.
+  Update downstream GQD-dependent files only after baseline selection.
+  Resume complex construction only after corrected baseline acceptance.
+
+- Next action:
+  Commit the validated two-class COOH-GQD construction checkpoint before creating new Gaussian inputs.
