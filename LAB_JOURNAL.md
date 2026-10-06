@@ -7068,3 +7068,203 @@ single-session format.*
 
 - Next action:
   Stage and review the reconciliation checkpoint before commit.
+
+### Entry 045 — 2026-10-05 — Corrected COOH-GQD PM6 v02 input generation and independent validation
+- Scientific/build objective:
+  Establish reproducible PM6 pre-optimization inputs for the two validated corrected COOH-GQD symmetry-class candidates and independently verify the inputs before any Gaussian submission.
+
+- Starting state:
+  The documentation-reconciliation checkpoint was remotely closed at Git commit 44e9810.
+
+  The historical COOH-GQD v01 structural baseline remains scientifically superseded.
+
+  Two corrected C55H18O2 starting candidates are validated for quantum-chemical work:
+    Class 1 representative = C1/H55 substitution class.
+    Class 2 representative = C3/H57 substitution class.
+
+  Neither candidate is yet the authoritative isolated COOH-GQD baseline.
+
+  Drug-complex construction remains on HOLD.
+
+- Commands / actions performed:
+  Verified the corrected source XYZ files and SHA-256 hashes.
+
+  Verified the unified Gaussian runner interface and existing PM6 naming/resource conventions.
+
+  Created a deterministic PM6 input-generation utility:
+    scripts/build_cooh_gqd_pm6_inputs.py
+
+  The generator validates source-file checksums, atom count, formula, standardized atom ordering, and Cartesian parseability before rendering any Gaussian input.
+
+  The generator was first executed in validation-only mode.
+
+  Dry-run validation passed for both corrected candidates and confirmed that no v02 Gaussian input was written prematurely.
+
+  The same validated generator was then executed with --write to create exactly two corrected PM6 v02 Gaussian inputs.
+
+  Frozen PM6 run identifiers:
+    PM6-COOH-GQD-C1-006
+    PM6-COOH-GQD-C2-007
+
+  Corrected PM6 v02 inputs:
+    calculations/phase1_dft/pm6/inputs/cooh_gqd_class1_c1_pm6_opt_v02.com
+    calculations/phase1_dft/pm6/inputs/cooh_gqd_class2_c3_pm6_opt_v02.com
+
+  Corresponding planned checkpoints:
+    archive/chk/cooh_gqd_class1_c1_pm6_opt_v02.chk
+    archive/chk/cooh_gqd_class2_c3_pm6_opt_v02.chk
+
+  Both inputs use:
+    #p PM6 opt SCF=XQC
+    %mem=8GB
+    %nprocshared=8
+    charge = 0
+    multiplicity = 1
+
+  An independent audit was then performed without importing or relying on the input-generation script.
+
+  The independent audit verified:
+    75 atoms in each input.
+    molecular formula C55H18O2.
+    C1-C54 = graphene scaffold.
+    H55-H71 = retained edge hydrogens.
+    C72 = carboxyl carbon.
+    O73 = carbonyl oxygen.
+    O74 = hydroxyl oxygen.
+    H75 = acidic hydroxyl hydrogen.
+    charge/multiplicity = 0 1.
+    route = #p PM6 opt SCF=XQC.
+    resources = 8 GB / 8 cores.
+    exact XYZ-to-Gaussian Cartesian transfer.
+    absence of geom=check.
+    absence of guess=read.
+    absence of freq.
+    absence of B3LYP/GD3/SCRF keywords.
+
+  A preexisting-output collision check was also performed for the two planned checkpoints, two planned logs, and two planned provenance files.
+
+  All six destinations were clear.
+
+- Files changed:
+  LAB_JOURNAL.md
+  scripts/build_cooh_gqd_pm6_inputs.py
+  calculations/phase1_dft/pm6/inputs/cooh_gqd_class1_c1_pm6_opt_v02.com
+  calculations/phase1_dft/pm6/inputs/cooh_gqd_class2_c3_pm6_opt_v02.com
+
+- Job IDs / run IDs:
+  PM6-COOH-GQD-C1-006 — defined, not submitted.
+  PM6-COOH-GQD-C2-007 — defined, not submitted.
+
+  No PBS job IDs exist yet.
+
+- Git commit:
+  Pending
+
+- Validation performed:
+  Generator Python syntax check:
+    PASS
+
+  Generator SHA-256:
+    ceef56efd5de161f04fb7b9aeb55debb5fb21e0389f969323f162443fd4b8999
+
+  Class 1 source:
+    structures/prepared/cooh_gqd_class1_c1_v01.xyz
+    SHA-256:
+    33cda2addb0a7962dacab5fe3816a1935a520dbf8f183a57058c145c8ac01571
+
+  Class 2 source:
+    structures/prepared/cooh_gqd_class2_c3_v01.xyz
+    SHA-256:
+    c1c4856b9f7dc618ec4757dc131c844a82bbee473ddd114a3457ef8fe7815b73
+
+  Class 1 PM6 v02 input:
+    calculations/phase1_dft/pm6/inputs/cooh_gqd_class1_c1_pm6_opt_v02.com
+    SHA-256:
+    41a96cda2410d1c0bcdc5d0f77bb5259f4d0e486b56a381e713331aec1b94608
+
+  Class 2 PM6 v02 input:
+    calculations/phase1_dft/pm6/inputs/cooh_gqd_class2_c3_pm6_opt_v02.com
+    SHA-256:
+    7bd0dd5610afdf46159ff9cca4d0608caa3009859ba2590c4ae2b0be735524e9
+
+  Independent Class 1 input audit:
+    PASS
+
+  Independent Class 2 input audit:
+    PASS
+
+  Independent PM6 v02 input gate:
+    PASS
+
+  Preexisting output/checkpoint/provenance collision gate:
+    PASS — all six planned destinations clear.
+
+- Result:
+  Two reproducible and independently validated corrected PM6 v02 inputs now exist for the two symmetry-distinct COOH-GQD candidates.
+
+  The structural source files remain the validated corrected XYZ candidates created during the rebuild. The v02 designation identifies the corrected quantum-chemical calculation lineage and does not rewrite the immutable prepared-structure history.
+
+  No Gaussian calculation has yet been submitted.
+
+- Problems encountered:
+  None during input generation or independent validation.
+
+- Root cause:
+  Not applicable.
+
+- Correction:
+  Not applicable.
+
+- Why the correction was justified:
+  Not applicable.
+
+- Decision / advancement gate:
+  PASS — corrected Class 1 source XYZ validated against expected checksum.
+
+  PASS — corrected Class 2 source XYZ validated against expected checksum.
+
+  PASS — deterministic PM6 v02 input generator validated.
+
+  PASS — Class 1 PM6 v02 input independently validated.
+
+  PASS — Class 2 PM6 v02 input independently validated.
+
+  PASS — exact XYZ-to-input Cartesian transfer confirmed for both candidates.
+
+  PASS — no preexisting checkpoint, log, or provenance collision detected.
+
+  HOLD — neither PM6 calculation is submitted until this input-generation checkpoint is committed and remotely closed.
+
+  HOLD — neither corrected candidate may advance to B3LYP solely because PM6 later converges; each final PM6 geometry must pass the required independent topology/geometry audit.
+
+  HOLD — neither Class 1 nor Class 2 is yet the authoritative isolated COOH-GQD baseline.
+
+  HOLD — drug-complex construction remains unauthorized.
+
+  AUTHORIZED NEXT STEP — commit and remotely close the validated PM6 v02 input-generation checkpoint, then submit PM6-COOH-GQD-C1-006 and PM6-COOH-GQD-C2-007 using the established Maple Gaussian runner and PM6 resource overrides.
+
+- Archive / checksum status:
+  No historical archive file was modified or overwritten.
+
+  No PM6 v02 log exists yet.
+
+  No PM6 v02 checkpoint exists yet.
+
+  No PM6 v02 provenance file exists yet.
+
+  Input and source SHA-256 values are recorded above.
+
+- What remains:
+  Commit and remotely close the PM6 v02 input-generation checkpoint.
+  Submit both corrected PM6 candidates.
+  Record PBS job IDs.
+  Monitor Gaussian completion without modifying active calculations.
+  Run standard Gaussian QC.
+  Independently audit each final PM6 geometry for composition, connectivity, circumcoronene topology, unintended bonding, and scaffold distortion.
+  Advance only PM6 candidates that pass both computational and molecular-model gates.
+  Generate corrected B3LYP v02 inputs only after PM6 advancement.
+  Compare the two corrected symmetry classes at the final DFT level before selecting the authoritative COOH-GQD baseline.
+  Resume complex construction only after corrected baseline acceptance.
+
+- Next action:
+  Selectively stage and review the PM6 v02 input-generation checkpoint before commit.
