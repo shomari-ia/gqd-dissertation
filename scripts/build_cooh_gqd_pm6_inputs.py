@@ -10,7 +10,7 @@ SYSTEMS = (
     {
         "label": "Class 1",
         "representative": "C1",
-        "run_id": "PM6-COOH-GQD-C1-006",
+        "run_id": "PM6-COOH-GQD-C1-008",
         "source": Path(
             "structures/prepared/cooh_gqd_class1_c1_v01.xyz"
         ),
@@ -20,17 +20,17 @@ SYSTEMS = (
         ),
         "output": Path(
             "calculations/phase1_dft/pm6/inputs/"
-            "cooh_gqd_class1_c1_pm6_opt_v02.com"
+            "cooh_gqd_class1_c1_pm6_opt_v03.com"
         ),
         "chk": (
             "archive/chk/"
-            "cooh_gqd_class1_c1_pm6_opt_v02.chk"
+            "cooh_gqd_class1_c1_pm6_opt_v03.chk"
         ),
     },
     {
         "label": "Class 2",
         "representative": "C3",
-        "run_id": "PM6-COOH-GQD-C2-007",
+        "run_id": "PM6-COOH-GQD-C2-009",
         "source": Path(
             "structures/prepared/cooh_gqd_class2_c3_v01.xyz"
         ),
@@ -40,11 +40,11 @@ SYSTEMS = (
         ),
         "output": Path(
             "calculations/phase1_dft/pm6/inputs/"
-            "cooh_gqd_class2_c3_pm6_opt_v02.com"
+            "cooh_gqd_class2_c3_pm6_opt_v03.com"
         ),
         "chk": (
             "archive/chk/"
-            "cooh_gqd_class2_c3_pm6_opt_v02.chk"
+            "cooh_gqd_class2_c3_pm6_opt_v03.chk"
         ),
     },
 )
@@ -184,7 +184,7 @@ def validate_xyz(system):
 def render_input(system, atom_lines):
     title = (
         "COOH-GQD {} ({}) PM6 pre-optimization | "
-        "corrected v02 | charge=0 mult=1"
+        "corrected v03 | charge=0 mult=1"
     ).format(
         system["label"],
         system["representative"],
@@ -202,16 +202,31 @@ def render_input(system, atom_lines):
     ]
 
     parts.extend(atom_lines)
-    parts.append("")
 
-    return "\n".join(parts)
+    text = "\n".join(parts) + "\n\n"
+
+    if not text.endswith("\n\n"):
+        raise RuntimeError(
+            "{} rendered input is missing the terminal blank line".format(
+                system["label"]
+            )
+        )
+
+    if text.endswith("\n\n\n"):
+        raise RuntimeError(
+            "{} rendered input has more than one terminal blank record".format(
+                system["label"]
+            )
+        )
+
+    return text
 
 
 def main():
     parser = argparse.ArgumentParser(
         description=(
             "Validate corrected COOH-GQD Class-1/Class-2 XYZ sources "
-            "and deterministically generate PM6 v02 Gaussian inputs."
+            "and deterministically generate PM6 v03 Gaussian retry inputs."
         )
     )
 
@@ -237,7 +252,7 @@ def main():
             )
         )
 
-    print("COOH-GQD corrected PM6 v02 input validation = PASS")
+    print("COOH-GQD corrected PM6 v03 input validation = PASS")
 
     for system, source_sha, text in rendered:
         print("")
@@ -255,6 +270,7 @@ def main():
         print("ROUTE=#p PM6 opt SCF=XQC")
         print("MEMORY=8GB")
         print("NPROC=8")
+        print("TERMINAL_BLANK_LINE=PASS")
 
         if args.write:
             output = system["output"]
