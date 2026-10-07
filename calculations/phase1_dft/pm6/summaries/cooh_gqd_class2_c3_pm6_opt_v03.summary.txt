@@ -1,0 +1,17 @@
+run_id          cooh_gqd_class2_c3_pm6_opt_v03
+log_file        archive/logs/cooh_gqd_class2_c3_pm6_opt_v03.log
+log_sha256      a38d7c9aaa123f07e9b3083c99a71842ebd8b11dddb7f9e62f375f56ba0d8bd3
+verified_at     2026-10-06T20:27:11-05:00
+route           #p PM6 opt SCF=XQC
+charge_mult     Charge =  0 Multiplicity = 1
+n_atoms         75
+termination     NORMAL
+optimization    COMPLETED
+imag_freq       NA
+scf_hartree     0.157794872635
+zpe_hartree     NA
+gibbs_hartree   NA
+cp_corrected    NA
+cpu_time        Job cpu time:       0 days  0 hours  2 minutes 14.8 seconds.
+elapsed_time    Elapsed time:       0 days  0 hours  0 minutes 24.5 seconds.
+qc_status       PASS
