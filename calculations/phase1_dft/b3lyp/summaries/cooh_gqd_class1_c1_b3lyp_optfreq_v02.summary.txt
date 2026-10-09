@@ -1,0 +1,17 @@
+run_id          cooh_gqd_class1_c1_b3lyp_optfreq_v02
+log_file        archive/logs/cooh_gqd_class1_c1_b3lyp_optfreq_v02.log
+log_sha256      fcf25ba62c89aac307ec66b7cd950580c8ed63abf2c29239af729b733db4cb1e
+verified_at     2026-10-08T03:33:01-05:00
+route           #p opt freq B3LYP/6-31G(d,p) EmpiricalDispersion=GD3BJ SCRF=(SMD,Solve
+charge_mult     Charge =  0 Multiplicity = 1
+n_atoms         75
+termination     NORMAL
+optimization    COMPLETED
+imag_freq       1
+scf_hartree     -2257.83332209
+zpe_hartree     0.549061
+gibbs_hartree   -2257.341590
+cp_corrected    NA
+cpu_time        Job cpu time:       0 days 19 hours 25 minutes 46.3 seconds.
+elapsed_time    Elapsed time:       0 days  1 hours 12 minutes 59.3 seconds.
+qc_status       FAILED

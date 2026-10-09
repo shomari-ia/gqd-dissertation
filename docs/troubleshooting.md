@@ -99,3 +99,103 @@ submission:
 A Gaussian `End of file in ZSymb` failure at this stage is an input-format
 failure, not evidence of a molecular-geometry or electronic-convergence
 problem.
+
+## B3LYP optimization completes but QC fails because of a COOH-localized imaginary frequency
+
+### Symptom
+
+A Gaussian `opt freq` calculation may terminate normally and report:
+
+    Optimization completed.
+    -- Stationary point found.
+    Normal termination of Gaussian 16
+
+but `scripts/verify_gaussian.sh` returns exit code 4 and the QC summary reports:
+
+    imag_freq       1
+    qc_status       FAILED
+
+This is not a Gaussian execution failure. The geometry optimization completed,
+but the frequency calculation shows that the stationary structure does not pass
+the project's true-minimum gate.
+
+### Confirmed COOH-GQD example
+
+Corrected B3LYP Class-1/C1 and Class-2/C3 calculations each produced all 219
+expected vibrational modes for a nonlinear 75-atom system, but each had one
+negative frequency.
+
+Class 1:
+
+    imaginary frequency = -6.2326 cm^-1
+    COOH displacement share = 96.788%
+
+Class 2:
+
+    imaginary frequency = -54.3969 cm^-1
+    COOH displacement share = 93.843%
+
+The graphene scaffold was not the dominant unstable coordinate.
+
+Class 1 had relaxed to an almost coplanar COOH arrangement and the negative
+mode was a very shallow out-of-plane COOH motion.
+
+Class 2 retained an exactly perpendicular COOH orientation and Cs symmetry.
+Its negative mode displaced the COOH away from that symmetry-associated
+stationary geometry.
+
+### Diagnostic procedure
+
+1. Confirm normal Gaussian termination and completed optimization.
+2. Count every `Frequencies --` value and verify the expected number of modes.
+3. Count all negative frequencies rather than inspecting only the end of the
+   frequency list.
+4. Parse the imaginary-mode displacement vectors and identify which atoms
+   dominate the mode.
+5. Check molecular connectivity before and after any proposed mode
+   displacement.
+6. Test the positive and negative eigenvector directions for symmetry
+   equivalence before scheduling duplicate calculations.
+
+### Correction strategy
+
+Do not overwrite the completed calculation and do not simply ignore a small
+negative mode when the project acceptance rule requires zero imaginary
+frequencies.
+
+Preserve the original input, log, checkpoint, provenance, and QC summary as an
+immutable failed-minimum lineage.
+
+Construct a new retry seed by displacing the completed geometry a small,
+documented distance along the imaginary normal-mode eigenvector. For the
+corrected COOH-GQD candidates, a maximum atomic displacement of 0.10 A
+preserved the full 93-bond molecular graph.
+
+Generate both eigenvector signs initially when needed for diagnosis. If the
+two directions are demonstrated to be mirror- or symmetry-equivalent, retain
+that evidence and schedule only one deterministic branch to avoid duplicate
+computation.
+
+For a symmetry-associated saddle, disable symmetry in the retry optimization.
+Use tighter optimization/numerical controls only as a documented recovery
+measure; do not change the underlying scientific level of theory merely to
+force a pass.
+
+### Advancement rule
+
+Normal termination plus `Optimization completed` is not sufficient for an
+accepted optimized B3LYP structure.
+
+For isolated COOH-GQD acceptance, the retry must achieve:
+
+- normal Gaussian termination;
+- completed optimization / stationary point;
+- complete frequency calculation;
+- zero imaginary frequencies;
+- preserved C55H18O2 composition and atom order;
+- preserved intended molecular connectivity and graphene topology;
+- acceptable post-DFT structural deformation.
+
+Only after both site-class candidates satisfy these gates may their matched
+DFT energies and thermochemistry be used for authoritative site-class
+selection.
