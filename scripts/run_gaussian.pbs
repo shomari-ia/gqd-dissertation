@@ -149,7 +149,7 @@ fi
 # --------------------------------------------------------------- QC gate
 
 set +e
-scripts/verify_gaussian.sh "$OUTPUT" "${STAGE_DIR}/summaries"
+scripts/verify_gaussian.sh "$OUTPUT" "${STAGE_DIR}/summaries" "$RUN_ID" "$INPUT"
 QC_EXIT=$?
 set -e
 

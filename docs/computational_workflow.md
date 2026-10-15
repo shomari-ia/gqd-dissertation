@@ -56,7 +56,7 @@ enter a binding-energy expression.
 
 | | |
 |---|---|
-| **Input** | `b3lyp/inputs/<system>_b3lyp_optfreq_<version>.com` with `%oldchk=` from the corresponding PM6 checkpoint and `geom=check`; corrected COOH-GQD symmetry-class candidates use the new v02 lineage |
+| **Input** | `b3lyp/inputs/<system>_b3lyp_optfreq_<version>.com`; standard PM6-to-B3LYP handoff uses `%oldchk=` from the corresponding PM6 checkpoint with `geom=check`. The corrected COOH-GQD site-class comparison began with matched v02 checkpoint-handoff inputs; after one COOH-localized imaginary frequency in each v02 result, accepted v03 retries used validated explicit Cartesian imaginary-mode-displaced seeds with fresh checkpoints, `NoSymm`, `Int=UltraFine`, and `Opt=(CalcFC,Tight,MaxCycles=200)`. |
 | **Level** | B3LYP-D3(BJ)/6-31G(d,p), SMD water |
 | **Resources** | 16 cores, 32 GB, one node |
 | **Output** | optimized geometry, SCF energy, thermal free-energy correction |
@@ -65,10 +65,16 @@ enter a binding-energy expression.
 | **On failure — walltime** | Resubmit with `geom=check guess=read` from the *same-level* checkpoint (valid here: same method, same basis). Expected for venetoclax and ABT-737. |
 | **On failure — SCF convergence** | `scf=xqc`, or `scf=(maxcycle=256)`. New `run_id`; note the reason. |
 
-The corrected isolated COOH-GQD rebuild is evaluated as a controlled comparison
-between the validated Class-1 and Class-2 symmetry representatives. Neither
-candidate becomes the authoritative GQD baseline until its PM6 and B3LYP gates
-pass and the two corrected candidates have been compared.
+The corrected isolated COOH-GQD site-class comparison is complete. Both
+Class-1/C1 and Class-2/C3 candidates passed their PM6 gates, reached accepted
+B3LYP-D3(BJ)/6-31G(d,p) SMD-water true minima with zero imaginary
+frequencies, and passed independent post-DFT molecular-model/topology
+validation.
+
+B3LYP-COOH-GQD-C1-004 is the authoritative corrected isolated COOH-GQD
+baseline. B3LYP-COOH-GQD-C2-005 is retained as a valid accepted comparison
+minimum but is not the production baseline. Class 1 is favored by both the
+matched electronic-energy and Gibbs-free-energy comparisons.
 
 The previously accepted isolated drug baselines remain valid and are not
 recomputed solely because the GQD structural model was rebuilt.

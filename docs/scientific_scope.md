@@ -107,9 +107,25 @@ Both corrected monocarboxylated candidates have:
     hydroxyl oxygen: O74
     acidic hydrogen: H75
 
-Neither symmetry class is yet designated the authoritative isolated COOH-GQD
-baseline. Final selection requires quantum-chemical comparison of the two
-validated corrected candidates.
+The corrected site-class quantum-chemical comparison is complete. Both
+candidates reached accepted B3LYP-D3(BJ)/6-31G(d,p) SMD-water true minima
+with zero imaginary frequencies and passed independent post-DFT
+molecular-model/topology validation.
+
+The authoritative corrected isolated COOH-GQD baseline is:
+
+    Class 1 / C1
+    run ID: B3LYP-COOH-GQD-C1-004
+    substitution representative: C1/H55
+
+The Class-2/C3 structure represented by B3LYP-COOH-GQD-C2-005 is retained
+as a valid accepted comparison minimum but is not the production baseline.
+
+Class 1 is lower than Class 2 by 0.00510590 Hartree in electronic energy
+(approximately 3.2040 kcal/mol) and by 0.004823 Hartree in Gibbs free energy
+(approximately 3.0265 kcal/mol). The matched electronic-energy and
+free-energy comparisons therefore independently support selection of the
+Class-1/C1 structure as the authoritative corrected isolated COOH-GQD model.
 
 ---
 

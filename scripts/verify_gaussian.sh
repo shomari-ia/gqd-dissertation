@@ -1,7 +1,7 @@
 #!/bin/bash
 # verify_gaussian.sh — quality-control gate for a single Gaussian 16 log.
 #
-# Usage:  scripts/verify_gaussian.sh <path/to/job.log> [summary_dir]
+# Usage:  scripts/verify_gaussian.sh <path/to/job.log> [summary_dir] [canonical_run_id] [input_file]
 #
 # Writes a small text summary (committable) and prints one TSV line:
 #   run_id  status  imag_freq  final_scf_hartree  gibbs_hartree  log_sha256
@@ -21,10 +21,13 @@ fi
 
 LOG="$1"
 SUMDIR="${2:-}"
+CANONICAL_RUN_ID="${3:-}"
+INPUT_FILE="${4:-}"
 
 [[ -f "$LOG" ]] || { echo "ERROR: not found: $LOG" >&2; exit 1; }
 
-RUN_ID=$(basename "$LOG" .log)
+SUMMARY_STEM=$(basename "$LOG" .log)
+RUN_ID="${CANONICAL_RUN_ID:-$SUMMARY_STEM}"
 STATUS="PASS"
 CODE=0
 
@@ -40,7 +43,11 @@ fi
 ERRLINE=$(grep -m1 -E "Error termination|Convergence failure|galloc|Erroneous write" "$LOG" || true)
 
 # --- optimization ------------------------------------------------------
-ROUTE=$(grep -m1 "^ #" "$LOG" | sed 's/^ *//' || true)
+if [[ -n "$INPUT_FILE" && -f "$INPUT_FILE" ]]; then
+    ROUTE=$(awk '/^#/ { print; exit }' "$INPUT_FILE")
+else
+    ROUTE=$(grep -m1 "^ #" "$LOG" | sed 's/^ *//' || true)
+fi
 if grep -qi "opt" <<<"$ROUTE"; then
     if grep -q "Optimization completed" "$LOG"; then
         OPT="COMPLETED"
@@ -113,7 +120,7 @@ if [[ -n "$SUMDIR" ]]; then
         echo "elapsed_time    $ELAPSED"
         echo "qc_status       $STATUS"
         [[ -n "$ERRLINE" ]] && echo "error_line      $ERRLINE"
-    } > "$SUMDIR/${RUN_ID}.summary.txt"
+    } > "$SUMDIR/${SUMMARY_STEM}.summary.txt"
 fi
 
 printf "%s\t%s\t%s\t%s\t%s\t%s\n" \
