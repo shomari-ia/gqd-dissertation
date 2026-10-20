@@ -96,6 +96,66 @@ every stage transition in this project except a same-level restart.
 | **Gate** | each retained pose passes the Step 3 gate. All three poses are logged even though one is retained. |
 | **On failure** | If two poses converge to the same structure, record it — pose degeneracy is a result, not a problem. |
 
+### Complex starting-pose construction and validation
+
+Complex starting geometries must be constructed only from the accepted isolated
+B3LYP monomer geometries. The authoritative COOH-GQD fragment is written first
+and its atom order must remain unchanged; the drug fragment is written second
+with its accepted atom order preserved. Rigid-body rotation and translation of
+the accepted drug geometry are permitted for pose construction, but internal
+drug geometry must not be altered before the complex optimization.
+
+The three required starting hypotheses are:
+
+- **Flat:** drug aromatic/core plane approximately parallel to the corrected
+  GQD basal plane and centered over the basal surface.
+- **Slipped:** a distinct parallel basal pose with a defined in-plane
+  displacement relative to the flat pose.
+- **Edge:** a chemically directed pose involving the COOH-functionalized edge
+  and a documented drug polar-contact site.
+
+Starting-pose parameters define reproducible initial basins only. They are not
+assumed equilibrium adsorption distances or orientations. The unconstrained
+B3LYP-D3(BJ) optimization determines the relaxed adsorption structure.
+
+Before a basal flat or slipped structure is accepted as a production starting
+geometry, it must pass all of the following construction gates:
+
+- source monomer identity and checksum validation;
+- expected total atom count and molecular formula;
+- exact preservation of the authoritative GQD coordinates and atom order;
+- preserved drug element order and rigid-body internal distances;
+- interfragment heavy-atom minimum distance >= 2.0 A;
+- interfragment all-atom minimum distance >= 2.0 A;
+- independent post-write validation of the intended plane orientation,
+  separation, displacement, and contact geometry.
+
+For an edge pose, the heavy-atom interfragment minimum must remain >= 2.0 A.
+An intentional donor-H...acceptor hydrogen-bond contact may be shorter than
+2.0 A when explicitly defined and documented. Unintended short contacts are
+not permitted.
+
+PM6 must not be used to select complex adsorption basins or relative pose
+orientations. Dispersion-sensitive pose construction and production
+optimization proceed from the accepted B3LYP monomers directly to the
+B3LYP-D3(BJ) level.
+
+For the corrected Erlotinib pilot, the independently validated starting
+parameters are:
+
+- **Flat:** Face A; quinazoline/GQD plane angle 0 deg; core-plane separation
+  3.90 A; azimuth 209 deg; zero in-plane centroid displacement.
+- **Slipped:** Face A; quinazoline/GQD plane angle 0 deg; core-plane separation
+  3.40 A; azimuth 324 deg; 2.50 A displacement away from the C1/COOH edge.
+- **Edge:** Erlotinib N6 directed toward the O74-H75 donor; H75...N6 =
+  1.90 A; O74...N6 = 2.874176 A; quinazoline/GQD plane angle approximately
+  80 deg; deterministic interaction-axis twist 260 deg.
+
+These Erlotinib numerical parameters are specific to the Erlotinib pilot.
+Subsequent drugs require their own deterministic core/polar-site mapping,
+orientation search, and independent clash validation rather than automatic
+reuse of the Erlotinib azimuths or separations.
+
 Twelve complex optimizations (4 drugs × 3 poses) plus restarts. This is the bulk
 of the phase's compute.
 
