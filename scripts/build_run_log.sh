@@ -20,7 +20,7 @@ NOTES="run_notes.tsv"
 OUT="run_log.tsv"
 
 emit() {
-    printf "run_id\tdate\tsystem_id\tstage\tinput_file\tjob_id\tnode\tstatus\timag_freq\tscf_hartree\tgibbs_hartree\tgit_commit\toutput_sha256\tnotes\n"
+    printf "run_id\tdate\tsystem_id\tstage\tinput_file\tjob_id\tnode\tstatus\tscientific_disposition\timag_freq\tscf_hartree\tgibbs_hartree\tgit_commit\toutput_sha256\tnotes\n"
 
     find calculations -type f -name '*.prov' | sort | while read -r prov; do
         # provenance is plain key=value; read it without executing anything
@@ -58,18 +58,22 @@ emit() {
         fi
 
         note=""
+        disposition=""
         if [[ -f "$NOTES" ]]; then
-            note=$(awk -F'\t' -v id="$run_id" '$1==id {print $3}' "$NOTES" | head -n1)
+            disposition=$(awk -F'\t' -v id="$run_id" '$1==id {print $3}' "$NOTES" | head -n1)
+            note=$(awk -F'\t' -v id="$run_id" '$1==id {print $4}' "$NOTES" | head -n1)
         fi
-        # a manual status in run_notes.tsv (e.g. SUPERSEDED) wins over the QC status
+        # A manual status in run_notes.tsv may override the machine QC status only
+        # when an explicit execution-state correction is needed. Scientific meaning
+        # belongs in scientific_disposition and never overwrites the QC verdict.
         if [[ -f "$NOTES" ]]; then
             manual=$(awk -F'\t' -v id="$run_id" '$1==id && $2!="" {print $2}' "$NOTES" | head -n1)
             [[ -n "$manual" ]] && status="$manual"
         fi
 
-        printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" \
+        printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" \
             "$run_id" "$date" "$system_id" "$stage" "$input" "$job_id" "$node" \
-            "$status" "$imag" "$scf" "$gibbs" "$commit" "$osha" "$note"
+            "$status" "$disposition" "$imag" "$scf" "$gibbs" "$commit" "$osha" "$note"
     done
 }
 
