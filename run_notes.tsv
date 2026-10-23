@@ -5,9 +5,18 @@
 # Examples: ACCEPTED_CURRENT, ACCEPTED_COMPARISON, SUPERSEDED_STRUCTURAL_MODEL, QUARANTINED, RETAINED_DIAGNOSTIC.
 # Never delete a row. Supersede or retain it explicitly.
 #
-# Example (delete this line once you have real runs):
-# DFT-COOH-GQD-002	SUPERSEDED	SCF convergence failure; restarted with scf=xqc as DFT-COOH-GQD-003
-run_id	manual_status	note
-PM6-COOH-GQD-003	SUPERSEDED	Scientific calculation and QC passed; Git provenance was unavailable on the compute node. Local archive files were accidentally truncated on 2026-08-26 and restored from the verified Google Drive mirror with matching SHA-256 hashes.
-PM6-COOH-GQD-004	SUPERSEDED	Scientific calculation and QC passed, but git_commit was recorded as NA.
-PM6-COOH-GQD-005		First fully Git-linked PM6 reproducibility run; Gaussian and QC passed.
+# Example:
+# DFT-COOH-GQD-002		RETAINED_DIAGNOSTIC	SCF convergence failure; restarted with scf=xqc as DFT-COOH-GQD-003
+run_id	manual_status	scientific_disposition	note
+PM6-COOH-GQD-003		SUPERSEDED_STRUCTURAL_MODEL	Scientific calculation and QC passed; Git provenance was unavailable on the compute node. Local archive files were accidentally truncated on 2026-08-26 and restored from the verified Google Drive mirror with matching SHA-256 hashes.
+PM6-COOH-GQD-004		SUPERSEDED_STRUCTURAL_MODEL	Scientific calculation and QC passed, but git_commit was recorded as NA.
+PM6-COOH-GQD-005		SUPERSEDED_STRUCTURAL_MODEL	First fully Git-linked PM6 reproducibility run; Gaussian and QC passed, but the underlying historical GQD structural model was later superseded.
+B3LYP-COOH-GQD-001		SUPERSEDED_STRUCTURAL_MODEL	Gaussian/QC PASS is retained as an execution fact; the underlying historical GQD structural model was later shown to be invalid for the intended circumcoronene baseline and is not eligible for downstream scientific use.
+B3LYP-COOH-GQD-C1-002		RETAINED_FREQUENCY_FAILURE	Completed calculation retained as diagnostic evidence; one imaginary frequency failed the true-minimum gate.
+B3LYP-COOH-GQD-C2-003		RETAINED_FREQUENCY_FAILURE	Completed calculation retained as diagnostic evidence; one imaginary frequency failed the true-minimum gate.
+B3LYP-COOH-GQD-C1-004		ACCEPTED_CURRENT	Authoritative corrected isolated COOH-GQD baseline; selected and released for downstream use.
+B3LYP-COOH-GQD-C2-005		ACCEPTED_COMPARISON	Valid corrected comparison minimum; retained but not used as the production baseline.
+B3LYP-ERLOTINIB-001		ACCEPTED_ISOLATED_BASELINE	Accepted isolated Erlotinib B3LYP baseline; remains valid after GQD scaffold correction.
+B3LYP-GEFITINIB-001		ACCEPTED_ISOLATED_BASELINE	Accepted isolated Gefitinib B3LYP baseline; remains valid after GQD scaffold correction.
+B3LYP-VENETOCLAX-001		ACCEPTED_ISOLATED_BASELINE	Accepted isolated Venetoclax B3LYP baseline; remains valid after GQD scaffold correction.
+B3LYP-ABT737-001		ACCEPTED_ISOLATED_BASELINE	Accepted isolated ABT-737 B3LYP baseline; remains valid after GQD scaffold correction.
