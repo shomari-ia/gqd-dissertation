@@ -29,13 +29,27 @@ created when that work begins, not before.
 
 ---
 
-## Computational Environment 
+## Computational Environment
+
+The project is in a controlled MCSR execution-environment transition.
+
+**Historical / currently preserved execution layer**
 
 - **Cluster:** Maple, Mississippi Center for Supercomputing Research (MCSR)
-- **Scheduler:** OpenPBS (not Slurm)
-- **Nodes:** 36 cores / 119 GB; Gaussian is licensed **single-node only**
-- **Allocation per DFT job:** 16 cores, 32 GB
-- **Software:** Gaussian 16 Rev C.01; Avogadro 1.2; Open Babel; Multiwfn; NCIPLOT
+- **Scheduler:** OpenPBS
+- **Gaussian build used for accepted historical/current Maple work:** Gaussian 16 Rev C.01 / `g16-c01-avx2`
+- **Established DFT allocation:** 16 cores, 32 GB
+- **Submission wrapper:** `scripts/run_gaussian.pbs` — retained as the historical Maple execution layer and must not be overwritten.
+
+**Forward production environment**
+
+- **Cluster:** Magnolia
+- **Scheduler:** Slurm
+- **Gaussian build reported by MCSR:** `g16-c02-avx2`, CPU-based
+- **Migration rule:** do not invalidate accepted Maple calculations solely because the execution platform changes. New production work transitions to Magnolia after the Magnolia submission wrapper and provenance path are validated.
+- **Repository state:** the Magnolia-specific Slurm wrapper is not yet part of the canonical `main` branch; until it is committed and validated, Maple and Magnolia execution records must remain explicitly distinguished.
+
+The scientific method is unchanged by the platform transition: B3LYP-D3(BJ)/6-31G(d,p) with SMD water for primary optimization/frequency work, with the established downstream validation workflow.
 
 Local analysis environment: `environments/environment.yml`.
 
@@ -99,6 +113,18 @@ count, energies). `scripts/build_run_log.sh` assembles both into the table.
 
 Hand annotations go in `run_notes.tsv`, joined on `run_id`. Rebuilding the log
 therefore never destroys anything one writes.
+
+The ledger deliberately separates two concepts:
+
+- `status` = execution/QC outcome generated from the computational record;
+- `scientific_disposition` = current scientific interpretation, such as
+  `ACCEPTED_CURRENT`, `ACCEPTED_COMPARISON`,
+  `SUPERSEDED_STRUCTURAL_MODEL`, or `RETAINED_FREQUENCY_FAILURE`.
+
+A run may therefore remain `status=PASS` while being scientifically superseded.
+This preserves the historical fact that the calculation executed successfully
+without incorrectly presenting an invalidated molecular model as a current
+scientific baseline.
 
 Failed and superseded runs stay in the log permanently, with the reason
 recorded. A clean log with no failures in it is not evidence of good work; it
