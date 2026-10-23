@@ -72,13 +72,18 @@ Historical isolated COOH-GQD lineage:
 
 These runs remain immutable provenance records, but the isolated COOH-GQD
 baseline derived from the historical starting geometry is scientifically
-superseded.
+superseded. Their execution/QC outcomes remain part of the machine record;
+their scientific disposition is `SUPERSEDED_STRUCTURAL_MODEL`, and they are
+not eligible as current molecular baselines or downstream GQD-dependent inputs.
 
 A later geometry/topology audit established that the historical carbon
 framework was already strongly warped before the accepted B3LYP calculation
 and did not reproduce the required ideal circumcoronene graph. Numerical
 optimization and frequency acceptance therefore did not establish correctness
-of the underlying molecular model.
+of the underlying molecular model. A machine-level `PASS` therefore records
+successful execution/QC only; scientific acceptance additionally requires the
+applicable molecular-identity, topology, geometry, frequency, comparability,
+provenance, and independent scientific-validation gates.
 
 Corrected deterministic rebuild:
 
@@ -495,9 +500,13 @@ For a scope change:
 
 GQD model:                         DEFINED
 COOH connectivity:                 VALIDATED
-Historical COOH-GQD v01 baseline:  SUPERSEDED
-Corrected COOH-GQD candidates:     VALIDATED FOR QM START
-Authoritative COOH-GQD baseline:   PENDING QM COMPARISON
+Historical COOH-GQD v01 baseline:  SUPERSEDED_STRUCTURAL_MODEL
+Corrected COOH-GQD Class 1 / C1:   ACCEPTED TRUE MINIMUM
+Corrected COOH-GQD Class 2 / C3:   ACCEPTED COMPARISON MINIMUM
+Authoritative COOH-GQD baseline:   B3LYP-COOH-GQD-C1-004 — SELECTED / RELEASED
+Retained comparison baseline:      B3LYP-COOH-GQD-C2-005 — RETAINED COMPARISON
+Isolated Phase I drug baselines:   COMPLETE / ACCEPTED
+Historical GQD-complex artifacts:  QUARANTINED / NOT ELIGIBLE FOR REUSE
 Primary DFT protocol:              DEFINED
 Solvent model:                     DEFINED
 Phase I endpoints:                 DEFINED
