@@ -4,8 +4,12 @@
 # Drive, with its SHA-256 recorded in run_log.tsv.
 # ---------------------------------------------------------------------------
 
-archive/          # chk, wfx, cube, and full Gaussian logs — Drive-backed
+# Binary checkpoints, formatted checkpoints, logs, and regenerable archive data — Drive-backed
+archive/*
 !archive/README.md
+
+# Slurm scheduler stdout
+slurm-*.out
 
 # Gaussian scratch
 *.rwf
