@@ -1,0 +1,17 @@
+run_id          B3LYP-ERLOTINIB-MAGNOLIA-VALIDATION-001
+log_file        archive/logs/erlotinib_b3lyp_optfreq_magnolia_validation_v01.log
+log_sha256      3a4b5820655e5e4ca65f7b35fb2402e7682bcd3af6dea96c0ebab139860bdecf
+verified_at     2026-10-27T01:38:12-05:00
+route           #p opt freq B3LYP/6-31G(d,p) EmpiricalDispersion=GD3BJ SCRF=(SMD,Solvent=Water) geom=check
+charge_mult     Charge =  0 Multiplicity = 1
+n_atoms         52
+termination     NORMAL
+optimization    COMPLETED
+imag_freq       0
+scf_hartree     -1317.40085224
+zpe_hartree     0.420518
+gibbs_hartree   -1317.040903
+cp_corrected    NA
+cpu_time        Job cpu time:       0 days  2 hours 28 minutes 40.8 seconds.
+elapsed_time    Elapsed time:       0 days  0 hours  9 minutes 41.8 seconds.
+qc_status       PASS

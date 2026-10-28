@@ -34,6 +34,8 @@ emit() {
         node=$(get execution_host)
         [[ -z "$node" ]] && node=$(get node)
         commit=$(get git_commit)
+        runtime_commit=$(get runtime_git_commit)
+        if [[ -n "$runtime_commit" && ( -z "$commit" || "$commit" == "NA" || "$commit" == "UNKNOWN" ) ]]; then commit="$runtime_commit"; fi
         osha=$(get output_sha256)
 
         # stage and system are derived from the path/run_id, not typed twice
@@ -67,6 +69,7 @@ emit() {
         # when an explicit execution-state correction is needed. Scientific meaning
         # belongs in scientific_disposition and never overwrites the QC verdict.
         if [[ -f "$NOTES" ]]; then
+        [[ -z "$note" ]] && note="NA"
             manual=$(awk -F'\t' -v id="$run_id" '$1==id && $2!="" {print $2}' "$NOTES" | head -n1)
             [[ -n "$manual" ]] && status="$manual"
         fi

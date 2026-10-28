@@ -1,0 +1,17 @@
+run_id          B3LYP-COOH-GQD-ERLOTINIB-SLIPPED-001
+log_file        archive/logs/cooh_gqd_c1_erlotinib_slipped_b3lyp_optfreq_v01.log
+log_sha256      42c463a40ffe43ec56b9ffbbc22d2ba06a2ba82c842593ecc6797c58f4f22c6d
+verified_at     2026-10-21T18:51:02-05:00
+route           #p opt=(calcfc,tight,maxcycles=200) freq B3LYP/6-31G(d,p) EmpiricalDispersion=GD3BJ SCRF=(SMD,Solvent=Water) Int=UltraFine NoSymm
+charge_mult     Charge =  0 Multiplicity = 1
+n_atoms         127
+termination     NORMAL
+optimization    COMPLETED
+imag_freq       0
+scf_hartree     -3575.30729853
+zpe_hartree     0.971369
+gibbs_hartree   -3574.428296
+cp_corrected    NA
+cpu_time        Job cpu time:       4 days 14 hours 22 minutes 53.1 seconds.
+elapsed_time    Elapsed time:       0 days  6 hours 55 minutes 55.3 seconds.
+qc_status       PASS
