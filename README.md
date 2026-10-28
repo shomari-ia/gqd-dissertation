@@ -31,7 +31,7 @@ created when that work begins, not before.
 
 ## Computational Environment
 
-The project is in a controlled MCSR execution-environment transition.
+The MCSR execution-environment transition has been validated and closed for Gaussian production.
 
 **Historical / currently preserved execution layer**
 
@@ -41,13 +41,14 @@ The project is in a controlled MCSR execution-environment transition.
 - **Established DFT allocation:** 16 cores, 32 GB
 - **Submission wrapper:** `scripts/run_gaussian.pbs` — retained as the historical Maple execution layer and must not be overwritten.
 
-**Forward production environment**
+**Active production environment**
 
 - **Cluster:** Magnolia
 - **Scheduler:** Slurm
 - **Gaussian build reported by MCSR:** `g16-c02-avx2`, CPU-based
-- **Migration rule:** do not invalidate accepted Maple calculations solely because the execution platform changes. New production work transitions to Magnolia after the Magnolia submission wrapper and provenance path are validated.
-- **Repository state:** the Magnolia-specific Slurm wrapper is not yet part of the canonical `main` branch; until it is committed and validated, Maple and Magnolia execution records must remain explicitly distinguished.
+- **Production rule:** Maple is closed to new Gaussian production work. New Gaussian production proceeds on Magnolia through the validated Slurm workflow.
+- **Validated wrapper:** `scripts/run_gaussian_magnolia.slurm` is committed and validated on `main`.
+- **Platform validation:** `B3LYP-ERLOTINIB-MAGNOLIA-VALIDATION-001` (Slurm job 320607, node019) reproduced the accepted Maple Erlotinib baseline at the reported SCF, ZPE, Gibbs, optimization, and frequency gates and is classified `ACCEPTED_PLATFORM_VALIDATION`.
 
 The scientific method is unchanged by the platform transition: B3LYP-D3(BJ)/6-31G(d,p) with SMD water for primary optimization/frequency work, with the established downstream validation workflow.
 
@@ -73,7 +74,7 @@ run_notes.tsv             the one file you edit by hand
 
 ## Reproducing a Calculation 
 
-Everything below runs from the repository root on Maple.
+Historical Maple examples below are retained for provenance. New Gaussian production uses the validated Magnolia/Slurm execution layer.
 
 ```bash
 # 1. Commit the input before submitting (the run log records the commit hash)
@@ -141,8 +142,7 @@ script has passed on the log that produced it.
 
 ## Reproducibility Limitations
 
-- Gaussian 16 is proprietary; exact reproduction requires a licensed copy and
-  the same revision (Rev C.01).
+- Gaussian 16 is proprietary; exact reproduction requires a licensed copy. Accepted historical Maple work used Rev C.01, while the validated Magnolia production environment uses Rev C.02.
 - SCF convergence paths are hardware- and compiler-dependent; final energies are
   reproducible to the convergence threshold, not bit-for-bit.
 - Checkpoint files are binary and version-specific; the plain-text inputs and
