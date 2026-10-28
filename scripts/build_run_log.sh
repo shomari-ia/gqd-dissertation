@@ -45,12 +45,20 @@ emit() {
         status="MISSING_LOG"; imag="NA"; scf="NA"; gibbs="NA"
         sumdir="$(dirname "$(dirname "$input")")/summaries"
 
+        # Preserved failed-run provenance may live under a run-specific
+        # failed_runs/<RUN_ID>/ directory while sharing an output basename
+        # with a later successful retry. Prefer that run-local failed summary
+        # so the retry's summary can never overwrite the failed execution fact.
+        failed_sumfile="$(dirname "$prov")/$(basename "$output" .log).failed.summary.txt"
+
         # Preferred naming convention: summary named by reproducible run ID.
         sumfile="${sumdir}/${run_id}.summary.txt"
 
-        # Backward-compatible fallback for older output-basename summaries.
-        if [[ ! -f "$sumfile" ]]; then
-           sumfile="${sumdir}/$(basename "$output" .log).summary.txt"
+        if [[ "$prov" == *"/failed_runs/"* && -f "$failed_sumfile" ]]; then
+            sumfile="$failed_sumfile"
+        elif [[ ! -f "$sumfile" ]]; then
+            # Backward-compatible fallback for older output-basename summaries.
+            sumfile="${sumdir}/$(basename "$output" .log).summary.txt"
         fi
         if [[ -f "$sumfile" ]]; then
             status=$(grep -m1 '^qc_status' "$sumfile" | awk '{print $2}')
