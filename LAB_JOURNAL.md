@@ -7557,3 +7557,21 @@ single-session format.*
 - Archive / checksum status: Complete archive inventory remains 71 files with verification PASS. No archived Gaussian scientific output was modified during final closure.
 - What remains: Commit and push this Entry 061 closure record and perform one final HEAD-versus-origin/main verification.
 - Next action: Version-control this closure record, verify remote identity, then formally close the Magnolia checkpoint and proceed from the validated Magnolia production baseline.
+
+### Entry 062 — 2026-10-28 — Evidence-register audit repair of PM6-ABT737-001 ledger classification
+- Scientific/build objective: Reconcile a run-ledger status inconsistency discovered while constructing the Scientific Evidence Register and prevent a preserved failed ABT-737 PM6 attempt from inheriting the QC summary of its successful retry.
+- Starting state: The journal and failed-run archive classify PM6-ABT737-001 as an abnormal Gaussian input-format failure caused by a missing terminating blank record, superseded by PM6-ABT737-002. The generated run_log.tsv incorrectly showed PM6-ABT737-001 as PASS because the run-log builder's legacy basename-summary fallback resolved to the successful retry summary sharing the same output basename.
+- Commands / actions performed: Audited the failed-run provenance and failed summary; confirmed PBS job 7738511.maple on cn080, gaussian_exit=1, qc_exit=2, abnormal termination, optimization not completed, and failed log SHA256=92281568580c8bdf45415ac973bd23a997118426b1beb02abd1f44401eeb9b12. Updated scripts/build_run_log.sh to prefer a run-local *.failed.summary.txt when provenance resides under a failed_runs/<RUN_ID>/ lineage. Added RETAINED_INPUT_FORMAT_FAILURE to run_notes.tsv for PM6-ABT737-001 and repaired the generated ledger row to status=FAILED with no final SCF/Gibbs values.
+- Files changed: scripts/build_run_log.sh; run_notes.tsv; run_log.tsv; LAB_JOURNAL.md.
+- Job IDs / run IDs: PM6-ABT737-001 / PBS 7738511.maple / cn080; successful corrected retry PM6-ABT737-002 remains unchanged.
+- Validation performed: Failed-run provenance and failed summary agree on abnormal termination and qc_status=FAILED. The preserved failed log SHA256 matches the failed-run archive record. The corrected ledger no longer imports the successful PM6-ABT737-002 summary into the PM6-ABT737-001 row.
+- Result: PM6-ABT737-001 is correctly represented as execution FAILED with scientific_disposition=RETAINED_INPUT_FORMAT_FAILURE. PM6-ABT737-002 remains the valid corrected PM6 result. The run-log builder now prevents this class of basename collision for preserved failed-run lineages.
+- Problems encountered: Legacy output-basename summary fallback was ambiguous when a failed attempt and successful retry reused the same working output basename.
+- Root cause: The run-log builder selected summaries from the normal stage summaries directory using the output basename without first checking for a run-local failed summary associated with failed-run provenance.
+- Correction: Prioritize run-local failed summaries for provenance paths under failed_runs/, then fall back to canonical run-ID and legacy basename summaries only when appropriate.
+- Why the correction was justified: Execution/QC history must remain immutable and must not be overwritten by later retries. The repair changes only ledger reconstruction logic and scientific-disposition metadata; it does not alter any Gaussian calculation or accepted scientific result.
+- Decision / advancement gate: PASS — ledger classification repaired. PASS — successful ABT-737 retry remains unaffected. PASS — Scientific Evidence Register may use the corrected canonical ledger state.
+- Archive / checksum status: No archived Gaussian file was modified. Failed-run log/checkpoint remain preserved under archive/failed_runs/PM6-ABT737-001/.
+- What remains: Commit and remotely verify this evidence-register audit repair together with subsequent evidence-control artifacts as appropriate.
+- Next action: Build the Scientific Evidence Register, Acceptance Gates v2.0, SEP-001, Scientific Status Brief, and Supersession Register from the corrected canonical repository state.
+
