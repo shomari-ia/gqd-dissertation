@@ -63,6 +63,10 @@ SCIENTIFIC_STATUS.md              canonical current scientific status
 scientific_evidence_register.tsv  committee-facing scientific evidence index
 supersession_register.tsv         controlled supersession/change-history index
 docs/acceptance_gates_v2.md       scientific acceptance and advancement rules
+docs/execution_plan_v2.md         gate-based three-phase execution and forecast
+docs/research_journal_publication_edition.md  curated defense/publication journal design
+docs/computational_workflow.md    canonical Phase I workflow v2.0
+docs/storage_map.md               Git/HPC/Drive storage and full-calculation map
 config/systems.yml                systems, charges, multiplicities, route lines — one source of truth
 calculations/phase1_dft/          inputs, provenance records, QC summaries, by stage
 scripts/                          PBS/Slurm execution, QC, run-log/archive builders
