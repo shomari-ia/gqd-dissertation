@@ -1,44 +1,64 @@
-# Storage Map
+# Storage Map v2.0
 
-Four locations. Each holds exactly one kind of thing. When you are unsure where
-something goes, the answer is in this table.
+**Controlled date:** 2026-10-29
 
-| Location | Holds | Versioned by | Rule |
-|---|---|---|---|
-| **GitHub repo** | inputs (`.com`), scripts, `config/`, `docs/`, `run_log.tsv`, `*.prov`, `*.summary.txt`, results tables and figures | Git commits + tags | Nothing larger than ~5 MB. Nothing binary except final figures. |
-| **`archive/` → Google Drive `02_archive/`** | full `.log`, `.chk`, `.fchk`, `.wfx`, cube files | `run_id` folder names | Write once. Never edit in place. A correction is a new `run_id`. |
-| **Google Docs (Drive `01_manuscript/`)** | chapter prose while drafting | Docs revision history | Numbers enter prose only after they exist in `run_log.tsv`. |
-| **Zotero → `docs/references.bib`** | bibliography | Better BibTeX auto-export, then Git | Pinned citation keys only. |
+The project uses separate systems for version-controlled reproducibility, HPC execution, large scientific artifacts, committee deliverables, and dissertation writing. The `run_id` is the primary scientific join key.
 
-## The join key
+| Location | Holds | Control rule |
+|---|---|---|
+| **GitHub repository** | inputs, scripts, configuration, provenance, QC summaries, ledgers/registers, canonical scope/workflow/gates, text results, reproducible final figures | Versioned by Git. No large Gaussian binaries. |
+| **MCSR / HPC archive** | active execution files and full Gaussian scientific artifacts produced on Maple/Magnolia | Preserve run-specific identity; do not overwrite historical runs. |
+| **Google Drive — CDSE/GQD Dissertation/04_RUN_ARCHIVE/<RUN_ID>/** | full .log, .chk, .fchk, .wfx, cube files, final geometry exports and associated run package | One controlled run folder per RUN_ID; write-once scientific archive behavior. |
+| **Google Drive — 01_SCIENTIFIC_EVIDENCE/** | SEP evidence packages | Evidence is organized by scientific claim/milestone, not by file type. |
+| **Google Drive — 00_CURRENT_STATUS/** | current scientific status, evidence register, current committee package | Must reflect only the current accepted scientific state. |
+| **Google Drive — 07_DISSERTATION_CHAPTERS/** | current manuscript chapters / review copies | Numbers enter prose only after scientific acceptance and traceability. |
+| **Google Drive — 10_RESEARCH_JOURNAL_PUBLICATION_EDITION/** | curated print/defense journal and assets | Derived from canonical records; never replaces LAB_JOURNAL.md. |
+| **Zotero → docs/references.bib** | bibliography | Citation control through Zotero / Better BibTeX and Git. |
 
-`run_id` appears in five places and ties the whole record together:
+## Run archive unit
 
-    run_log.tsv row  →  calculations/**/prov/<run_id>.prov
-                     →  calculations/**/summaries/<stem>.summary.txt
-                     →  Drive 02_archive/phase1_dft/<run_id>/
-                     →  the results table cell that reports the number
+Recommended Drive structure:
 
-Given any number in Chapter 2, you can walk backwards to the input file, the
-job script, the commit, the node it ran on, and the checksum of the output it
-came from. That traceability is the entire point of the system.
+```
+04_RUN_ARCHIVE/
+└── <RUN_ID>/
+    ├── input/
+    ├── log/
+    ├── checkpoint/
+    ├── geometry/
+    ├── provenance/
+    ├── QC/
+    └── MANIFEST.txt
+```
 
-## What is *not* stored anywhere
+The run folder is the human-reviewable package for the full calculation.
 
-Gaussian scratch (`.rwf`, `.int`, `.d2e`, `Gau-*`) and PBS stdout files. They
-are regenerable and enormous. `.gitignore` already excludes them; delete them
-from the cluster after a successful QC gate.
+## Traceability chain
+
+`reported result → Scientific Evidence Register → run_log.tsv → provenance/QC → archive_manifest.tsv → full run artifact`
+
+Given any reported number, the project should be able to identify:
+- scientific claim;
+- run ID;
+- input file;
+- Git commit;
+- scheduler/job ID;
+- node;
+- Gaussian build;
+- full output-log checksum;
+- checkpoint/archive location;
+- scientific disposition.
 
 ## Integrity
 
-Every archived file's SHA-256, size, file type, and associated `run_id` are
-recorded in `archive_manifest.tsv`. Gaussian output-log hashes are also
-recorded in `run_log.tsv` and the corresponding provenance records.
+`archive_manifest.tsv` records the SHA-256, size, file type and run ID for archived scientific files.
 
 Run:
 
-    scripts/build_archive_manifest.sh --verify
+`scripts/build_archive_manifest.sh --verify`
 
-to re-hash every archived file and compare it with the committed manifest. A
-size or checksum mismatch indicates that a file changed or was corrupted during
-storage or transfer.
+to verify the scientific archive represented in the project manifest.
+
+## Non-archived scratch
+
+Gaussian scratch such as `.rwf`, `.int`, `.d2e` and temporary `Gau-*` files are not part of the permanent scientific archive unless a specific recovery event requires preservation.
