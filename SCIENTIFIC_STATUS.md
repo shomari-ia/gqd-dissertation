@@ -57,6 +57,10 @@ Maple is closed to new Gaussian production work. Historical Maple results remain
 - Lab Journal: Entries 001-062; Entry 062 repairs the `PM6-ABT737-001` failed-run ledger classification.
 - Historical malformed-GQD Erlotinib complexes: QUARANTINED / NOT ELIGIBLE FOR REUSE.
 - Acceptance logic: governed by `docs/acceptance_gates_v2.md`.
+- Execution strategy / forecast: `docs/execution_plan_v2.md`.
+- Canonical Phase I workflow: `docs/computational_workflow.md` (v2.0).
+- Storage / full-calculation map: `docs/storage_map.md` (v2.0).
+- Publication / defense journal design: `docs/research_journal_publication_edition.md`.
 - Scientific evidence index: `scientific_evidence_register.tsv`.
 - Supersession/change-control index: `supersession_register.tsv`.
 
