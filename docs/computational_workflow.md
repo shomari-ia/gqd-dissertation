@@ -1,202 +1,513 @@
-# Computational Workflow — Phase I
+# Computational Workflow v2.0 — Phase I DFT Drug Loading
 
-Written to the level Chapter 2 needs. Phases II and III get their own sections
-of this file when they begin; do not scaffold them now.
+**Controlled date:** 2026-10-29  
+**Status:** Canonical Phase I workflow.  
+**Active Gaussian platform:** Magnolia / Slurm / Gaussian 16 C.02.
 
-Every step states its input, its gate, and what happens when the gate fails.
-A result advances only when its gate passes — not because an output file exists.
+This document supersedes the earlier Phase I workflow presentation while preserving its scientifically valid history. It integrates the corrected GQD lineage, Acceptance Gates v2.0, status-versus-disposition semantics, the validated Magnolia execution layer, and the Scientific Evidence / Supersession control system.
 
----
-
-## Step 1 — Structure preparation
-
-| | |
-|---|---|
-| **Input** | Deterministically rebuilt circumcoronene parent for COOH-GQD; PubChem SDFs for the locked drug set |
-| **Tools** | `scripts/build_circumcoronene.py`, `scripts/hydrogenate_circumcoronene.py`, `scripts/functionalize_circumcoronene_cooh.py` for corrected GQD construction; Open Babel for documented drug preparation |
-| **Output** | validated text structures in `structures/prepared/`; Gaussian inputs in `calculations/phase1_dft/pm6/inputs/` |
-| **Gate** | For COOH-GQD: C55H18O2, 75 atoms, intact C54 circumcoronene scaffold with 72 C-C edges, 18 degree-2 carbons, 36 degree-3 carbons, 19 six-membered cycles, exactly one COOH substituent, standardized C72/O73/O74/H75 functional-group mapping, charge 0, multiplicity 1. |
-| **On failure** | Return to the deterministic preparation step and identify the construction defect. Do not hand-repair a malformed GQD geometry or advance a structure merely because a quantum-chemistry input can be generated. |
-
-Structures are prepared using the appropriate reproducible preparation route.
-
-Corrected COOH-GQD preparation is deterministic and script-based. The
-historical v01 GQD lineage is retained for provenance but is
-not reused as the corrected structural baseline.
-
-PubChem drug preparation uses the documented Open Babel/MMFF94 route.
-
-Raw PubChem files remain immutable.
-Prepared structures are independently validated and committed as text before
-Gaussian work.
+Phases II and III are governed by the Execution Plan and Scientific Scope until they enter production. Their detailed computational workflows will be added when those phases begin.
 
 ---
 
-## Step 2 — PM6 pre-optimization
+## 1. Governing principle
 
-| | |
-|---|---|
-| **Input** | `pm6/inputs/<system>_pm6_opt_<version>.com`; corrected COOH-GQD symmetry-class candidates use the new v02 lineage |
-| **Resources** | 8 cores, 8 GB, ≤4 h |
-| **Output** | run-specific PM6 log and checkpoint in `archive/logs/` and `archive/chk/` |
-| **Gate** | `scripts/verify_gaussian.sh` exits 0 with normal termination and "Optimization completed". For corrected COOH-GQD, the final PM6 geometry must additionally pass an independent topology/geometry audit before B3LYP advancement. |
-| **On failure** | Inspect the final geometry and determine whether the problem is convergence or molecular-model integrity. A topology/connectivity failure returns to Step 1; it is not corrected by adding convergence keywords. |
+A result advances only when its **applicable scientific gates pass**.
 
-For corrected COOH-GQD, the post-PM6 audit must confirm the intended
-C55H18O2 composition, intact C54 circumcoronene scaffold, single COOH
-attachment, and absence of unintended bonding or severe scaffold distortion.
+Gaussian normal termination, optimization completion, and zero imaginary frequencies are necessary for many calculations but are not sufficient by themselves to establish molecular-model validity or scientific acceptance.
 
-The checkpoint is the deliverable here, not the energy. PM6 energies are
-recorded for completeness but are **not comparable** to DFT energies and never
-enter a binding-energy expression.
+Acceptance is governed by `docs/acceptance_gates_v2.md`.
 
----
+### Gate map
 
-## Step 3 — B3LYP optimization + frequencies
-
-| | |
-|---|---|
-| **Input** | `b3lyp/inputs/<system>_b3lyp_optfreq_<version>.com`; standard PM6-to-B3LYP handoff uses `%oldchk=` from the corresponding PM6 checkpoint with `geom=check`. The corrected COOH-GQD site-class comparison began with matched v02 checkpoint-handoff inputs; after one COOH-localized imaginary frequency in each v02 result, accepted v03 retries used validated explicit Cartesian imaginary-mode-displaced seeds with fresh checkpoints, `NoSymm`, `Int=UltraFine`, and `Opt=(CalcFC,Tight,MaxCycles=200)`. |
-| **Level** | B3LYP-D3(BJ)/6-31G(d,p), SMD water |
-| **Resources** | 16 cores, 32 GB, one node |
-| **Output** | optimized geometry, SCF energy, thermal free-energy correction |
-| **Gate** | normal termination, optimization completed, **zero imaginary frequencies**. Corrected COOH-GQD candidates must also pass a post-DFT molecular-model audit before scientific acceptance. |
-| **On failure — imaginary mode** | Displace the geometry along the imaginary mode and re-optimize as a new `run_id`. Record the original as `FAILED` with the mode frequency in `run_notes.tsv`; never delete it. |
-| **On failure — walltime** | Resubmit with `geom=check guess=read` from the *same-level* checkpoint (valid here: same method, same basis). Expected for venetoclax and ABT-737. |
-| **On failure — SCF convergence** | `scf=xqc`, or `scf=(maxcycle=256)`. New `run_id`; note the reason. |
-
-The corrected isolated COOH-GQD site-class comparison is complete. Both
-Class-1/C1 and Class-2/C3 candidates passed their PM6 gates, reached accepted
-B3LYP-D3(BJ)/6-31G(d,p) SMD-water true minima with zero imaginary
-frequencies, and passed independent post-DFT molecular-model/topology
-validation.
-
-B3LYP-COOH-GQD-C1-004 is the authoritative corrected isolated COOH-GQD
-baseline. B3LYP-COOH-GQD-C2-005 is retained as a valid accepted comparison
-minimum but is not the production baseline. Class 1 is favored by both the
-matched electronic-energy and Gibbs-free-energy comparisons.
-
-The previously accepted isolated drug baselines remain valid and are not
-recomputed solely because the GQD structural model was rebuilt.
-
-**Do not carry `guess=read` across a method change.** A PM6 wavefunction is not
-a valid starting guess for a DFT calculation, and reading one across differing
-basis sets is invalid regardless of method. `geom=check` alone is correct for
-every stage transition in this project except a same-level restart.
+- **G0** — lineage and input identity
+- **G1** — molecular identity
+- **G2** — graph / connectivity / topology
+- **G3** — geometry / pose plausibility
+- **G4** — execution / numerical QC
+- **G5** — stationary point / frequency
+- **G6** — scientific comparability
+- **G7** — provenance / reproducibility
+- **G8** — archive integrity
+- **G9** — independent scientific validation
 
 ---
 
-## Step 4 — Complex construction and optimization
+## 2. Execution status, scientific disposition, advancement
 
-| | |
-|---|---|
-| **Input** | optimized GQD + optimized drug, assembled in three poses (flat, slipped, edge) |
-| **Level** | same as Step 3 — this is what makes the energies subtractable |
-| **Output** | three optimized complexes per drug; lowest-energy converged pose retained |
-| **Gate** | each retained pose passes the Step 3 gate. All three poses are logged even though one is retained. |
-| **On failure** | If two poses converge to the same structure, record it — pose degeneracy is a result, not a problem. |
+These are separate fields.
 
-### Complex starting-pose construction and validation
+### Execution / QC status
 
-Complex starting geometries must be constructed only from the accepted isolated
-B3LYP monomer geometries. The authoritative COOH-GQD fragment is written first
-and its atom order must remain unchanged; the drug fragment is written second
-with its accepted atom order preserved. Rigid-body rotation and translation of
-the accepted drug geometry are permitted for pose construction, but internal
-drug geometry must not be altered before the complex optimization.
+Examples:
+- `PASS`
+- `FAILED`
+- `MISSING_LOG`
 
-The three required starting hypotheses are:
+### Scientific disposition
 
-- **Flat:** drug aromatic/core plane approximately parallel to the corrected
-  GQD basal plane and centered over the basal surface.
-- **Slipped:** a distinct parallel basal pose with a defined in-plane
-  displacement relative to the flat pose.
-- **Edge:** a chemically directed pose involving the COOH-functionalized edge
-  and a documented drug polar-contact site.
+Examples:
+- `ACCEPTED_CURRENT`
+- `ACCEPTED_COMPARISON`
+- `ACCEPTED_ISOLATED_BASELINE`
+- `ACCEPTED_ADSORPTION_MINIMUM`
+- `ACCEPTED_PLATFORM_VALIDATION`
+- `SUPERSEDED_STRUCTURAL_MODEL`
+- `RETAINED_FREQUENCY_FAILURE`
+- `RETAINED_INPUT_FORMAT_FAILURE`
+- `RETAINED_INFRASTRUCTURE_FAILURE`
+- `QUARANTINED`
 
-Starting-pose parameters define reproducible initial basins only. They are not
-assumed equilibrium adsorption distances or orientations. The unconstrained
-B3LYP-D3(BJ) optimization determines the relaxed adsorption structure.
+A calculation may remain `PASS` as an execution fact while being scientifically superseded.
 
-Before a basal flat or slipped structure is accepted as a production starting
-geometry, it must pass all of the following construction gates:
+---
 
-- source monomer identity and checksum validation;
-- expected total atom count and molecular formula;
-- exact preservation of the authoritative GQD coordinates and atom order;
+## 3. Platform control
+
+### Historical execution layer
+
+Maple / OpenPBS / Gaussian 16 C.01 is retained for provenance.
+
+Accepted Maple results remain scientifically valid according to their individual dispositions.
+
+No new Gaussian production work should be launched on Maple.
+
+### Active production layer
+
+Magnolia / Slurm / Gaussian 16 C.02 is the active Gaussian production environment.
+
+Validated control:
+- `B3LYP-ERLOTINIB-MAGNOLIA-VALIDATION-001`
+- Slurm job `320607`
+- node `node019`
+- 16 Gaussian shared cores
+- 32 GB Gaussian memory
+- 64 GB scheduler allocation
+- local scratch
+- runtime Git identity
+- output/checkpoint hashing
+- QC summary
+- provenance and ledger integration
+
+The validation reproduced the accepted Maple Erlotinib baseline to the project-reported precision.
+
+Submission wrapper:
+- historical: `scripts/run_gaussian.pbs`
+- active: `scripts/run_gaussian_magnolia.slurm`
+
+The historical PBS wrapper must not be overwritten.
+
+---
+
+## 4. Step 1 — deterministic structure preparation
+
+### Corrected COOH-GQD
+
+Input:
+- deterministically rebuilt circumcoronene parent.
+
+Tools:
+- `scripts/build_circumcoronene.py`
+- `scripts/hydrogenate_circumcoronene.py`
+- `scripts/functionalize_circumcoronene_cooh.py`
+
+Required corrected-carrier identity:
+- C55H18O2
+- 75 atoms
+- intact C54 circumcoronene scaffold
+- 72 scaffold C-C edges
+- 18 degree-2 carbons
+- 36 degree-3 carbons
+- 19 six-membered cycles
+- one COOH substituent
+- standardized C72/O73/O74/H75 functional-group mapping
+- charge 0
+- multiplicity 1
+
+**Gates:** G0-G3, G9 as applicable.
+
+On failure:
+- return to deterministic construction;
+- identify the structural defect;
+- do not hand-repair a malformed carrier merely to make a Gaussian input run.
+
+Historical v01 GQD artifacts remain preserved but are scientifically `SUPERSEDED_STRUCTURAL_MODEL`.
+
+### Drugs
+
+Raw PubChem structures remain immutable.
+
+Prepared drug structures follow the documented preparation route and must pass identity/protonation/atom-order checks before quantum-chemical advancement.
+
+---
+
+## 5. Step 2 — isolated-species PM6 preparation
+
+PM6 remains part of the isolated-monomer preparation history and corrected isolated GQD workflow.
+
+PM6 is **not** a scientific adsorption-basin selector and is **not** used to choose complex pose orientations.
+
+For corrected isolated GQD candidates, the final PM6 geometry must independently retain:
+- C55H18O2 identity;
+- intended scaffold topology;
+- one COOH attachment;
+- absence of unintended bonding;
+- absence of severe scaffold distortion.
+
+PM6 energy is recorded but is not compared directly with DFT energy and never enters the final DFT binding-energy expression.
+
+**Gates:** G0-G2, G4, G7-G9 as applicable.
+
+---
+
+## 6. Step 3 — isolated B3LYP optimization and frequency
+
+Primary level:
+
+`B3LYP-D3(BJ)/6-31G(d,p), SMD water`
+
+Standard isolated-species gate:
+- normal termination;
+- optimization completed;
+- 0 imaginary frequencies for an accepted minimum;
+- molecular/model identity retained;
+- provenance complete;
+- archive/checksum complete;
+- independent scientific validation where required.
+
+### Corrected GQD lineage
+
+Accepted:
+- `B3LYP-COOH-GQD-C1-004` — authoritative current baseline.
+- `B3LYP-COOH-GQD-C2-005` — accepted comparison minimum.
+
+Retained frequency-failure history:
+- `B3LYP-COOH-GQD-C1-002`
+- `B3LYP-COOH-GQD-C2-003`
+
+The v02 failures remain evidence. The v03 retries used validated imaginary-mode displacement and fresh checkpoints.
+
+### Isolated drug baselines
+
+Accepted:
+- `B3LYP-ERLOTINIB-001`
+- `B3LYP-GEFITINIB-001`
+- `B3LYP-VENETOCLAX-001`
+- `B3LYP-ABT737-001`
+
+These are not invalidated by the separate GQD structural correction.
+
+### Restart rule
+
+`guess=read` is permitted only for a same-level restart with compatible checkpoint content.
+
+Do not carry a PM6 wavefunction into a DFT calculation.
+
+---
+
+## 7. Step 4 — deterministic complex construction
+
+Complexes are constructed only from accepted isolated B3LYP monomers.
+
+### Fragment order
+
+1. authoritative GQD
+2. accepted drug
+
+Atom order is preserved.
+
+The drug may undergo rigid-body translation/rotation for pose construction. Its internal geometry must not be altered before complex optimization.
+
+### Required starting hypotheses
+
+- **Flat:** drug aromatic/core plane approximately parallel to the corrected GQD basal plane.
+- **Slipped:** distinct parallel basal pose with controlled in-plane displacement.
+- **Edge:** chemically directed edge interaction involving the functionalized GQD edge and a documented drug polar-contact site.
+
+These are reproducible starting basins, not assumed equilibrium structures.
+
+### Pre-submission gates
+
+- source monomer identity/checksum;
+- expected total formula and atom count;
+- exact preservation of authoritative GQD coordinates and atom order;
 - preserved drug element order and rigid-body internal distances;
-- interfragment heavy-atom minimum distance >= 2.0 A;
-- interfragment all-atom minimum distance >= 2.0 A;
-- independent post-write validation of the intended plane orientation,
-  separation, displacement, and contact geometry.
+- intended plane/orientation geometry;
+- interfragment heavy-atom minimum >= 2.0 Å;
+- interfragment all-atom minimum >= 2.0 Å for basal poses;
+- documented exception for intentional donor-H...acceptor contact in a chemically directed edge pose;
+- independent post-write validation.
 
-For an edge pose, the heavy-atom interfragment minimum must remain >= 2.0 A.
-An intentional donor-H...acceptor hydrogen-bond contact may be shorter than
-2.0 A when explicitly defined and documented. Unintended short contacts are
-not permitted.
+**Mandatory:** G0-G3, G7, G9.
 
-PM6 must not be used to select complex adsorption basins or relative pose
-orientations. Dispersion-sensitive pose construction and production
-optimization proceed from the accepted B3LYP monomers directly to the
-B3LYP-D3(BJ) level.
+### No PM6 complex decision point
 
-For the corrected Erlotinib pilot, the independently validated starting
-parameters are:
+PM6 is not used to choose, pre-optimize, deduplicate, or rank complex adsorption basins.
 
-- **Flat:** Face A; quinazoline/GQD plane angle 0 deg; core-plane separation
-  3.90 A; azimuth 209 deg; zero in-plane centroid displacement.
-- **Slipped:** Face A; quinazoline/GQD plane angle 0 deg; core-plane separation
-  3.40 A; azimuth 324 deg; 2.50 A displacement away from the C1/COOH edge.
-- **Edge:** Erlotinib N6 directed toward the O74-H75 donor; H75...N6 =
-  1.90 A; O74...N6 = 2.874176 A; quinazoline/GQD plane angle approximately
-  80 deg; deterministic interaction-axis twist 260 deg.
+All scientific basin decisions begin from the accepted B3LYP monomers and are resolved at the dispersion-corrected DFT level.
 
-These Erlotinib numerical parameters are specific to the Erlotinib pilot.
-Subsequent drugs require their own deterministic core/polar-site mapping,
-orientation search, and independent clash validation rather than automatic
-reuse of the Erlotinib azimuths or separations.
-
-Twelve complex optimizations (4 drugs × 3 poses) plus restarts. This is the bulk
-of the phase's compute.
+This is a reproducibility and scientific-method refinement, not an arbitrary method change.
 
 ---
 
-## Step 5 — Binding energies
+## 8. Step 5 — B3LYP complex optimization and frequency
 
-E_bind = E_complex − (E_GQD + E_drug), negative meaning favorable.
+Primary level:
 
-| | |
-|---|---|
-| **BSSE** | counterpoise, one Gaussian job with `Counterpoise=2` and fragment labels; charge/mult line `0 1 0 1 0 1` |
-| **Validation** | M06-2X/6-311+G(d,p)/SMD single point on the B3LYP geometry — **no** `EmpiricalDispersion` keyword (M06-2X includes it) |
-| **Gate** | both numbers exist for every pair; sign and magnitude physically sensible (dispersion-dominated π-stacking on this system should be tens of kcal/mol, not hundreds) |
-| **Reported in** | kcal/mol (Hartree × 627.5095) |
+`B3LYP-D3(BJ)/6-31G(d,p), SMD water`
 
-Comparability check before subtracting any two energies: same functional, same
-basis, same solvent, same charge state. If any differ, the difference is
-meaningless.
+Current validated Magnolia DFT resource profile:
+- one Slurm node;
+- 16 Gaussian shared cores;
+- 32 GB Gaussian memory;
+- 64 GB scheduler allocation;
+- local scratch.
+
+### Acceptance
+
+Each optimized pose is independently recorded.
+
+For an accepted adsorption minimum:
+- G0-G5 and G7-G9 must pass;
+- normal termination;
+- completed optimization;
+- 0 imaginary frequencies;
+- fragments remain scientifically interpretable;
+- no hidden molecular-model failure;
+- archive/provenance closure.
+
+If two starting poses converge to the same minimum, record the degeneracy. Do not delete one lineage to make the dataset look cleaner.
+
+### Current Erlotinib results
+
+Accepted:
+- `B3LYP-COOH-GQD-ERLOTINIB-FLAT-001`
+- `B3LYP-COOH-GQD-ERLOTINIB-SLIPPED-001`
+
+Unresolved:
+- `B3LYP-COOH-GQD-ERLOTINIB-EDGE-001`
+
+The Maple edge execution is `RETAINED_INFRASTRUCTURE_FAILURE`; it does not reject the edge adsorption hypothesis.
+
+The next edge calculation must use a **new run ID** on Magnolia.
 
 ---
 
-## Step 6 — Electronic-structure analysis
+## 9. Failure classification and retry policy
 
-Generate `output=wfx` from the optimized complex, then extract with Multiwfn
-and NCIPLOT: HOMO–LUMO gaps (eV), QTAIM bond critical points between fragments,
-NCI/RDG isosurfaces, ELF, DOS, condensed Fukui indices, TDDFT UV-Vis.
+Before changing a calculation, classify the failure.
 
-| | |
-|---|---|
-| **Gate** | the `.wfx` loads in Multiwfn and the atom count matches the complex |
-| **Output** | descriptor values into `results/tables/`, figures into `results/figures/` |
-| **Rule** | every figure is regenerated by a script in `scripts/analysis/`, never edited by hand into its final form |
+### Structural/model failure
+
+Return to structure construction or scientific model definition.
+
+Example:
+- historical malformed COOH-GQD lineage.
+
+### True-minimum / frequency failure
+
+Retain the run.
+Diagnose the imaginary mode.
+Create a new run ID for any retry.
+
+### Input-format failure
+
+Retain the failed run.
+Repair only the syntactic defect.
+Use a new run ID.
+
+Examples:
+- missing terminal Gaussian blank record.
+
+### Infrastructure/resource failure
+
+Preserve scheduler/log/checkpoint evidence.
+Do not interpret the incomplete run chemically.
+Change platform/resources only as justified.
+
+Example:
+- Maple Erlotinib edge memory-envelope failure.
+
+### Provenance/metadata defect
+
+Repair traceability without altering accepted scientific output.
+
+### Platform transition
+
+Validate against an accepted control before releasing the new environment.
 
 ---
 
-## Step 7 — Descriptor table
+## 10. Step 6 — pose comparison
 
-One row per drug–GQD pair: BSSE-corrected E_bind, M06-2X validation E_bind,
-HOMO–LUMO gap of complex vs. isolated species, net charge transfer, dominant
-NCI interaction type.
+A pose comparison is scientifically authorized only after the required basins are resolved.
 
-**Gate:** every cell traces to a `run_id` in `run_log.tsv`. A number with no
-`run_id` does not go in the table.
+Do not declare the global/retained pose from an incomplete basin set unless the missing basin has been scientifically excluded for a documented reason.
+
+Current Erlotinib state:
+- flat accepted;
+- slipped accepted;
+- edge unresolved.
+
+Therefore the current flat/slipped energy ordering is an intermediate result, not the final complete adsorption conclusion.
+
+---
+
+## 11. Step 7 — binding energy and BSSE
+
+Electronic binding energy:
+
+`E_bind = E_complex - (E_GQD + E_drug)`
+
+Negative values indicate favorable association under the defined model.
+
+### Counterpoise
+
+Use `Counterpoise=2` with controlled fragment labels and compatible charge/multiplicity definitions.
+
+### Scientific-comparability gate
+
+Before subtraction:
+- same functional;
+- same basis;
+- same solvent definition;
+- same intended charge/protonation state;
+- compatible correction protocol.
+
+If these conditions fail, the energy difference is not used as a binding energy.
+
+**Mandatory:** G0-G1, G4, G6-G9.
+
+---
+
+## 12. Step 8 — M06-2X validation
+
+Validation level:
+
+`M06-2X/6-311+G(d,p), SMD water`
+
+Use the accepted B3LYP optimized geometry.
+
+Under the current protocol, do not add `EmpiricalDispersion=GD3BJ` to the M06-2X validation calculation.
+
+Validation results are recorded separately from the primary B3LYP result.
+
+---
+
+## 13. Step 9 — electronic / noncovalent interaction analysis
+
+Planned analyses, subject to the finalized analysis plan and available evidence:
+
+- HOMO-LUMO quantities
+- charge-transfer descriptors
+- QTAIM
+- NCI / RDG
+- ELF
+- DOS
+- Fukui indices
+- TDDFT / UV-Vis where justified
+
+Wavefunction/analysis files must trace to the accepted complex run.
+
+Derived figures and tables should be reproducible from scripts when feasible.
+
+No descriptor enters the dissertation without an identifiable source run.
+
+---
+
+## 14. Step 10 — evidence promotion and results table
+
+For every reported scientific value:
+
+`reported value → evidence/register row → run_id → provenance/QC → input/output hash → archive artifact`
+
+A result enters a dissertation table only when:
+- its applicable gates pass;
+- its scientific disposition allows use;
+- the value traces to a run ID;
+- archive/provenance integrity is closed.
+
+Committee-facing promotion occurs through the Scientific Evidence Register and the appropriate SEP package.
+
+---
+
+## 15. Storage architecture
+
+### GitHub
+
+Version-controlled text/reproducibility layer:
+- inputs;
+- scripts;
+- provenance;
+- QC summaries;
+- ledgers/registers;
+- scope/workflow/gates;
+- results tables and reproducible final figures.
+
+### Full Gaussian artifacts
+
+Full `.log`, `.chk`, `.fchk`, `.wfx`, cube and related large scientific artifacts remain outside Git and are indexed by `archive_manifest.tsv`.
+
+### Google Drive scientific mirror
+
+Authoritative project root:
+
+`CDSE / GQD Dissertation /`
+
+Large run artifacts should map to:
+
+`04_RUN_ARCHIVE/<RUN_ID>/`
+
+Recommended internal structure:
+
+- `input/`
+- `log/`
+- `checkpoint/`
+- `geometry/`
+- `provenance/`
+- `QC/`
+- `MANIFEST.txt`
+
+Scientific evidence packages live under:
+
+`01_SCIENTIFIC_EVIDENCE/SEP-###_...`
+
+Current committee-facing status lives under:
+
+`00_CURRENT_STATUS/`
+
+---
+
+## 16. Operating loop
+
+For every new production calculation:
+
+1. pull / verify repository state;
+2. validate scientific input;
+3. assign new run ID;
+4. commit the input;
+5. submit through the correct platform wrapper;
+6. capture scheduler/build/host/runtime provenance;
+7. preserve output/checkpoint;
+8. run QC;
+9. perform applicable independent scientific/model validation;
+10. classify execution status and scientific disposition;
+11. update `run_notes.tsv` and rebuild `run_log.tsv`;
+12. update archive manifest and verify hashes;
+13. update `LAB_JOURNAL.md`;
+14. update Scientific Evidence / Supersession control when the scientific state changes;
+15. inspect Git diff;
+16. commit, push, and verify remote closure;
+17. only then release the result for the next scientific stage.
+
+---
+
+## 17. Current advancement point
+
+The corrected GQD carrier is released.
+
+All four isolated drug baselines are released.
+
+Erlotinib flat and slipped adsorption minima are accepted.
+
+The next authorized scientific execution is the corrected Erlotinib edge calculation on Magnolia under a new run ID, followed by completion of the Erlotinib pose comparison and controlled energetic validation.
