@@ -1,3 +1,30 @@
+<div align="center">
+
+![GQD — Quantum Materials, Molecular Intelligence](assets/branding/gqd-header.svg)
+
+**Reproducible multiscale research · Graphene quantum dots · Anticancer drug delivery**
+
+[Scientific status](SCIENTIFIC_STATUS.md) · [Evidence register](scientific_evidence_register.tsv) · [Acceptance gates](docs/acceptance_gates_v2.md) · [Computational workflow](docs/computational_workflow.md) · [Research journal](LAB_JOURNAL.md)
+
+</div>
+
+> **Scientific integrity:** This landing-page artwork is conceptual branding, not a calculated molecular structure. Current scientific conclusions and their dispositions are governed by [the scientific status](SCIENTIFIC_STATUS.md), [acceptance gates](docs/acceptance_gates_v2.md), and [evidence register](scientific_evidence_register.tsv). Phase labels describe a research plan, not completion claims.
+
+### Explore the research
+
+| Start here | What you will find |
+|---|---|
+| [Current scientific status](SCIENTIFIC_STATUS.md) | Current accepted evidence and scientific caveats |
+| [Scientific evidence register](scientific_evidence_register.tsv) | Indexed records and dispositions |
+| [Acceptance gates v2](docs/acceptance_gates_v2.md) | Scientific validation and advancement criteria |
+| [Computational workflow](docs/computational_workflow.md) | Reproducible scientific workflow |
+| [Execution plan](docs/execution_plan_v2.md) | Gate-based execution milestones |
+| [Research journal](LAB_JOURNAL.md) | Research narrative and provenance |
+| [Storage map](docs/storage_map.md) | Location of archived calculations |
+| [Visual identity](assets/branding/BRAND_GUIDE.md) | Branding rules and visual assets |
+
+---
+
 # pH-Responsive Carboxyl-Functionalized Graphene Quantum Dots for Anticancer Drug Delivery
 
 Computational dissertation project — Shomari A. Johnson
