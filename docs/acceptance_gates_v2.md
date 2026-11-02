@@ -35,7 +35,7 @@ A run may remain `status=PASS` while its scientific disposition is superseded.
 
 Mandatory: G0-G2, G4-G5, G7-G9.
 
-The corrected COOH-GQD additionally requires deterministic circumcoronene graph validation plus independent post-PM6 and post-DFT topology/model audits.
+The corrected COOH-GQD additionally requires deterministic circumcoronene graph validation plus independent post-PM6 and post-DFT topology/model audits. The canonical standalone audit tool is `scripts/audit_gqd_geometry_topology.py`, documented in `docs/gqd_geometry_topology_audit.md`. It independently reconstructs the GQD graph from Cartesian coordinates and evaluates the expected circumcoronene invariants, COOH connectivity, and best-fit-plane deformation.
 
 ### Isolated drug baseline
 
