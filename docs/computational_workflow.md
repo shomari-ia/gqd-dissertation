@@ -1,6 +1,6 @@
 # Computational Workflow v2.0 — Phase I DFT Drug Loading
 
-**Controlled date:** 2026-10-29  
+**Controlled date:** 2026-11-02  
 **Status:** Canonical Phase I workflow.  
 **Active Gaussian platform:** Magnolia / Slurm / Gaussian 16 C.02.
 
@@ -110,6 +110,10 @@ Tools:
 - `scripts/build_circumcoronene.py`
 - `scripts/hydrogenate_circumcoronene.py`
 - `scripts/functionalize_circumcoronene_cooh.py`
+- `scripts/audit_gqd_geometry_topology.py` — independent standalone GQD identity/topology/planarity/COOH audit
+
+Audit specification and reproducible commands:
+- `docs/gqd_geometry_topology_audit.md`
 
 Required corrected-carrier identity:
 - C55H18O2
@@ -156,6 +160,8 @@ For corrected isolated GQD candidates, the final PM6 geometry must independently
 
 PM6 energy is recorded but is not compared directly with DFT energy and never enters the final DFT binding-energy expression.
 
+The independent GQD model gate should be executed with `scripts/audit_gqd_geometry_topology.py` against the exported/final geometry whenever a compatible XYZ or Gaussian output is available. Builder self-reports do not substitute for this independent audit.
+
 **Gates:** G0-G2, G4, G7-G9 as applicable.
 
 ---
@@ -174,6 +180,8 @@ Standard isolated-species gate:
 - provenance complete;
 - archive/checksum complete;
 - independent scientific validation where required.
+
+For corrected GQD results, the post-DFT model audit is performed with the standalone `scripts/audit_gqd_geometry_topology.py` tool (see `docs/gqd_geometry_topology_audit.md`). The audit reconstructs connectivity from Cartesian coordinates and reports the C1-C54 best-fit-plane RMS/span, C-C edge count, degree distribution, connectivity, cycle rank, six-membered-cycle count, total inferred GQD bonds, and COOH connectivity. A Gaussian success marker alone cannot satisfy this gate.
 
 ### Corrected GQD lineage
 
