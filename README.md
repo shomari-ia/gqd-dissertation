@@ -2,26 +2,26 @@
 
 ![GQD — Quantum Materials, Molecular Intelligence](assets/branding/gqd-header.svg)
 
-**Reproducible multiscale research · Graphene quantum dots · Anticancer drug delivery**
+**Reproducible mMltiscale Research · Graphene Quantum Dots · Anticancer Drug Delivery**
 
-[Scientific status](SCIENTIFIC_STATUS.md) · [Evidence register](scientific_evidence_register.tsv) · [Acceptance gates](docs/acceptance_gates_v2.md) · [Computational workflow](docs/computational_workflow.md) · [Research journal](LAB_JOURNAL.md)
+[Scientific Status](SCIENTIFIC_STATUS.md) · [Evidence Register](scientific_evidence_register.tsv) · [Acceptance Gates](docs/acceptance_gates_v2.md) · [Computational Workflow](docs/computational_workflow.md) · [Research Journal](LAB_JOURNAL.md)
 
 </div>
 
-> **Scientific integrity:** This landing-page artwork is conceptual branding, not a calculated molecular structure. Current scientific conclusions and their dispositions are governed by [the scientific status](SCIENTIFIC_STATUS.md), [acceptance gates](docs/acceptance_gates_v2.md), and [evidence register](scientific_evidence_register.tsv). Phase labels describe a research plan, not completion claims.
+> **Scientific Integrity:** This landing-page artwork is conceptual branding, not a calculated molecular structure. Current scientific conclusions and their dispositions are governed by [the scientific status](SCIENTIFIC_STATUS.md), [acceptance gates](docs/acceptance_gates_v2.md), and [evidence register](scientific_evidence_register.tsv). Phase labels describe a research plan, not completion claims.
 
-### Explore the research
+### Explore The Research
 
-| Start here | What you will find |
+| Start Here | What You Will Find |
 |---|---|
-| [Current scientific status](SCIENTIFIC_STATUS.md) | Current accepted evidence and scientific caveats |
-| [Scientific evidence register](scientific_evidence_register.tsv) | Indexed records and dispositions |
-| [Acceptance gates v2](docs/acceptance_gates_v2.md) | Scientific validation and advancement criteria |
-| [Computational workflow](docs/computational_workflow.md) | Reproducible scientific workflow |
-| [Execution plan](docs/execution_plan_v2.md) | Gate-based execution milestones |
-| [Research journal](LAB_JOURNAL.md) | Research narrative and provenance |
-| [Storage map](docs/storage_map.md) | Location of archived calculations |
-| [Visual identity](assets/branding/BRAND_GUIDE.md) | Branding rules and visual assets |
+| [Current Scientific Status](SCIENTIFIC_STATUS.md) | Current Accepted Evidence and Scientific Caveats |
+| [Scientific Evidence Register](scientific_evidence_register.tsv) | Indexed Records and Dispositions |
+| [Acceptance Gates v2](docs/acceptance_gates_v2.md) | Scientific Validation and Advancement Criteria |
+| [Computational Workflow](docs/computational_workflow.md) | Reproducible Scientific Workflow |
+| [Execution Plan](docs/execution_plan_v2.md) | Gate-Based Execution Milestones |
+| [Research Journal](LAB_JOURNAL.md) | Research Narrative and Provenance |
+| [Storage Map](docs/storage_map.md) | Location of Archived Calculations |
+| [Visual Identity](assets/branding/BRAND_GUIDE.md) | Branding Rules and Visual Assets |
 
 ---
 
@@ -68,7 +68,7 @@ The MCSR execution-environment transition has been validated and closed for Gaus
 - **Established DFT allocation:** 16 cores, 32 GB
 - **Submission wrapper:** `scripts/run_gaussian.pbs` — retained as the historical Maple execution layer and must not be overwritten.
 
-**Active production environment**
+**Active Production Environment**
 
 - **Cluster:** Magnolia
 - **Scheduler:** Slurm
