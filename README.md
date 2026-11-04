@@ -27,7 +27,7 @@
 
 # pH-Responsive Carboxyl-Functionalized Graphene Quantum Dots for Anticancer Drug Delivery
 
-Computational Dissertation Project — Shomari A. Johnson
+Computational Dissertation Project — Shomari A. Johnson —
 CDSE: Computational Data-Enabled Science & Engineering (Computational Biology & Bioinformatics), Jackson State University
 Interdisciplinary Center for Nanotoxicity · Dissertation Advisor: Dr. Jerzy Leszczynski · Departmental Advisor: Dr. Tor Kwembe
 
