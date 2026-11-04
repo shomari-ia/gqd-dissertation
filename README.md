@@ -2,7 +2,7 @@
 
 ![GQD — Quantum Materials, Molecular Intelligence](assets/branding/gqd-header.svg)
 
-**Reproducible mMltiscale Research · Graphene Quantum Dots · Anticancer Drug Delivery**
+**Reproducible Multiscale Research · Graphene Quantum Dots · Anticancer Drug Delivery**
 
 [Scientific Status](SCIENTIFIC_STATUS.md) · [Evidence Register](scientific_evidence_register.tsv) · [Acceptance Gates](docs/acceptance_gates_v2.md) · [Computational Workflow](docs/computational_workflow.md) · [Research Journal](LAB_JOURNAL.md)
 
