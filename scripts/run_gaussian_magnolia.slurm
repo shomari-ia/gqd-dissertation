@@ -92,10 +92,32 @@ fi
 
 # --------------------------------------------------------- Gaussian scratch
 
-SCRDIR="/tmp/${USER}.${SLURM_JOB_ID}"
-mkdir -p "$SCRDIR"
+SCRATCH_ROOT="/local"
+
+if [[ ! -d "$SCRATCH_ROOT" ]]; then
+    echo "ERROR: Magnolia local scratch root does not exist: $SCRATCH_ROOT" >&2
+    exit 12
+fi
+
+if [[ ! -w "$SCRATCH_ROOT" ]]; then
+    echo "ERROR: Magnolia local scratch root is not writable: $SCRATCH_ROOT" >&2
+    exit 13
+fi
+
+SCRDIR="${SCRATCH_ROOT}/${USER}.${SLURM_JOB_ID}"
+
+if [[ -e "$SCRDIR" ]]; then
+    echo "ERROR: Refusing to reuse existing scratch directory: $SCRDIR" >&2
+    exit 14
+fi
+
+mkdir -m 700 "$SCRDIR"
 export GAUSS_SCRDIR="$SCRDIR"
 export OMP_NUM_THREADS=1
+
+echo "Gaussian scratch directory: $GAUSS_SCRDIR"
+df -hT "$SCRATCH_ROOT" || true
+df -i "$SCRATCH_ROOT" || true
 
 cleanup() {
     rm -rf "$SCRDIR"

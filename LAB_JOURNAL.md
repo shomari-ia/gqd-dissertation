@@ -7663,3 +7663,19 @@ single-session format.*
 - Scientific control: This is an infrastructure retry, not a new adsorption hypothesis. EDGE-001 remains immutable failure evidence. EDGE-002 will receive an independent execution/QC, frequency, structural, provenance, archive, and scientific-disposition assessment.
 - Decision / advancement gate: PASS — Edge-002 input identity/geometry audit. PASS — Magnolia resource preflight. HOLD — no submission until this input and journal record are committed, pushed to origin/main, and remote identity is verified.
 - Next action: Commit and remotely close the Edge-002 pre-submission checkpoint, then submit B3LYP-COOH-GQD-ERLOTINIB-EDGE-002 through scripts/run_gaussian_magnolia.slurm.
+
+### Entry 069 — 2026-11-10 — Erlotinib Edge-002 Magnolia scratch-filesystem failure and root-cause closure
+- Scientific/build objective: Execute the corrected C1 COOH-GQD–Erlotinib edge adsorption hypothesis on Magnolia using the validated Gaussian 16 C.02 production environment.
+- Run ID / job ID: B3LYP-COOH-GQD-ERLOTINIB-EDGE-002; Slurm job 340779; execution host node019.
+- Input control: Edge-002 input SHA256=9588f1a45b7ba9f279d1e8560b0ca9218d32bb4d3debdabbf257eb46e0219cdf. The committed input retained the corrected 127-atom Edge-001 geometry, charge/multiplicity 0 1, B3LYP-D3(BJ)/6-31G(d,p), SMD water, Opt+Freq, Int=UltraFine, and NoSymm.
+- Execution result: FAILED. Gaussian terminated during the initial SCF with "Erroneous write" and "g_write: No space left on device", followed by segmentation termination.
+- Resource evidence: Slurm allocated 16 CPUs and 64 GB; Gaussian requested %mem=32GB. MaxRSS was approximately 3.2 GB. The failure therefore does not support a RAM-allocation diagnosis.
+- Scratch provenance: GAUSS_SCRDIR was /tmp/r2751.340779.
+- Root-cause validation: An independent Slurm compute-node probe on Magnolia node054 established that /tmp is a dedicated 2.0 GB XFS filesystem that was 100% utilized with approximately 700 KB free and 99% inode utilization. The same compute node exposed /local as a separate approximately 3.5 TB XFS filesystem with approximately 3.4 TB available and sticky world-writable permissions suitable for isolated per-job scratch directories. /scratch and /localscratch were not mounted.
+- Infrastructure interpretation: The installed Magnolia Gaussian example still references /tmp and the historical PBS_JOBID variable. The live Magnolia Slurm compute-node filesystem probe therefore provides the authoritative basis for the current wrapper correction.
+- QC result: ABNORMAL termination; optimization NOT_COMPLETED; frequency result, final SCF energy, ZPE, and Gibbs energy unavailable.
+- Scientific disposition: RETAINED_INFRASTRUCTURE_FAILURE. No scientific conclusion is drawn about the corrected edge adsorption hypothesis.
+- Correction: scripts/run_gaussian_magnolia.slurm was hardened to place Gaussian temporary files under /local/${USER}.${SLURM_JOB_ID}, verify that /local exists and is writable, refuse scratch-directory reuse, and clean the isolated job directory on exit. No molecular structure, scientific method, charge, multiplicity, Gaussian memory directive, or CPU allocation was changed.
+- Decision / advancement gate: PASS — Edge-002 infrastructure root cause established. PASS — Magnolia scratch correction implemented. HOLD — no Edge-003 submission until this failure record and infrastructure correction are committed, pushed to origin/main, and remotely verified.
+- Archive / evidence status: Edge-002 Gaussian log and checkpoint remain preserved in the scientific archive. Provenance and QC summary are retained in the repository. The failed execution remains immutable evidence.
+- Next action: Remotely close the Edge-002 infrastructure correction, then prepare B3LYP-COOH-GQD-ERLOTINIB-EDGE-003 as a fresh immutable retry with scientific coordinates and method unchanged.
