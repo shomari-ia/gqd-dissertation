@@ -7679,3 +7679,13 @@ single-session format.*
 - Decision / advancement gate: PASS — Edge-002 infrastructure root cause established. PASS — Magnolia scratch correction implemented. HOLD — no Edge-003 submission until this failure record and infrastructure correction are committed, pushed to origin/main, and remotely verified.
 - Archive / evidence status: Edge-002 Gaussian log and checkpoint remain preserved in the scientific archive. Provenance and QC summary are retained in the repository. The failed execution remains immutable evidence.
 - Next action: Remotely close the Edge-002 infrastructure correction, then prepare B3LYP-COOH-GQD-ERLOTINIB-EDGE-003 as a fresh immutable retry with scientific coordinates and method unchanged.
+
+### Entry 070 — 2026-11-11 — Magnolia /local scratch validation and Edge-003 preparation release
+- Scientific/build objective: Validate the corrected Magnolia Gaussian scratch target under a real Slurm batch job before releasing the next corrected Erlotinib edge retry.
+- Infrastructure validation job: Slurm job 343024 (`gqd_local_probe`) on node054.
+- Validation result: PASS. The batch probe confirmed that `/local` exists on the compute node as a separate XFS filesystem (~3.5 TB total, ~3.4 TB available), supports user-isolated directory creation, permits write/readback of a 64 MB test file, and allows successful cleanup.
+- Interpretation: The prior Edge-002 failure was correctly attributed to exhaustion of node-local `/tmp`, while `/local` is suitable for Magnolia Gaussian scratch.
+- Repository control state: `HEAD` and `origin/main` were already synchronized at commit `0ee60e9c631a475ba254a46ff9156bab81021261`, and unrelated legacy construction artifacts were preserved in `stash@{0}` before release of the next retry.
+- Edge-003 preparation: `cooh_gqd_c1_erlotinib_edge_b3lyp_optfreq_v03.com` was created as a fresh immutable retry derived from Edge-002.
+- Identity control: Only the checkpoint filename and run/title identity were changed (`EDGE-002`/`v02` → `EDGE-003`/`v03`). The 127-atom coordinate block, charge/multiplicity, route section, scientific method, and computational resource directives were preserved.
+- Advancement gate: PASS — Magnolia `/local` scratch validated. PASS — Edge-003 input prepared and identity-controlled. Next action: commit/push the released Edge-003 input, verify remote closure, and submit `B3LYP-COOH-GQD-ERLOTINIB-EDGE-003` on Magnolia.
