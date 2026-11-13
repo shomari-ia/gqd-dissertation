@@ -95,6 +95,14 @@ Submission wrapper:
 - historical: `scripts/run_gaussian.pbs`
 - active: `scripts/run_gaussian_magnolia.slurm`
 
+Analysis / QC helper environment:
+- isolated user environment: `$HOME/.venvs/gqd-tools`
+- Python: 3.12.3 at the Edge-003 closure checkpoint
+- `cclib==1.8.1`
+- activation: `source "$HOME/.venvs/gqd-tools/bin/activate"`
+- cclib is used for independent Gaussian parsing and structural/frequency validation; it does not replace Gaussian as the source of electronic-structure results.
+- the virtual environment itself is not committed to Git; required package/version information is recorded here for reproducibility.
+
 The historical PBS wrapper must not be overwritten.
 
 ---
@@ -516,6 +524,6 @@ The corrected GQD carrier is released.
 
 All four isolated drug baselines are released.
 
-Erlotinib flat and slipped adsorption minima are accepted.
+Erlotinib flat, slipped, and edge adsorption minima are accepted.
 
-The next authorized scientific execution is the corrected Erlotinib edge calculation on Magnolia under a new run ID, followed by completion of the Erlotinib pose comparison and controlled energetic validation.
+The corrected Erlotinib adsorption-basin set is therefore resolved at the current B3LYP-D3(BJ)/6-31G(d,p), SMD-water Opt+Freq level. The next authorized work is controlled flat/slipped/edge pose comparison followed by binding-energy/BSSE, M06-2X, and planned descriptor validation before advancing the locked Phase I sequence to Gefitinib.

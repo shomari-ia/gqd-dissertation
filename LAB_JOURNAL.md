@@ -7689,3 +7689,17 @@ single-session format.*
 - Edge-003 preparation: `cooh_gqd_c1_erlotinib_edge_b3lyp_optfreq_v03.com` was created as a fresh immutable retry derived from Edge-002.
 - Identity control: Only the checkpoint filename and run/title identity were changed (`EDGE-002`/`v02` → `EDGE-003`/`v03`). The 127-atom coordinate block, charge/multiplicity, route section, scientific method, and computational resource directives were preserved.
 - Advancement gate: PASS — Magnolia `/local` scratch validated. PASS — Edge-003 input prepared and identity-controlled. Next action: commit/push the released Edge-003 input, verify remote closure, and submit `B3LYP-COOH-GQD-ERLOTINIB-EDGE-003` on Magnolia.
+
+### Entry 071 — 2026-11-13 — Erlotinib Edge-003 scientific acceptance and adsorption-basin resolution
+- Scientific/build objective: Resolve the corrected C1 COOH-GQD–Erlotinib edge adsorption hypothesis after the Edge-001 Maple infrastructure failure and Edge-002 Magnolia `/tmp` scratch-filesystem failure.
+- Run ID / job ID: B3LYP-COOH-GQD-ERLOTINIB-EDGE-003; Slurm job 343829; node011; Gaussian 16 C.02 (`g16-c02-avx2`).
+- Reproducibility state: Runtime Git commit ef82f0cb2636e341602bce3325fe5b6e474d18fe; runtime worktree clean; input SHA256=4bf626102c4da7fd0f584f0145cf62f78612d23b48414aff6bf0a79a6daead55.
+- Infrastructure result: PASS. Gaussian used `/local/r2751.343829`; Slurm allocated 16 CPUs and 64 GB; batch MaxRSS=28923920K. The corrected `/local` scratch architecture remained stable through the complete Opt+Freq calculation.
+- Gaussian/QC result: PASS. Normal termination; optimization completed; stationary point found; 375 vibrational modes; 0 imaginary frequencies; lowest frequency=4.8585 cm^-1.
+- Final energies: SCF=-3575.25578701 Ha; ZPE=0.969539 Ha; Gibbs free energy=-3574.387683 Ha.
+- Independent structural validation: PASS using cclib 1.8.1 in `$HOME/.venvs/gqd-tools`. Final geometry retained 127 atoms and C77H41N3O6 total composition; GQD=C55H18O2; Erlotinib=C22H23N3O4; atom order preserved; GQD and Erlotinib intrafragment connectivity preserved; no unintended interfragment covalent bond detected. Minimum interfragment distance=1.5689 Å between H75 and N81.
+- Scientific disposition: ACCEPTED_ADSORPTION_MINIMUM.
+- Failure-lineage interpretation: Edge-001 and Edge-002 remain immutable `RETAINED_INFRASTRUCTURE_FAILURE` evidence and are not rerun or overwritten. Edge-003 is the authoritative scientific edge minimum.
+- Current pose comparison: At this common B3LYP-D3(BJ)/6-31G(d,p), SMD-water level, slipped is lower than flat by approximately 1.532 kcal/mol electronically and 1.387 kcal/mol in Gibbs free energy. Edge is higher than slipped by approximately 32.324 kcal/mol electronically and 25.485 kcal/mol in Gibbs free energy. These are relative equal-composition total-system energies, not final BSSE-corrected adsorption/binding energies.
+- Archive/evidence closure: run ledger=27 runs; archive manifest=75 physical files with checksum verification PASS; Edge-003 provenance/QC summary and scientific evidence-register records added.
+- Decision / advancement gate: PASS — corrected Erlotinib flat, slipped, and edge adsorption basins are all resolved as accepted minima. RELEASE — proceed to controlled pose comparison and energetic validation (binding-energy/BSSE, M06-2X, and planned descriptors) before advancing to Gefitinib.
