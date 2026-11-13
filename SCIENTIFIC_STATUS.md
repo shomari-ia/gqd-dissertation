@@ -1,6 +1,7 @@
 # GQD Dissertation — Current Scientific Status
 
-**Controlled date:** 2026-11-13  
+**Controlled date:** 2026-11-13
+
 **Purpose:** Canonical current-state summary for scientific decisions, committee reporting, and evidence-package generation.
 
 This file summarizes the current scientific state. Detailed execution history remains in `LAB_JOURNAL.md`; machine-level run facts remain in `run_log.tsv`; supersession history remains in `supersession_register.tsv`.
