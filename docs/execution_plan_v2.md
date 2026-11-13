@@ -50,8 +50,10 @@ The isolated drug calculations are independent of the historical malformed GQD l
 
 - Flat: `B3LYP-COOH-GQD-ERLOTINIB-FLAT-001` — `ACCEPTED_ADSORPTION_MINIMUM`.
 - Slipped: `B3LYP-COOH-GQD-ERLOTINIB-SLIPPED-001` — `ACCEPTED_ADSORPTION_MINIMUM`.
-- Edge on Maple: `B3LYP-COOH-GQD-ERLOTINIB-EDGE-001` — `RETAINED_INFRASTRUCTURE_FAILURE`; no scientific edge conclusion.
-- Immediate scientific requirement: fresh corrected edge execution on Magnolia under a new run ID.
+- Edge: `B3LYP-COOH-GQD-ERLOTINIB-EDGE-003` — `ACCEPTED_ADSORPTION_MINIMUM`.
+- Edge-001 and Edge-002 remain `RETAINED_INFRASTRUCTURE_FAILURE` evidence and are not scientific edge results.
+- The corrected flat/slipped/edge basin set is resolved.
+- Immediate scientific requirement: controlled Counterpoise/BSSE evaluation of all three accepted minima.
 
 ### Active HPC platform
 
@@ -142,15 +144,16 @@ Complexes are built only from accepted isolated B3LYP monomers.
 #### Erlotinib
 
 Current:
-- flat accepted;
-- slipped accepted;
-- edge unresolved.
+- flat, slipped, and edge accepted;
+- pose comparison reproducibly locked;
+- electronic ordering: Slipped < Flat << Edge;
+- raw electronic binding values classified `PRE_BSSE`;
+- three Counterpoise=2 inputs prepared from the final accepted optimized geometries.
 
 Next:
-- execute corrected edge on Magnolia;
-- close the pose comparison;
-- compute controlled binding/BSSE quantities;
-- run M06-2X validation;
+- execute controlled Flat/Slipped/Edge Counterpoise calculations on Magnolia;
+- compute BSSE-corrected binding quantities while retaining interaction/deformation distinctions;
+- run M06-2X/6-311+G(d,p), SMD-water validation;
 - complete selected electronic/NCI descriptors;
 - populate Chapter 2 only from accepted evidence.
 

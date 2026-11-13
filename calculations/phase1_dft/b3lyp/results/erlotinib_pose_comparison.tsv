@@ -1,0 +1,4 @@
+electronic_rank	pose	run_id	scf_hartree	gibbs_hartree	delta_e_vs_lowest_kcal_mol	delta_g_vs_lowest_kcal_mol	raw_e_bind_hartree	raw_e_bind_kcal_mol	binding_status
+1	Slipped	B3LYP-COOH-GQD-ERLOTINIB-SLIPPED-001	-3575.30729853	-3574.428296	0.000	0.000	-0.07284608	-45.712	PRE_BSSE
+2	Flat	B3LYP-COOH-GQD-ERLOTINIB-FLAT-001	-3575.30485771	-3574.426086	1.532	1.387	-0.07040526	-44.180	PRE_BSSE
+3	Edge	B3LYP-COOH-GQD-ERLOTINIB-EDGE-003	-3575.25578701	-3574.387683	32.324	25.485	-0.02133456	-13.388	PRE_BSSE

@@ -296,16 +296,16 @@ If two starting poses converge to the same minimum, record the degeneracy. Do no
 
 ### Current Erlotinib results
 
-Accepted:
+Accepted adsorption minima:
 - `B3LYP-COOH-GQD-ERLOTINIB-FLAT-001`
 - `B3LYP-COOH-GQD-ERLOTINIB-SLIPPED-001`
+- `B3LYP-COOH-GQD-ERLOTINIB-EDGE-003`
 
-Unresolved:
-- `B3LYP-COOH-GQD-ERLOTINIB-EDGE-001`
+Retained infrastructure-failure evidence:
+- `B3LYP-COOH-GQD-ERLOTINIB-EDGE-001` — Maple resource failure.
+- `B3LYP-COOH-GQD-ERLOTINIB-EDGE-002` — Magnolia `/tmp` scratch-filesystem failure.
 
-The Maple edge execution is `RETAINED_INFRASTRUCTURE_FAILURE`; it does not reject the edge adsorption hypothesis.
-
-The next edge calculation must use a **new run ID** on Magnolia.
+The corrected flat/slipped/edge basin set is resolved. Edge-003 is the authoritative edge minimum; Edge-001 and Edge-002 remain immutable execution-history evidence.
 
 ---
 
@@ -363,9 +363,19 @@ Do not declare the global/retained pose from an incomplete basin set unless the 
 Current Erlotinib state:
 - flat accepted;
 - slipped accepted;
-- edge unresolved.
+- edge accepted.
 
-Therefore the current flat/slipped energy ordering is an intermediate result, not the final complete adsorption conclusion.
+Controlled B3LYP pose comparison from the accepted minima:
+- Slipped: electronic/Gibbs reference minimum.
+- Flat: +1.532 kcal/mol electronic; +1.387 kcal/mol Gibbs relative to Slipped.
+- Edge: +32.324 kcal/mol electronic; +25.485 kcal/mol Gibbs relative to Slipped.
+
+Raw electronic binding energies relative to the accepted optimized isolated GQD and Erlotinib baselines are:
+- Slipped: -45.712 kcal/mol.
+- Flat: -44.180 kcal/mol.
+- Edge: -13.388 kcal/mol.
+
+These raw values are explicitly `PRE_BSSE` and are not the final corrected binding-energy conclusion.
 
 ---
 
@@ -380,6 +390,29 @@ Negative values indicate favorable association under the defined model.
 ### Counterpoise
 
 Use `Counterpoise=2` with controlled fragment labels and compatible charge/multiplicity definitions.
+
+For the neutral singlet COOH-GQD + Erlotinib system:
+- fragment 1 = 75-atom C55H18O2 GQD;
+- fragment 2 = 52-atom C22H23N3O4 Erlotinib;
+- charge/multiplicity specification = `0 1 0 1 0 1`.
+
+Counterpoise single-point calculations are performed on each accepted B3LYP optimized complex geometry.
+
+Distinguish the following quantities:
+
+`E_bind,raw = E_complex - (E_GQD,opt + E_drug,opt)`
+
+This is the raw electronic binding energy relative to optimized isolated monomers.
+
+Gaussian Counterpoise also provides a BSSE correction and a frozen-geometry counterpoise interaction/complexation energy. The project must not silently equate the frozen-geometry interaction energy with the full binding energy when fragment deformation is present.
+
+For the current protocol, the BSSE-corrected binding energy relative to the accepted optimized isolated monomers is:
+
+`E_bind,CP = E_bind,raw + E_BSSE`
+
+where Gaussian's reported positive BSSE correction is evaluated at the accepted complex geometry.
+
+Interaction, deformation, raw binding, and BSSE-corrected binding quantities must remain explicitly labeled in reported tables.
 
 ### Scientific-comparability gate
 

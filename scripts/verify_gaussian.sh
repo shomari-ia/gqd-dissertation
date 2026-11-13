@@ -75,8 +75,17 @@ else
 fi
 
 # --- energies ----------------------------------------------------------
-SCF=$(grep "SCF Done" "$LOG" \
-      | tail -n 1 | awk '{print $5}' || true)
+# Counterpoise jobs contain multiple SCF calculations: the full
+# supermolecule is followed by fragment/ghost calculations. Preserve the
+# full-complex SCF energy rather than accidentally recording the last
+# fragment SCF.
+if grep -qi 'counterpoise' <<<"$ROUTE"; then
+    SCF=$(grep "SCF Done" "$LOG" \
+          | head -n 1 | awk '{print $5}' || true)
+else
+    SCF=$(grep "SCF Done" "$LOG" \
+          | tail -n 1 | awk '{print $5}' || true)
+fi
 SCF="${SCF:-NA}"
 
 GIBBS=$(grep "Sum of electronic and thermal Free Energies" "$LOG" \
@@ -88,9 +97,13 @@ ZPE=$(grep "Zero-point correction" "$LOG" \
 ZPE="${ZPE:-NA}"
 
 # BSSE counterpoise, if this was a Counterpoise=2 job
-CP=$(grep -m1 "counterpoise corrected energy" "$LOG" \
+CP=$(grep -im1 -E 'Counterpoise:[[:space:]]*corrected energy' "$LOG" \
      | awk '{print $NF}' || true)
 CP="${CP:-NA}"
+
+BSSE=$(grep -im1 -E 'Counterpoise:[[:space:]]*BSSE energy' "$LOG" \
+       | awk '{print $NF}' || true)
+BSSE="${BSSE:-NA}"
 
 CHARGE_MULT=$(grep -m1 "Charge =" "$LOG" | sed 's/^ *//' || echo "NA")
 NATOMS=$(grep -m1 "NAtoms=" "$LOG" | awk '{print $2}' || echo "NA")
@@ -116,6 +129,7 @@ if [[ -n "$SUMDIR" ]]; then
         echo "zpe_hartree     $ZPE"
         echo "gibbs_hartree   $GIBBS"
         echo "cp_corrected    $CP"
+        echo "bsse_hartree    $BSSE"
         echo "cpu_time        $CPUTIME"
         echo "elapsed_time    $ELAPSED"
         echo "qc_status       $STATUS"
