@@ -7718,3 +7718,16 @@ single-session format.*
 - Binding-energy interpretation rule: Gaussian frozen-geometry Counterpoise interaction/complexation energy is kept distinct from full binding relative to optimized isolated monomers. The project BSSE-corrected binding quantity is computed as raw electronic binding plus the Gaussian BSSE correction, with deformation/interaction terms separately labeled where resolved.
 - Archive control: BSSE output/checkpoint filename mappings added to `scripts/build_archive_manifest.sh` before execution.
 - Decision / advancement gate: PASS — pose comparison. PASS — three BSSE input identity/composition/method preflights. HOLD — no submission until this pre-submission state is committed, pushed to `origin/main`, and remotely verified.
+
+### Entry 073 — 2026-11-13 — Erlotinib BSSE-001 method-compatibility failure and corrected Counterpoise protocol
+- Scientific/build objective: Execute Boys-Bernardi Counterpoise calculations for the accepted Erlotinib Flat, Slipped, and Edge adsorption minima.
+- Failed run IDs / jobs: B3LYP-COOH-GQD-ERLOTINIB-FLAT-BSSE-001 / Slurm 346509; B3LYP-COOH-GQD-ERLOTINIB-SLIPPED-BSSE-001 / Slurm 346510; B3LYP-COOH-GQD-ERLOTINIB-EDGE-BSSE-001 / Slurm 346511.
+- Execution result: all three jobs failed during Gaussian route processing within 3-4 seconds, before SCF execution.
+- Diagnostic: Gaussian 16 C.02 reported `No SCRF with counterpoise/fragments.` for every job.
+- Resource interpretation: MaxRSS was only approximately 4.8-5.3 MB and execution never reached the electronic-structure calculation. The failures are not attributable to Magnolia memory, CPU, scratch, molecular geometry, convergence, or accepted adsorption-minimum validity.
+- Scientific disposition: all three BSSE-001 runs are `RETAINED_INPUT_FORMAT_FAILURE`. They support no scientific conclusion about Flat, Slipped, Edge, binding strength, or BSSE.
+- Method correction: Gaussian's automated `Counterpoise=2` facility will be run without SCRF at B3LYP-D3(BJ)/6-31G(d,p), using the frozen accepted SMD-water optimized complex geometries.
+- Scientific interpretation rule: the primary adsorption energies remain the SMD-water B3LYP energies. Gas-phase Counterpoise is used only to estimate the basis-set superposition correction. The corrected electronic binding estimate is reported as `E_bind,SMD+BSSE = E_bind,raw,SMD + BSSE_gas`, using Gaussian's positive reported BSSE magnitude.
+- Reporting constraint: this result must be labeled as an SMD binding energy with a gas-phase BSSE correction, not as a fully solvent-phase Counterpoise calculation.
+- Retry control: fresh immutable run IDs will be B3LYP-COOH-GQD-ERLOTINIB-FLAT-BSSE-002, B3LYP-COOH-GQD-ERLOTINIB-SLIPPED-BSSE-002, and B3LYP-COOH-GQD-ERLOTINIB-EDGE-BSSE-002. BSSE-001 artifacts remain preserved.
+- Advancement gate: PASS — root cause established. PASS — corrected protocol defined. HOLD — BSSE-002 submission requires new-input identity validation and Git pre-submission closure.

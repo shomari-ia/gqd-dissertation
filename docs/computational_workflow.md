@@ -396,7 +396,9 @@ For the neutral singlet COOH-GQD + Erlotinib system:
 - fragment 2 = 52-atom C22H23N3O4 Erlotinib;
 - charge/multiplicity specification = `0 1 0 1 0 1`.
 
-Counterpoise single-point calculations are performed on each accepted B3LYP optimized complex geometry.
+Gaussian 16 does not permit the automated `Counterpoise` facility to be combined with `SCRF`. Therefore, the project estimates BSSE using a gas-phase Boys-Bernardi Counterpoise single-point calculation at B3LYP-D3(BJ)/6-31G(d,p) on each accepted SMD-water optimized complex geometry.
+
+The primary adsorption model remains SMD water. The gas-phase Counterpoise calculation is used only to estimate the finite-basis BSSE correction and does not replace the SMD electronic energies.
 
 Distinguish the following quantities:
 
@@ -406,11 +408,13 @@ This is the raw electronic binding energy relative to optimized isolated monomer
 
 Gaussian Counterpoise also provides a BSSE correction and a frozen-geometry counterpoise interaction/complexation energy. The project must not silently equate the frozen-geometry interaction energy with the full binding energy when fragment deformation is present.
 
-For the current protocol, the BSSE-corrected binding energy relative to the accepted optimized isolated monomers is:
+For the current protocol, the reported corrected electronic binding estimate is:
 
-`E_bind,CP = E_bind,raw + E_BSSE`
+`E_bind,SMD+BSSE = E_bind,raw,SMD + BSSE_gas`
 
-where Gaussian's reported positive BSSE correction is evaluated at the accepted complex geometry.
+where `BSSE_gas` is Gaussian's positive Boys-Bernardi BSSE magnitude calculated in the gas phase at the frozen accepted SMD-optimized complex geometry.
+
+This quantity must be labeled as an SMD electronic binding energy with a gas-phase BSSE correction. It is not described as a fully solvent-phase Counterpoise calculation.
 
 Interaction, deformation, raw binding, and BSSE-corrected binding quantities must remain explicitly labeled in reported tables.
 

@@ -148,10 +148,11 @@ Current:
 - pose comparison reproducibly locked;
 - electronic ordering: Slipped < Flat << Edge;
 - raw electronic binding values classified `PRE_BSSE`;
-- three Counterpoise=2 inputs prepared from the final accepted optimized geometries.
+- first Counterpoise attempt (`BSSE-001`) retained as an input/method-compatibility failure because Gaussian 16 C.02 rejects `SCRF` with `Counterpoise`;
+- corrected gas-phase Counterpoise retry lineage is authorized using the frozen accepted SMD-optimized geometries.
 
 Next:
-- execute controlled Flat/Slipped/Edge Counterpoise calculations on Magnolia;
+- execute controlled Flat/Slipped/Edge gas-phase Counterpoise calculations under fresh `BSSE-002` run IDs;
 - compute BSSE-corrected binding quantities while retaining interaction/deformation distinctions;
 - run M06-2X/6-311+G(d,p), SMD-water validation;
 - complete selected electronic/NCI descriptors;

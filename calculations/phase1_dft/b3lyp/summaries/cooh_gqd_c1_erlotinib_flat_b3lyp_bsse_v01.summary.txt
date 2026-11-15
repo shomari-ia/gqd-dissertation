@@ -1,0 +1,19 @@
+run_id          B3LYP-COOH-GQD-ERLOTINIB-FLAT-BSSE-001
+log_file        archive/logs/cooh_gqd_c1_erlotinib_flat_b3lyp_bsse_v01.log
+log_sha256      e02340abea96b33a930c52b759b00d071753c61971406ad95165d4131eba2042
+verified_at     2026-11-13T15:38:53-06:00
+route           #p B3LYP/6-31G(d,p) EmpiricalDispersion=GD3BJ Counterpoise=2 SCRF=(SMD,Solvent=Water) Int=UltraFine NoSymm
+charge_mult     NA
+n_atoms         NA
+termination     ABNORMAL
+optimization    NA
+imag_freq       NA
+scf_hartree     NA
+zpe_hartree     NA
+gibbs_hartree   NA
+cp_corrected    NA
+bsse_hartree    NA
+cpu_time        Job cpu time:       0 days  0 hours  0 minutes  0.0 seconds.
+elapsed_time    Elapsed time:       0 days  0 hours  0 minutes  0.0 seconds.
+qc_status       FAILED
+error_line       Error termination via Lnk1e in /usr/local/apps/gaussian/g16-c02-avx2/g16/l1.exe at Fri Nov 13 15:38:51 2026.

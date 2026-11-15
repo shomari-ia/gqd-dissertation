@@ -62,11 +62,13 @@ lines = [
     "%nprocshared=16",
     (
         "#p B3LYP/6-31G(d,p) EmpiricalDispersion=GD3BJ "
-        "Counterpoise=2 SCRF=(SMD,Solvent=Water) "
-        "Int=UltraFine NoSymm"
+        "Counterpoise=2 Int=UltraFine NoSymm"
     ),
     "",
-    f"{args.run_id} | accepted B3LYP geometry | Counterpoise=2 | v01",
+    (
+        f"{args.run_id} | gas-phase Counterpoise correction on "
+        "accepted SMD-optimized geometry | Counterpoise=2"
+    ),
     "",
     "0 1 0 1 0 1",
 ]
