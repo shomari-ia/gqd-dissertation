@@ -1,0 +1,2 @@
+run_id	donor_atom	hydrogen_atom	acceptor_atom	donor_H_A	H_acceptor_A	donor_acceptor_A	donor_H_acceptor_angle_deg
+B3LYP-COOH-GQD-ERLOTINIB-EDGE-003	74:O	75:H	81:N	1.044018	1.568944	2.610448	174.869
