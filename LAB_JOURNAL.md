@@ -7771,3 +7771,19 @@ single-session format.*
 - Legacy control: historical `cooh_gqd_m062x_sp_v01.com` remains preserved but is quarantined from reuse because it references the superseded historical GQD checkpoint; the explicit-coordinate five-system validation is authoritative.
 - Evidence-control state: run ledger=38 runs; archive manifest=97 physical files; checksum verification PASS.
 - Advancement gate: PASS — Erlotinib higher-level energetic validation closed. RELEASE — proceed to the controlled electronic/noncovalent interaction descriptor package before final Erlotinib Phase I promotion and advancement to Gefitinib.
+
+### Entry 077 — 2026-11-16 — Erlotinib descriptor analysis Gate 1
+- Objective: Determine which Erlotinib electronic/noncovalent descriptors can be obtained from accepted evidence without unnecessary new quantum calculations.
+- Gate result: PASS — no new Gaussian SCF calculation is required for the core descriptor package.
+- Geometry source: accepted B3LYP Flat, Slipped, and Edge minima.
+- Electronic-density source: accepted five-system M06-2X/6-311+G(d,p), SMD-water checkpoints.
+- Tool audit: cclib 1.8.1 PASS; Gaussian `formchk` FOUND; Gaussian `cubegen` FOUND; Multiwfn NOT FOUND; Critic2 NOT FOUND.
+- Wavefunction preparation: all five accepted M06-2X checkpoints converted successfully to formatted checkpoints using `formchk`.
+- Frontier gaps (eV): C1=4.1293; Erlotinib=6.2646; Flat=4.1168; Slipped=4.1261; Edge=4.1685.
+- Preliminary Mulliken fragment charges (e): Flat GQD=-0.6487 / drug=+0.6487; Slipped GQD=-0.6351 / drug=+0.6351; Edge GQD=+0.0063 / drug=-0.0063. Mulliken values are retained as provisional evidence only and require Hirshfeld/Hirshfeld-I confirmation before scientific promotion.
+- Contact geometry: Flat heavy-min=3.2568 A, plane angle=8.733 deg, 129 heavy contacts <=4 A; Slipped=3.2757 A, 7.974 deg, 134 contacts; Edge=2.6104 A, 32.175 deg, 8 contacts.
+- Edge special contact: H75-N81=1.5689 A and O74-N81=2.6104 A; no hydrogen-bond claim is made pending donor-parent and angular validation.
+- Core descriptor plan: contact geometry, HOMO/LUMO energies and surfaces, Hirshfeld/Hirshfeld-I fragment charge, NCI/RDG, followed by targeted QTAIM if warranted.
+- Deferred at this gate: Fukui, TDDFT/UV-Vis, difference-density fragment calculations, ELF, and DOS.
+- Archive state after formatted-checkpoint addition: 102 physical files; checksum verification required before Git closure.
+- Advancement gate: RELEASE post-processing tool validation; HOLD final descriptor interpretation until Hirshfeld/NCI workflow is validated.

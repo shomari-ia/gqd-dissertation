@@ -1,0 +1,4 @@
+pose	run_id	min_all_distance_A	closest_all_pair	min_heavy_distance_A	closest_heavy_pair	heavy_pairs_le_3.5A	heavy_pairs_le_4.0A	gqd_carbon_plane_rms_A	drug_heavy_principal_plane_rms_A	principal_plane_angle_deg	drug_heavy_centroid_height_A	drug_heavy_mean_height_A	drug_heavy_median_height_A
+Flat	B3LYP-COOH-GQD-ERLOTINIB-FLAT-001	2.5658	59:H-126:H	3.2568	26:C-93:C	25	129	0.0656	0.4059	8.733	3.4167	3.4167	3.2944
+Slipped	B3LYP-COOH-GQD-ERLOTINIB-SLIPPED-001	2.4419	67:H-111:H	3.2757	23:C-93:C	24	134	0.0596	0.4994	7.974	3.3456	3.3456	3.3061
+Edge	B3LYP-COOH-GQD-ERLOTINIB-EDGE-003	1.5689	75:H-81:N	2.6104	74:O-81:N	6	8	0.0192	0.4889	32.175	0.5469	1.7785	1.8661
