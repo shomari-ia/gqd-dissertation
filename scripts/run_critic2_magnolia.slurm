@@ -53,11 +53,19 @@ fi
 
 GIT_COMMIT="$(git rev-parse HEAD)"
 
-if [[ -n "$(git status --porcelain)" ]]; then
+# Runtime outputs and provenance are intentionally untracked. A release is
+# considered dirty only when tracked repository content differs from HEAD.
+if ! git diff --quiet || ! git diff --cached --quiet; then
     GIT_DIRTY=true
 else
     GIT_DIRTY=false
 fi
+
+UNTRACKED_COUNT="$(
+    git ls-files --others --exclude-standard |
+    wc -l |
+    tr -d ' '
+)"
 
 INPUT_SHA="$(sha256sum "$CRITIC2_INPUT" | awk '{print $1}')"
 BINARY_SHA="$(sha256sum "$CRITIC2_BIN" | awk '{print $1}')"
@@ -112,6 +120,7 @@ fi
     echo "source_fchk_sha256=$SOURCE_FCHK_SHA"
     echo "git_commit=$GIT_COMMIT"
     echo "git_dirty=$GIT_DIRTY"
+    echo "untracked_count=$UNTRACKED_COUNT"
     echo "return_code=$RC"
     echo "output_file=$OUTPUT"
     echo "output_sha256=$OUTPUT_SHA"
