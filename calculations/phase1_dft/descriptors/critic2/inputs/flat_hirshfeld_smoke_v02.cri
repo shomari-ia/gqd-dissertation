@@ -1,0 +1,25 @@
+# CRITIC2-ERLOTINIB-FLAT-HIRSHFELD-SMOKE-002
+# Source: M062X-COOH-GQD-ERLOTINIB-FLAT-001
+#
+# Analytical M06-2X/6-311+G(d,p), SMD-water wavefunction.
+# Post-processing only. No new electronic-structure calculation.
+
+ROOT flat_hirshfeld_smoke_v02
+
+UNITS ANGSTROM
+
+MOLECULE archive/wfn/cooh_gqd_c1_erlotinib_flat_m062x_smd_sp_v01.fchk
+
+LOAD archive/wfn/cooh_gqd_c1_erlotinib_flat_m062x_smd_sp_v01.fchk
+
+MESHTYPE FRANCHINI VERYGOOD
+
+HIRSHFELD \
+ JSON calculations/phase1_dft/descriptors/critic2/results/flat_hirshfeld_smoke_v02.json
+
+HIRSHFELD ITERATIVE \
+ TOL 1e-7 \
+ MAXIT 200 \
+ JSON calculations/phase1_dft/descriptors/critic2/results/flat_hirshfeld_i_smoke_v02.json
+
+END
