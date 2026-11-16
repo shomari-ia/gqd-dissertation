@@ -152,11 +152,18 @@ Current:
 - Slipped and Flat are treated as a near-degenerate low-energy adsorption pair pending higher-level validation;
 - Edge remains clearly less favorable.
 
+Current higher-level validation:
+- M06-2X/6-311+G(d,p), SMD-water five-system validation PASS;
+- method-matched electronic binding energies: Slipped=-37.074, Flat=-36.029, Edge=-8.335 kcal/mol;
+- M06-2X independently reproduces the near-degenerate Flat/Slipped low-energy pair;
+- Slipped remains nominally favored by 1.044 kcal/mol;
+- Edge remains substantially less favorable.
+
 Next:
-- execute M06-2X/6-311+G(d,p), SMD-water validation using accepted B3LYP geometries;
-- compare Flat/Slipped/Edge energetic ordering at the validation level;
-- complete selected electronic/NCI descriptors;
-- populate Chapter 2 only from accepted evidence.
+- complete the controlled electronic/noncovalent interaction descriptor package;
+- finalize SEP-003 Erlotinib adsorption evidence;
+- populate Chapter 2 only from accepted evidence;
+- release Gefitinib after the Erlotinib Phase I gate closes.
 
 #### Gefitinib
 

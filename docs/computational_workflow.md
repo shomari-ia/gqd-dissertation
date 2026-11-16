@@ -567,4 +567,6 @@ The corrected Erlotinib adsorption-basin set is resolved at B3LYP-D3(BJ)/6-31G(d
 
 The controlled gas-phase Counterpoise BSSE correction is also resolved. Slipped and Flat form a near-degenerate low-energy pair after correction (`-34.140` and `-33.154` kcal/mol SMD+gas-BSSE estimates), while Edge remains substantially less favorable (`-10.072` kcal/mol).
 
-The next authorized scientific stage is M06-2X/6-311+G(d,p), SMD-water validation using the accepted B3LYP geometries, followed by the planned electronic/noncovalent descriptor package before advancing to Gefitinib.
+The M06-2X/6-311+G(d,p), SMD-water validation is now resolved. Method-matched electronic binding energies are Slipped=-37.074, Flat=-36.029, and Edge=-8.335 kcal/mol. M06-2X independently confirms Flat and Slipped as a near-degenerate low-energy pair with Slipped nominally favored, while Edge remains substantially less favorable.
+
+The next authorized scientific stage is the controlled electronic/noncovalent interaction descriptor package, after which the Erlotinib Phase I evidence package can be finalized before advancement to Gefitinib.

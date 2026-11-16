@@ -1,0 +1,20 @@
+run_id          M062X-COOH-GQD-C1-001
+log_file        archive/logs/cooh_gqd_c1_m062x_smd_sp_v01.log
+log_sha256      607934c7103b1cc8bfbae3a2be7f4e33c4b4bd77dd4fec20081ae20ae20dc727
+verified_at     2026-11-15T21:17:56-06:00
+route           #p M062X/6-311+G(d,p) SCRF=(SMD,Solvent=Water) Int=UltraFine NoSymm
+charge_mult     Charge =  0 Multiplicity = 1
+n_atoms         75
+termination     NORMAL
+optimization    NA
+imag_freq       NA
+scf_hartree     -2257.21308993
+zpe_hartree     NA
+gibbs_hartree   NA
+cp_corrected    NA
+bsse_hartree    NA
+cp_raw_complexation_kcal_mol       NA
+cp_corrected_complexation_kcal_mol NA
+cpu_time        Job cpu time:       0 days  5 hours 44 minutes 11.6 seconds.
+elapsed_time    Elapsed time:       0 days  0 hours 22 minutes  0.8 seconds.
+qc_status       PASS

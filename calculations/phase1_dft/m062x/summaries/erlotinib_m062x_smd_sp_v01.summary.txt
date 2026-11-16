@@ -1,0 +1,20 @@
+run_id          M062X-ERLOTINIB-001
+log_file        archive/logs/erlotinib_m062x_smd_sp_v01.log
+log_sha256      f0f7469092f5a1e109ba78b6916ecfaea0e5b8caae5e922a45ba435a3703bc3e
+verified_at     2026-11-15T21:00:13-06:00
+route           #p M062X/6-311+G(d,p) SCRF=(SMD,Solvent=Water) Int=UltraFine NoSymm
+charge_mult     Charge =  0 Multiplicity = 1
+n_atoms         52
+termination     NORMAL
+optimization    NA
+imag_freq       NA
+scf_hartree     -1317.09055446
+zpe_hartree     NA
+gibbs_hartree   NA
+cp_corrected    NA
+bsse_hartree    NA
+cp_raw_complexation_kcal_mol       NA
+cp_corrected_complexation_kcal_mol NA
+cpu_time        Job cpu time:       0 days  1 hours  6 minutes 22.9 seconds.
+elapsed_time    Elapsed time:       0 days  0 hours  4 minutes 19.9 seconds.
+qc_status       PASS

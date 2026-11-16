@@ -47,7 +47,26 @@ The primary adsorption model remains SMD water. The reported corrected estimate 
 | Flat | -44.180 | +11.026 | -33.154 | +0.986 |
 | Edge | -13.388 | +3.316 | -10.072 | +24.068 |
 
-The BSSE correction preserves Slipped as the nominal lowest-energy pose but reduces the Slipped-versus-Flat separation to 0.986 kcal/mol. The independent gas-phase Counterpoise corrected interaction values are -34.71 kcal/mol for Slipped and -34.63 kcal/mol for Flat, a difference of only 0.08 kcal/mol. Accordingly, Flat and Slipped are treated as a near-degenerate low-energy adsorption pair pending M06-2X validation. Edge remains clearly less favorable.
+The BSSE correction preserves Slipped as the nominal lowest-energy pose but reduces the Slipped-versus-Flat separation to 0.986 kcal/mol. The independent gas-phase Counterpoise corrected interaction values are -34.71 kcal/mol for Slipped and -34.63 kcal/mol for Flat, a difference of only 0.08 kcal/mol. Accordingly, Flat and Slipped are treated as a near-degenerate low-energy adsorption pair. Edge remains clearly less favorable.
+
+## Erlotinib M06-2X validation
+
+Independent higher-level single-point validation was completed at M06-2X/6-311+G(d,p), SMD water on the accepted B3LYP geometries.
+
+Method-matched electronic reference energies:
+
+- C1 COOH-GQD: -2257.21308993 Ha.
+- Erlotinib: -1317.09055446 Ha.
+
+| Pose | M06-2X electronic binding (kcal/mol) | Δ vs Slipped (kcal/mol) |
+|---|---:|---:|
+| Slipped | -37.074 | 0.000 |
+| Flat | -36.029 | +1.044 |
+| Edge | -8.335 | +28.739 |
+
+M06-2X independently reproduces the B3LYP+BSSE interpretation. Flat and Slipped form a near-degenerate low-energy adsorption pair, with Slipped nominally favored by approximately 1 kcal/mol. Edge remains substantially less favorable.
+
+These are electronic single-point binding energies evaluated on accepted B3LYP geometries. They are not M06-2X Gibbs free energies and are not M06-2X BSSE-corrected values.
 
 
 ## Active HPC platform

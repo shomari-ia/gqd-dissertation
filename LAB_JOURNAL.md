@@ -7756,3 +7756,18 @@ single-session format.*
 - Input SHA256: C1=97d2f79224ffa5910404cbf95d4fe375d1f8c541a9bf9c8e9f89314345514132; Erlotinib=8154fd0e4b1d92519416d5740a5947a8e38800af32cfb28146c0cae5c34f2ba0; Flat=a956a3f53482df0171650b22571cd02b44cc74724187299ee21e37c518360df2; Slipped=c076cf36a266e9d46d8f3ab681846d415e4775cd29b124361b5796f4940f9706; Edge=5a6e583a848a167d8007c932eb485cc565676fc8234b2605f0ebdfbcebd50088.
 - Current hypothesis to test: B3LYP+BSSE supports Flat and Slipped as a near-degenerate low-energy pair with Slipped nominally favored, while Edge remains clearly less favorable. M06-2X is an independent higher-level energetic validation of that conclusion.
 - Advancement gate: PASS — five-system M06-2X input set prepared and independently validated. HOLD — no execution until the inputs, builder, archive mappings, and Entry 075 are committed, pushed, and remotely verified.
+
+### Entry 076 — 2026-11-16 — Erlotinib M06-2X energetic validation acceptance
+- Scientific objective: Complete independent higher-level energetic validation of the accepted Erlotinib adsorption system after B3LYP optimization and BSSE closure.
+- Validation level: M06-2X/6-311+G(d,p), SMD water, `Int=UltraFine`, `NoSymm`, no GD3BJ; single-point calculations on frozen accepted B3LYP geometries.
+- Successful jobs: C1=353011; isolated Erlotinib=353012; Flat=353013; Slipped=353014; Edge=353015. All completed with Slurm exit code 0:0 and Gaussian normal termination.
+- M06-2X electronic energies: C1=-2257.21308993 Ha; Erlotinib=-1317.09055446 Ha; Flat=-3574.36106094 Ha; Slipped=-3574.36272538 Ha; Edge=-3574.31692708 Ha.
+- Method-matched electronic binding energies calculated as `E_complex - (E_C1 + E_Erlotinib)`: Flat=-36.029 kcal/mol; Slipped=-37.074 kcal/mol; Edge=-8.335 kcal/mol.
+- Relative validation ordering: Slipped=0.000 kcal/mol; Flat=+1.044 kcal/mol; Edge=+28.739 kcal/mol relative to Slipped.
+- Cross-method interpretation: B3LYP+gas-BSSE produced a Slipped-versus-Flat separation of 0.986 kcal/mol; M06-2X produces 1.044 kcal/mol. The independent methods therefore converge on the same interpretation: Flat and Slipped form a near-degenerate low-energy adsorption pair with Slipped nominally favored, while Edge is energetically distinct and substantially less favorable.
+- Scientific limitation: these are electronic single-point binding energies evaluated on accepted B3LYP geometries; they are not M06-2X thermal/Gibbs free energies and are not M06-2X BSSE-corrected values.
+- Scientific disposition: all five M06-2X runs = `ACCEPTED_ENERGETIC_VALIDATION`.
+- Reproducibility: deterministic validation table stored at `calculations/phase1_dft/m062x/results/erlotinib_m062x_validation.tsv`.
+- Legacy control: historical `cooh_gqd_m062x_sp_v01.com` remains preserved but is quarantined from reuse because it references the superseded historical GQD checkpoint; the explicit-coordinate five-system validation is authoritative.
+- Evidence-control state: run ledger=38 runs; archive manifest=97 physical files; checksum verification PASS.
+- Advancement gate: PASS — Erlotinib higher-level energetic validation closed. RELEASE — proceed to the controlled electronic/noncovalent interaction descriptor package before final Erlotinib Phase I promotion and advancement to Gefitinib.
