@@ -7745,3 +7745,14 @@ single-session format.*
 - Reproducibility: deterministic comparison table stored at calculations/phase1_dft/b3lyp/results/erlotinib_bsse_comparison.tsv; QC parser updated for Gaussian 16 C.02 Counterpoise wording and interaction-energy fields.
 - Evidence-control state: run ledger=33 runs; archive manifest=87 physical files; archive checksum verification PASS.
 - Advancement gate: PASS — Erlotinib BSSE energetic-validation gate closed. RELEASE — proceed to M06-2X/6-311+G(d,p), SMD-water validation using the accepted B3LYP geometries.
+
+### Entry 075 — 2026-11-15 — Erlotinib five-system M06-2X validation release
+- Scientific objective: Begin higher-level energetic validation of the accepted Erlotinib adsorption system after closure of the B3LYP pose and BSSE gates.
+- Validation method: single-point M06-2X/6-311+G(d,p), SMD water, `Int=UltraFine`, `NoSymm`; no empirical GD3BJ correction is added.
+- Geometry rule: all five calculations use frozen accepted B3LYP optimized geometries. No M06-2X geometry optimization or frequency calculation is performed at this validation stage.
+- Systems / run IDs: C1 carrier=`M062X-COOH-GQD-C1-001`; isolated Erlotinib=`M062X-ERLOTINIB-001`; Flat=`M062X-COOH-GQD-ERLOTINIB-FLAT-001`; Slipped=`M062X-COOH-GQD-ERLOTINIB-SLIPPED-001`; Edge=`M062X-COOH-GQD-ERLOTINIB-EDGE-001`.
+- Scientific purpose of the five-system set: the isolated carrier and drug provide method-matched M06-2X monomer energies so that M06-2X binding energies can be calculated for all three accepted complex geometries rather than relying only on total-complex energy ranking.
+- Input preflight: atom count, molecular composition, neutral-singlet state, source-geometry coordinate identity, route controls, and prohibited-keyword checks PASS for all five inputs.
+- Input SHA256: C1=97d2f79224ffa5910404cbf95d4fe375d1f8c541a9bf9c8e9f89314345514132; Erlotinib=8154fd0e4b1d92519416d5740a5947a8e38800af32cfb28146c0cae5c34f2ba0; Flat=a956a3f53482df0171650b22571cd02b44cc74724187299ee21e37c518360df2; Slipped=c076cf36a266e9d46d8f3ab681846d415e4775cd29b124361b5796f4940f9706; Edge=5a6e583a848a167d8007c932eb485cc565676fc8234b2605f0ebdfbcebd50088.
+- Current hypothesis to test: B3LYP+BSSE supports Flat and Slipped as a near-degenerate low-energy pair with Slipped nominally favored, while Edge remains clearly less favorable. M06-2X is an independent higher-level energetic validation of that conclusion.
+- Advancement gate: PASS — five-system M06-2X input set prepared and independently validated. HOLD — no execution until the inputs, builder, archive mappings, and Entry 075 are committed, pushed, and remotely verified.

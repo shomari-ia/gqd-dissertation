@@ -120,6 +120,16 @@ emit() {
                         run_id="B3LYP-COOH-GQD-ERLOTINIB-SLIPPED-BSSE-002" ;;
                     cooh_gqd_c1_erlotinib_edge_b3lyp_bsse_v02)
                         run_id="B3LYP-COOH-GQD-ERLOTINIB-EDGE-BSSE-002" ;;
+                    cooh_gqd_c1_m062x_smd_sp_v01)
+                        run_id="M062X-COOH-GQD-C1-001" ;;
+                    erlotinib_m062x_smd_sp_v01)
+                        run_id="M062X-ERLOTINIB-001" ;;
+                    cooh_gqd_c1_erlotinib_flat_m062x_smd_sp_v01)
+                        run_id="M062X-COOH-GQD-ERLOTINIB-FLAT-001" ;;
+                    cooh_gqd_c1_erlotinib_slipped_m062x_smd_sp_v01)
+                        run_id="M062X-COOH-GQD-ERLOTINIB-SLIPPED-001" ;;
+                    cooh_gqd_c1_erlotinib_edge_m062x_smd_sp_v01)
+                        run_id="M062X-COOH-GQD-ERLOTINIB-EDGE-001" ;;
                     erlotinib_b3lyp_optfreq_magnolia_validation_v01)
                         run_id="B3LYP-ERLOTINIB-MAGNOLIA-VALIDATION-001" ;;
                     erlotinib_pm6_opt_v01_magnolia_seed)
