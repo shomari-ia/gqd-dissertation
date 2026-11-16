@@ -1,0 +1,24 @@
+# CRITIC2-ERLOTINIB-FLAT-HIRSHFELD-SMOKE-004
+# Source: M062X-COOH-GQD-ERLOTINIB-FLAT-001
+#
+# Analytical M06-2X/6-311+G(d,p), SMD-water wavefunction.
+# Post-processing only. No new electronic-structure calculation.
+#
+# Corrected retry after confirming Critic2 succeeds on Magnolia when
+# stdout is redirected by the shell rather than passed as an output path.
+
+ROOT flat_hirshfeld_smoke_v04
+
+UNITS ANGSTROM
+
+MOLECULE archive/wfn/cooh_gqd_c1_erlotinib_flat_m062x_smd_sp_v01.fchk
+
+LOAD archive/wfn/cooh_gqd_c1_erlotinib_flat_m062x_smd_sp_v01.fchk
+
+MESHTYPE FRANCHINI VERYGOOD
+
+HIRSHFELD
+
+HIRSHFELD ITERATIVE TOL 1e-7 MAXIT 200
+
+END
