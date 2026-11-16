@@ -7731,3 +7731,17 @@ single-session format.*
 - Reporting constraint: this result must be labeled as an SMD binding energy with a gas-phase BSSE correction, not as a fully solvent-phase Counterpoise calculation.
 - Retry control: fresh immutable run IDs will be B3LYP-COOH-GQD-ERLOTINIB-FLAT-BSSE-002, B3LYP-COOH-GQD-ERLOTINIB-SLIPPED-BSSE-002, and B3LYP-COOH-GQD-ERLOTINIB-EDGE-BSSE-002. BSSE-001 artifacts remain preserved.
 - Advancement gate: PASS — root cause established. PASS — corrected protocol defined. HOLD — BSSE-002 submission requires new-input identity validation and Git pre-submission closure.
+
+### Entry 074 — 2026-11-15 — Erlotinib BSSE-002 energetic validation acceptance
+- Scientific objective: Complete controlled basis-set-superposition-error validation for the accepted Erlotinib Flat, Slipped, and Edge adsorption minima.
+- Successful runs: B3LYP-COOH-GQD-ERLOTINIB-FLAT-BSSE-002 / Slurm 352916; B3LYP-COOH-GQD-ERLOTINIB-SLIPPED-BSSE-002 / Slurm 352917; B3LYP-COOH-GQD-ERLOTINIB-EDGE-BSSE-002 / Slurm 352918.
+- Execution result: PASS for all three. Gaussian 16 C.02 normal termination; single-point Counterpoise calculations; optimization and frequency gates not applicable.
+- Method: gas-phase B3LYP-D3(BJ)/6-31G(d,p), Counterpoise=2, on the frozen accepted B3LYP-D3(BJ)/6-31G(d,p), SMD-water optimized geometries. Gas-phase CP is used only as a BSSE estimate because automated Gaussian Counterpoise cannot be combined with SCRF.
+- Flat: BSSE=0.017571042223 Ha=11.026 kcal/mol; raw SMD binding=-44.180 kcal/mol; SMD+gas-BSSE=-33.154 kcal/mol; Gaussian gas CP corrected interaction=-34.63 kcal/mol.
+- Slipped: BSSE=0.018441748922 Ha=11.572 kcal/mol; raw SMD binding=-45.712 kcal/mol; SMD+gas-BSSE=-34.140 kcal/mol; Gaussian gas CP corrected interaction=-34.71 kcal/mol.
+- Edge: BSSE=0.005285059110 Ha=3.316 kcal/mol; raw SMD binding=-13.388 kcal/mol; SMD+gas-BSSE=-10.072 kcal/mol; Gaussian gas CP corrected interaction=-17.97 kcal/mol.
+- Scientific interpretation: BSSE correction preserves Slipped as the nominal lowest SMD-based corrected estimate but reduces the Slipped-versus-Flat difference to 0.986 kcal/mol. The gas-phase corrected CP interaction values differ by only 0.08 kcal/mol. Flat and Slipped are therefore treated as a near-degenerate low-energy adsorption pair pending M06-2X validation. Edge remains energetically distinct and substantially less favorable.
+- Scientific disposition: all three BSSE-002 runs = ACCEPTED_ENERGETIC_VALIDATION.
+- Reproducibility: deterministic comparison table stored at calculations/phase1_dft/b3lyp/results/erlotinib_bsse_comparison.tsv; QC parser updated for Gaussian 16 C.02 Counterpoise wording and interaction-energy fields.
+- Evidence-control state: run ledger=33 runs; archive manifest=87 physical files; archive checksum verification PASS.
+- Advancement gate: PASS — Erlotinib BSSE energetic-validation gate closed. RELEASE — proceed to M06-2X/6-311+G(d,p), SMD-water validation using the accepted B3LYP geometries.

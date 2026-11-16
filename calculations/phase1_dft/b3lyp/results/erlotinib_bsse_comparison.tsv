@@ -1,0 +1,4 @@
+rank	pose	run_id	raw_smd_binding_kcal_mol	bsse_gas_hartree	bsse_gas_kcal_mol	smd_plus_gas_bsse_kcal_mol	delta_corrected_vs_lowest_kcal_mol	gaussian_cp_corrected_energy_hartree	gas_cp_raw_interaction_kcal_mol	gas_cp_corrected_interaction_kcal_mol
+1	Slipped	B3LYP-COOH-GQD-ERLOTINIB-SLIPPED-BSSE-002	-45.712	0.018441748922	11.572	-34.140	0.000	-3575.244233855090	-46.29	-34.71
+2	Flat	B3LYP-COOH-GQD-ERLOTINIB-FLAT-BSSE-002	-44.180	0.017571042223	11.026	-33.154	0.986	-3575.243874373089	-45.66	-34.63
+3	Edge	B3LYP-COOH-GQD-ERLOTINIB-EDGE-BSSE-002	-13.388	0.005285059110	3.316	-10.072	24.068	-3575.212441649937	-21.29	-17.97

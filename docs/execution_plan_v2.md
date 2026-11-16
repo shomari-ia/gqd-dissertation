@@ -146,15 +146,15 @@ Complexes are built only from accepted isolated B3LYP monomers.
 Current:
 - flat, slipped, and edge accepted;
 - pose comparison reproducibly locked;
-- electronic ordering: Slipped < Flat << Edge;
-- raw electronic binding values classified `PRE_BSSE`;
-- first Counterpoise attempt (`BSSE-001`) retained as an input/method-compatibility failure because Gaussian 16 C.02 rejects `SCRF` with `Counterpoise`;
-- corrected gas-phase Counterpoise retry lineage is authorized using the frozen accepted SMD-optimized geometries.
+- BSSE-001 retained as input/method-compatibility failure evidence;
+- BSSE-002 gas-phase Counterpoise calculations accepted as energetic validation;
+- SMD+gas-BSSE estimates: Slipped=-34.140, Flat=-33.154, Edge=-10.072 kcal/mol;
+- Slipped and Flat are treated as a near-degenerate low-energy adsorption pair pending higher-level validation;
+- Edge remains clearly less favorable.
 
 Next:
-- execute controlled Flat/Slipped/Edge gas-phase Counterpoise calculations under fresh `BSSE-002` run IDs;
-- compute BSSE-corrected binding quantities while retaining interaction/deformation distinctions;
-- run M06-2X/6-311+G(d,p), SMD-water validation;
+- execute M06-2X/6-311+G(d,p), SMD-water validation using accepted B3LYP geometries;
+- compare Flat/Slipped/Edge energetic ordering at the validation level;
 - complete selected electronic/NCI descriptors;
 - populate Chapter 2 only from accepted evidence.
 

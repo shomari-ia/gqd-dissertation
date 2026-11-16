@@ -31,7 +31,24 @@ Current B3LYP values:
 
 All three required corrected Erlotinib adsorption basins are now resolved as true minima. At the current B3LYP-D3(BJ)/6-31G(d,p), SMD-water level, slipped is lower than flat by approximately 1.532 kcal/mol electronically and 1.387 kcal/mol in Gibbs free energy. Edge is higher than slipped by approximately 32.324 kcal/mol electronically and 25.485 kcal/mol in Gibbs free energy.
 
-These are relative total-system energies for equal-composition adsorption minima and support the current pose ordering, but they are not yet the final adsorption/binding-energy conclusion. Controlled BSSE/counterpoise, M06-2X validation, and planned descriptor analyses remain pending.
+These are relative total-system energies for equal-composition adsorption minima. The controlled BSSE gate is now closed; M06-2X validation and planned descriptor analyses remain pending before the final Phase I Erlotinib conclusion.
+
+## Erlotinib BSSE energetic validation
+
+Gas-phase Boys-Bernardi Counterpoise calculations were performed at B3LYP-D3(BJ)/6-31G(d,p) on the frozen accepted SMD-water optimized geometries because Gaussian 16 does not permit automated Counterpoise with SCRF.
+
+The primary adsorption model remains SMD water. The reported corrected estimate is therefore explicitly:
+
+`E_bind,SMD+BSSE = E_bind,raw,SMD + BSSE_gas`
+
+| Pose | Raw SMD binding (kcal/mol) | Gas BSSE (kcal/mol) | SMD + gas-BSSE estimate (kcal/mol) | Δ vs lowest |
+|---|---:|---:|---:|---:|
+| Slipped | -45.712 | +11.572 | -34.140 | 0.000 |
+| Flat | -44.180 | +11.026 | -33.154 | +0.986 |
+| Edge | -13.388 | +3.316 | -10.072 | +24.068 |
+
+The BSSE correction preserves Slipped as the nominal lowest-energy pose but reduces the Slipped-versus-Flat separation to 0.986 kcal/mol. The independent gas-phase Counterpoise corrected interaction values are -34.71 kcal/mol for Slipped and -34.63 kcal/mol for Flat, a difference of only 0.08 kcal/mol. Accordingly, Flat and Slipped are treated as a near-degenerate low-energy adsorption pair pending M06-2X validation. Edge remains clearly less favorable.
+
 
 ## Active HPC platform
 
@@ -56,9 +73,9 @@ Maple is closed to new Gaussian production work. Historical Maple results remain
 
 ## Evidence-control state
 
-- Run ledger: 27 runs at the Edge-003 acceptance closure; execution/QC status remains separated from scientific disposition.
-- Archive: 75 physical scientific files inventoried in `archive_manifest.tsv`; checksum verification PASS at the Edge-003 closure.
-- Lab Journal: Entries 001-071; Entry 071 records Edge-003 scientific acceptance and closure.
+- Run ledger: 33 runs at the Erlotinib BSSE closure; execution/QC status remains separated from scientific disposition.
+- Archive: 87 physical scientific files inventoried in `archive_manifest.tsv`; checksum verification PASS at the Erlotinib BSSE closure.
+- Lab Journal: Entries 001-074; Entry 074 records the accepted Erlotinib BSSE energetic validation.
 - Historical malformed-GQD Erlotinib complexes: QUARANTINED / NOT ELIGIBLE FOR REUSE.
 - Acceptance logic: governed by `docs/acceptance_gates_v2.md`.
 - Execution strategy / forecast: `docs/execution_plan_v2.md`.

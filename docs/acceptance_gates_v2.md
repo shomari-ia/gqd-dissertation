@@ -75,6 +75,7 @@ Use an already accepted scientific control. Record software-build and scheduler 
 | ACCEPTED_COMPARISON | Valid comparison result, not production baseline | Comparison only |
 | ACCEPTED_ISOLATED_BASELINE | Accepted isolated molecule | Yes |
 | ACCEPTED_ADSORPTION_MINIMUM | Valid optimized adsorption minimum | Yes, for later controlled comparison |
+| ACCEPTED_ENERGETIC_VALIDATION | Valid controlled energetic correction or higher-level energy validation under a documented protocol | Yes, for controlled energetic interpretation |
 | ACCEPTED_PLATFORM_VALIDATION | Platform continuity demonstrated | Releases platform |
 | SUPERSEDED_STRUCTURAL_MODEL | Execution history retained but model no longer scientifically eligible | No |
 | RETAINED_FREQUENCY_FAILURE | Completed run failed true-minimum gate | No |

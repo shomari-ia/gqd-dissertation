@@ -96,14 +96,26 @@ ZPE=$(grep "Zero-point correction" "$LOG" \
       | tail -n 1 | awk '{print $3}' || true)
 ZPE="${ZPE:-NA}"
 
-# BSSE counterpoise, if this was a Counterpoise=2 job
-CP=$(grep -im1 -E 'Counterpoise:[[:space:]]*corrected energy' "$LOG" \
+# BSSE / Counterpoise output. Gaussian 16 C.02 prints:
+#   Counterpoise corrected energy = ...
+#   BSSE energy = ...
+#   complexation energy = ... kcal/mole (raw)
+#   complexation energy = ... kcal/mole (corrected)
+CP=$(grep -im1 -E '^[[:space:]]*Counterpoise([[:space:]]*:)?[[:space:]]*corrected energy[[:space:]]*=' "$LOG" \
      | awk '{print $NF}' || true)
 CP="${CP:-NA}"
 
-BSSE=$(grep -im1 -E 'Counterpoise:[[:space:]]*BSSE energy' "$LOG" \
+BSSE=$(grep -im1 -E '^[[:space:]]*(Counterpoise([[:space:]]*:)?[[:space:]]*)?BSSE energy[[:space:]]*=' "$LOG" \
        | awk '{print $NF}' || true)
 BSSE="${BSSE:-NA}"
+
+CP_RAW_KCAL=$(grep -im1 -E '^[[:space:]]*complexation energy[[:space:]]*=.*\(raw\)' "$LOG" \
+              | awk '{print $4}' || true)
+CP_RAW_KCAL="${CP_RAW_KCAL:-NA}"
+
+CP_CORR_KCAL=$(grep -im1 -E '^[[:space:]]*complexation energy[[:space:]]*=.*\(corrected\)' "$LOG" \
+               | awk '{print $4}' || true)
+CP_CORR_KCAL="${CP_CORR_KCAL:-NA}"
 
 CHARGE_MULT=$(grep -m1 "Charge =" "$LOG" | sed 's/^ *//' || echo "NA")
 NATOMS=$(grep -m1 "NAtoms=" "$LOG" | awk '{print $2}' || echo "NA")
@@ -130,6 +142,8 @@ if [[ -n "$SUMDIR" ]]; then
         echo "gibbs_hartree   $GIBBS"
         echo "cp_corrected    $CP"
         echo "bsse_hartree    $BSSE"
+        echo "cp_raw_complexation_kcal_mol       $CP_RAW_KCAL"
+        echo "cp_corrected_complexation_kcal_mol $CP_CORR_KCAL"
         echo "cpu_time        $CPUTIME"
         echo "elapsed_time    $ELAPSED"
         echo "qc_status       $STATUS"

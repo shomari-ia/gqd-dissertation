@@ -563,4 +563,8 @@ All four isolated drug baselines are released.
 
 Erlotinib flat, slipped, and edge adsorption minima are accepted.
 
-The corrected Erlotinib adsorption-basin set is therefore resolved at the current B3LYP-D3(BJ)/6-31G(d,p), SMD-water Opt+Freq level. The next authorized work is controlled flat/slipped/edge pose comparison followed by binding-energy/BSSE, M06-2X, and planned descriptor validation before advancing the locked Phase I sequence to Gefitinib.
+The corrected Erlotinib adsorption-basin set is resolved at B3LYP-D3(BJ)/6-31G(d,p), SMD-water Opt+Freq.
+
+The controlled gas-phase Counterpoise BSSE correction is also resolved. Slipped and Flat form a near-degenerate low-energy pair after correction (`-34.140` and `-33.154` kcal/mol SMD+gas-BSSE estimates), while Edge remains substantially less favorable (`-10.072` kcal/mol).
+
+The next authorized scientific stage is M06-2X/6-311+G(d,p), SMD-water validation using the accepted B3LYP geometries, followed by the planned electronic/noncovalent descriptor package before advancing to Gefitinib.
