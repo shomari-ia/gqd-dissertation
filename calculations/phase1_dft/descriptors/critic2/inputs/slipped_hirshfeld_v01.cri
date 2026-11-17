@@ -1,0 +1,20 @@
+# CRITIC2-ERLOTINIB-SLIPPED-HIRSHFELD-001
+# Source: M062X-COOH-GQD-ERLOTINIB-SLIPPED-001
+# Analytical M06-2X/6-311+G(d,p), SMD-water wavefunction.
+# Post-processing only; no new electronic-structure calculation.
+
+ROOT erlotinib_slipped_hirshfeld_v01
+
+UNITS ANGSTROM
+
+MOLECULE archive/wfn/cooh_gqd_c1_erlotinib_slipped_m062x_smd_sp_v01.fchk
+
+LOAD archive/wfn/cooh_gqd_c1_erlotinib_slipped_m062x_smd_sp_v01.fchk
+
+MESHTYPE FRANCHINI VERYGOOD
+
+HIRSHFELD
+
+HIRSHFELD ITERATIVE TOL 1e-7 MAXIT 200
+
+END
