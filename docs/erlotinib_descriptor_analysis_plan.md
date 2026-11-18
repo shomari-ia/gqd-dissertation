@@ -139,3 +139,52 @@ Next controlled stage:
 - generate interfragment NCI/RDG analyses;
 - generate HOMO/LUMO spatial surfaces;
 - evaluate targeted QTAIM only after the real-space workflow is validated.
+
+
+## Gate 2 — real-space charge-partition closure
+
+Status: PASS.
+
+Critic2 analytical-wavefunction post-processing was validated on the accepted
+Flat M06-2X formatted checkpoint and then applied without methodological change
+to Slipped and Edge. All three analyses completed with zero Critic2 warnings,
+zero comments, and Hirshfeld-I convergence in 45 iterations.
+
+Accepted fragment charges (GQD / Erlotinib, e):
+
+- Flat:
+  - Hirshfeld: +0.047092 / -0.047107
+  - Hirshfeld-I: +0.020731 / -0.020746
+- Slipped:
+  - Hirshfeld: +0.054966 / -0.054821
+  - Hirshfeld-I: +0.031690 / -0.031545
+- Edge:
+  - Hirshfeld: -0.221890 / +0.222348
+  - Hirshfeld-I: -0.170826 / +0.171283
+
+Interpretation:
+
+- Flat and Slipped show only small apparent GQD-to-Erlotinib redistribution.
+- Edge shows substantially larger apparent Erlotinib-to-GQD redistribution.
+- The preliminary Mulliken pattern from Gate 1 is not reproduced and is
+  superseded for charge-transfer interpretation.
+- Net charge transfer therefore does not explain why Flat and Slipped are the
+  preferred adsorption pair.
+- The combined energetic, geometric, and charge-partition evidence supports
+  testing distributed interfragment pi/dispersion interactions as the principal
+  stabilizing feature of Flat and Slipped.
+
+The initial Hirshfeld-I zero-charge TSVs were a parser artifact caused by reading
+the Z column instead of N_HI. Raw Critic2 results were valid and were not rerun.
+The corrected parser uses table-specific column mappings and verifies
+q_HI = Z - N_HI atom by atom.
+
+Next controlled stage:
+
+1. Validate one interfragment NCI/RDG analysis using the accepted Flat
+   M06-2X wavefunction.
+2. Apply the identical validated NCI/RDG workflow to Slipped and Edge.
+3. Compare the spatial extent and sign(lambda2)rho character of the
+   interfragment interaction domains.
+4. Generate HOMO/LUMO spatial surfaces.
+5. Use targeted QTAIM only after NCI/RDG validation.
