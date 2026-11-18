@@ -7787,3 +7787,20 @@ single-session format.*
 - Deferred at this gate: Fukui, TDDFT/UV-Vis, difference-density fragment calculations, ELF, and DOS.
 - Archive state after formatted-checkpoint addition: 102 physical files; checksum verification required before Git closure.
 - Advancement gate: RELEASE post-processing tool validation; HOLD final descriptor interpretation until Hirshfeld/NCI workflow is validated.
+
+
+### Entry 078 — 2026-11-18 — Erlotinib real-space charge-partition validation closure
+- Scientific objective: Validate whether the preliminary Mulliken fragment-charge pattern survives a more robust real-space population analysis and determine whether net charge redistribution explains the accepted Flat/Slipped/Edge adsorption ordering.
+- Source wavefunctions: accepted M06-2X/6-311+G(d,p), SMD-water single-point wavefunctions on the frozen accepted B3LYP geometries for Flat, Slipped, and Edge.
+- Critic2 workflow validation: Flat smoke analysis `CRITIC2-ERLOTINIB-FLAT-HIRSHFELD-SMOKE-004`, Slurm job 354283, completed successfully with exit code 0:0, empty stderr, 0 warnings, 0 comments, and Hirshfeld-I convergence in 45 iterations.
+- Production analyses: `CRITIC2-ERLOTINIB-SLIPPED-HIRSHFELD-001` / Slurm 355114 and `CRITIC2-ERLOTINIB-EDGE-HIRSHFELD-001` / Slurm 355115; both completed with exit code 0:0. Hirshfeld-I converged in 45 iterations for all three poses.
+- Numerical charge-partition results (GQD / Erlotinib, e): Flat Hirshfeld=+0.047092/-0.047107 and Hirshfeld-I=+0.020731/-0.020746; Slipped Hirshfeld=+0.054966/-0.054821 and Hirshfeld-I=+0.031690/-0.031545; Edge Hirshfeld=-0.221890/+0.222348 and Hirshfeld-I=-0.170826/+0.171283.
+- Direction convention: positive GQD fragment charge means electron depletion from GQD. Flat and Slipped therefore show only small apparent GQD-to-Erlotinib redistribution, while Edge shows substantially larger apparent Erlotinib-to-GQD redistribution.
+- Electron-count QC: Flat=572.00001505 e, Slipped=571.99985485 e, Edge=571.99954237 e, consistent with the neutral 572-electron complex within the controlled integration tolerance.
+- Parser correction: the first Hirshfeld-I parser revision incorrectly read the nuclear-charge Z column as N_HI and therefore produced false zero fragment charges. Raw Critic2 output showed nonzero N_HI/q_HI values. The parser was corrected at commit 161bd95068961287d722bed698ae5919c04c6820 to use table-specific column mappings and to verify q_HI=Z-N_HI atom by atom. No Critic2 calculation was rerun because the underlying outputs were valid.
+- Mulliken supersession: Gate-1 Mulliken fragment charges are retained as preliminary evidence but are not accepted for charge-transfer interpretation. Their large Flat/Slipped drug-to-GQD pattern is contradicted by both Hirshfeld and Hirshfeld-I and is treated as population-scheme-sensitive artifact for this question.
+- Mechanistic interpretation: Net charge transfer is not the origin of the Flat/Slipped energetic preference. The low-energy surface-parallel poses combine broad contact networks with only small net charge redistribution. Edge shows stronger localized polar/electronic redistribution yet remains much less favorable energetically, supporting the working interpretation that distributed pi/dispersion contact dominates overall Flat/Slipped stabilization.
+- Edge polar-contact context: accepted geometry gives O74-H75=1.0440 A, H75...N81=1.5689 A, O74...N81=2.6104 A, and O74-H75...N81=174.869 degrees, geometrically consistent with a strong O-H...N hydrogen-bond candidate. Electron-density characterization remains reserved for NCI/RDG and targeted QTAIM.
+- Scientific disposition: ACCEPTED_DESCRIPTOR_VALIDATION for Hirshfeld/Hirshfeld-I fragment charge. Preliminary Mulliken charge-transfer interpretation is superseded.
+- Advancement gate: PASS — real-space charge-partition sub-gate closed. RELEASE — proceed to controlled interfragment NCI/RDG using the accepted M06-2X wavefunctions. HOLD targeted QTAIM until the NCI workflow is validated.
+- Quantum-run count: unchanged at 38; all work in this entry is post-processing of accepted wavefunctions.
