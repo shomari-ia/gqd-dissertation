@@ -1,0 +1,2 @@
+pose	analysis_id	critic2_warnings	critic2_comments	hirshfeld_i_iterations	hirshfeld_total_e	hirshfeld_gqd_charge_e	hirshfeld_drug_charge_e	hirshfeld_drug_to_gqd_e	hirshfeld_i_total_e	hirshfeld_i_gqd_charge_e	hirshfeld_i_drug_charge_e	hirshfeld_i_drug_to_gqd_e	qc_status
+Slipped	CRITIC2-ERLOTINIB-SLIPPED-HIRSHFELD-001	0	0	45	571.99985485	0.05496577	-0.05482062	-0.05496577	571.99985484	0.03168985	-0.03154470	-0.03168985	PASS

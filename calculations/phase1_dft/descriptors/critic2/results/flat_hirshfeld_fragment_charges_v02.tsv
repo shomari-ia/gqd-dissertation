@@ -1,0 +1,2 @@
+pose	analysis_id	critic2_warnings	critic2_comments	hirshfeld_i_iterations	hirshfeld_total_e	hirshfeld_gqd_charge_e	hirshfeld_drug_charge_e	hirshfeld_drug_to_gqd_e	hirshfeld_i_total_e	hirshfeld_i_gqd_charge_e	hirshfeld_i_drug_charge_e	hirshfeld_i_drug_to_gqd_e	qc_status
+Flat	CRITIC2-ERLOTINIB-FLAT-HIRSHFELD-SMOKE-004	0	0	45	572.00001505	0.04709165	-0.04710669	-0.04709165	572.00001505	0.02073107	-0.02074611	-0.02073107	PASS

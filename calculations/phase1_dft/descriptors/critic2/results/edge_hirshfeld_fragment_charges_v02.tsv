@@ -1,0 +1,2 @@
+pose	analysis_id	critic2_warnings	critic2_comments	hirshfeld_i_iterations	hirshfeld_total_e	hirshfeld_gqd_charge_e	hirshfeld_drug_charge_e	hirshfeld_drug_to_gqd_e	hirshfeld_i_total_e	hirshfeld_i_gqd_charge_e	hirshfeld_i_drug_charge_e	hirshfeld_i_drug_to_gqd_e	qc_status
+Edge	CRITIC2-ERLOTINIB-EDGE-HIRSHFELD-001	0	0	45	571.99954237	-0.22189018	0.22234781	0.22189018	571.99954237	-0.17082552	0.17128315	0.17082552	PASS

@@ -1,0 +1,4 @@
+pose	hirshfeld_gqd_charge_e	hirshfeld_drug_charge_e	hirshfeld_direction	hirshfeld_abs_transfer_e	hirshfeld_i_gqd_charge_e	hirshfeld_i_drug_charge_e	hirshfeld_i_direction	hirshfeld_i_abs_transfer_e	accepted_interpretation
+Flat	0.04709165	-0.04710669	GQD_to_Erlotinib	0.04709165	0.02073107	-0.02074611	GQD_to_Erlotinib	0.02073107	minimal_net_redistribution
+Slipped	0.05496577	-0.05482062	GQD_to_Erlotinib	0.05496577	0.03168985	-0.03154470	GQD_to_Erlotinib	0.03168985	minimal_net_redistribution
+Edge	-0.22189018	0.22234781	Erlotinib_to_GQD	0.22189018	-0.17082552	0.17128315	Erlotinib_to_GQD	0.17082552	larger_localized_redistribution
