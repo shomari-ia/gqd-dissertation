@@ -13,12 +13,26 @@ EXPECTED_ATOMS = 127
 EXPECTED_ELECTRONS = 572.0
 GQD_LAST_ATOM = 75
 
-ROW = re.compile(
-    r"^\s*(\d+)\s+\d+\s+([A-Za-z]+)_\s+"
-    r"([+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[Ee][+-]?\d+)?)"
+NUMBER = r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[Ee][+-]?\d+)?"
+
+# Standard Hirshfeld table:
+# nneq mult name N_hirsh V_hirsh
+STANDARD_ROW = re.compile(
+    rf"^\s*(\d+)\s+\d+\s+([A-Za-z]+)_\s+({NUMBER})\s+({NUMBER})"
 )
 
-def extract_population_table(lines: list[str], marker: str) -> list[tuple[int, str, float]]:
+# Hirshfeld-I table:
+# nneq mult name Z nmin nmax N_HI q_HI
+ITERATIVE_ROW = re.compile(
+    rf"^\s*(\d+)\s+\d+\s+([A-Za-z]+)_\s+"
+    rf"(\d+)\s+\d+\s+\d+\s+({NUMBER})\s+({NUMBER})"
+)
+
+
+def extract_standard_table(
+    lines: list[str],
+) -> list[tuple[int, str, float]]:
+    marker = "# N_hirsh = atomic electron populations"
     try:
         start = next(i for i, line in enumerate(lines) if marker in line)
     except StopIteration as exc:
@@ -28,7 +42,7 @@ def extract_population_table(lines: list[str], marker: str) -> list[tuple[int, s
     seen: set[int] = set()
 
     for line in lines[start + 1 :]:
-        m = ROW.match(line)
+        m = STANDARD_ROW.match(line)
         if not m:
             if len(rows) >= EXPECTED_ATOMS:
                 break
@@ -39,12 +53,9 @@ def extract_population_table(lines: list[str], marker: str) -> list[tuple[int, s
         pop = float(m.group(3))
 
         if atom in seen:
-            if len(rows) >= EXPECTED_ATOMS:
-                break
             continue
-
         if symbol not in Z:
-            raise SystemExit(f"ERROR: unsupported element in table: {symbol}")
+            raise SystemExit(f"ERROR: unsupported element in standard table: {symbol}")
 
         rows.append((atom, symbol, pop))
         seen.add(atom)
@@ -52,16 +63,73 @@ def extract_population_table(lines: list[str], marker: str) -> list[tuple[int, s
         if len(rows) == EXPECTED_ATOMS:
             break
 
+    validate_rows(rows, "standard Hirshfeld")
+    return rows
+
+
+def extract_iterative_table(
+    lines: list[str],
+) -> list[tuple[int, str, float]]:
+    marker = "# N_HI = Hirshfeld-I population; q_HI = Z - N_HI"
+    try:
+        start = next(i for i, line in enumerate(lines) if marker in line)
+    except StopIteration as exc:
+        raise SystemExit(f"ERROR: marker not found: {marker}") from exc
+
+    rows: list[tuple[int, str, float]] = []
+    seen: set[int] = set()
+
+    for line in lines[start + 1 :]:
+        m = ITERATIVE_ROW.match(line)
+        if not m:
+            if len(rows) >= EXPECTED_ATOMS:
+                break
+            continue
+
+        atom = int(m.group(1))
+        symbol = m.group(2).upper()
+        z_reported = int(m.group(3))
+        pop = float(m.group(4))
+        q_reported = float(m.group(5))
+
+        if atom in seen:
+            continue
+        if symbol not in Z:
+            raise SystemExit(f"ERROR: unsupported element in Hirshfeld-I table: {symbol}")
+        if z_reported != Z[symbol]:
+            raise SystemExit(
+                f"ERROR: atom {atom} {symbol} has Critic2 Z={z_reported}, "
+                f"expected {Z[symbol]}"
+            )
+
+        q_recomputed = Z[symbol] - pop
+        if abs(q_recomputed - q_reported) > 1e-8:
+            raise SystemExit(
+                f"ERROR: atom {atom} Hirshfeld-I charge mismatch: "
+                f"reported={q_reported:.10f}, recomputed={q_recomputed:.10f}"
+            )
+
+        rows.append((atom, symbol, pop))
+        seen.add(atom)
+
+        if len(rows) == EXPECTED_ATOMS:
+            break
+
+    validate_rows(rows, "Hirshfeld-I")
+    return rows
+
+
+def validate_rows(
+    rows: list[tuple[int, str, float]],
+    label: str,
+) -> None:
     if len(rows) != EXPECTED_ATOMS:
         raise SystemExit(
-            f"ERROR: expected {EXPECTED_ATOMS} rows after marker "
-            f"{marker!r}; found {len(rows)}"
+            f"ERROR: expected {EXPECTED_ATOMS} rows in {label}; found {len(rows)}"
         )
 
     if [x[0] for x in rows] != list(range(1, EXPECTED_ATOMS + 1)):
-        raise SystemExit("ERROR: atom numbering is not exactly 1..127")
-
-    return rows
+        raise SystemExit(f"ERROR: {label} atom numbering is not exactly 1..127")
 
 
 def summarize(rows: list[tuple[int, str, float]]) -> dict[str, float]:
@@ -124,14 +192,8 @@ def main() -> None:
     if re.search(r"\bpinned\b", text, flags=re.IGNORECASE):
         raise SystemExit("ERROR: pinned Hirshfeld-I atom detected")
 
-    standard = extract_population_table(
-        lines,
-        "# N_hirsh = atomic electron populations",
-    )
-    iterative = extract_population_table(
-        lines,
-        "# N_HI = Hirshfeld-I population; q_HI = Z - N_HI",
-    )
+    standard = extract_standard_table(lines)
+    iterative = extract_iterative_table(lines)
 
     hs = summarize(standard)
     hi = summarize(iterative)
