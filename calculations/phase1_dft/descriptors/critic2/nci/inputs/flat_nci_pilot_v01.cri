@@ -1,0 +1,27 @@
+# CRITIC2-ERLOTINIB-FLAT-NCI-PILOT-001
+# Source wavefunction: M062X-COOH-GQD-ERLOTINIB-FLAT-001
+# Purpose: validate fragment-restricted interfragment NCI/RDG workflow.
+# No new electronic-structure calculation.
+
+ROOT erlotinib_flat_nci_pilot_v01
+
+UNITS ANGSTROM
+
+MOLECULE archive/wfn/cooh_gqd_c1_erlotinib_flat_m062x_smd_sp_v01.fchk
+
+LOAD archive/wfn/cooh_gqd_c1_erlotinib_flat_m062x_smd_sp_v01.fchk
+
+NCIPLOT
+  ONAME erlotinib_flat_nci_pilot_v01
+  CUTOFFS 0.2 2.0
+  CUTPLOT 0.05 0.5
+  RTHRES 2.0
+  RHOPARAM 0.95
+  RHOPARAM2 0.75
+  INCREMENTS 0.10 0.10 0.10
+  FRAGMENT calculations/phase1_dft/descriptors/critic2/nci/fragments/flat_gqd.xyz
+  FRAGMENT calculations/phase1_dft/descriptors/critic2/nci/fragments/flat_erlotinib.xyz
+  NOCHK
+ENDNCIPLOT
+
+END
