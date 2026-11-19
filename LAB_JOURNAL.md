@@ -7822,3 +7822,23 @@ single-session format.*
 - Scientific interpretation at pilot stage: the validated Flat interfragment NCI dataset contains both attractive and repulsive/steric signed-density regimes. The presence of negative low-RDG points establishes an attractive intermolecular domain, but grid-point counts are not treated as interaction energies. Comparative interpretation is deferred until Slipped and Edge are analyzed under identical settings.
 - Advancement gate: PASS — Flat NCI/RDG pilot validated and parameter set locked. RELEASE — Slipped and Edge production NCI/RDG analyses under identical settings. HOLD final three-pose NCI interpretation and targeted QTAIM until comparative QC is complete.
 - Quantum-run count: unchanged at 38; NCI/RDG is post-processing of accepted M06-2X wavefunctions.
+
+
+### Entry 080 — 2026-11-19 — Erlotinib three-pose NCI/RDG comparison closure
+- Scientific objective: Compare Flat, Slipped, and Edge intermolecular NCI/RDG domains under the identical fragment-restricted Critic2 protocol validated in the Flat pilot.
+- Source wavefunctions: accepted M06-2X/6-311+G(d,p), SMD-water single-point densities on frozen accepted B3LYP geometries.
+- Analyses / jobs: Flat pilot `CRITIC2-ERLOTINIB-FLAT-NCI-PILOT-001` / Slurm 355537; Slipped `CRITIC2-ERLOTINIB-SLIPPED-NCI-001` / Slurm 355543; Edge `CRITIC2-ERLOTINIB-EDGE-NCI-001` / Slurm 355544.
+- Execution result: PASS for all three. Slipped and Edge completed with exit code 0:0; quantitative NCI QC PASS. Locked Flat-pilot settings were used unchanged: CUTOFFS 0.2 2.0; CUTPLOT 0.05 0.5; RTHRES 2.0 A; RHOPARAM 0.95; RHOPARAM2 0.75; INCREMENTS 0.10 A; explicit GQD/Erlotinib fragments; NOCHK.
+- Flat QC: 119493 NCI rows; 10831 low-RDG points (RDG <= 0.5); sign(lambda2)rho range -0.028380452 to +0.023092610; grid 206 x 181 x 101 = 3765886 points.
+- Slipped QC: 121321 NCI rows; 11397 low-RDG points; sign(lambda2)rho range -0.028928209 to +0.029757990; grid 224 x 179 x 103 = 4129888 points.
+- Edge QC: 11599 NCI rows; 200 low-RDG points; sign(lambda2)rho range -0.198028400 to +0.052231277; grid 297 x 170 x 162 = 8179380 points.
+- Grid-normalized low-RDG extent: Flat=0.00287608 of all grid points (0.2876%); Slipped=0.00275964 (0.2760%); Edge=0.00002445 (0.002445%). Flat and Slipped therefore exhibit about 118x and 113x, respectively, the normalized low-RDG spatial extent of Edge.
+- NCI-row-normalized low-RDG fraction: Flat=9.064%; Slipped=9.394%; Edge=1.724%.
+- Attractive-domain intensity: Edge reaches sign(lambda2)rho=-0.1980, approximately seven times more negative in magnitude than the Flat/Slipped minima near -0.029. The Edge low-RDG median is negative (-0.00654), whereas Flat and Slipped medians are weakly positive (~+0.0042).
+- Interpretive constraint: NCI/RDG point counts and grid fractions are spatial descriptors, not interaction energies. They are used only to compare the extent and character of interaction domains generated under identical thresholds and grid spacing.
+- Scientific interpretation: Flat and Slipped form the same broad distributed surface-interaction regime, consistent with their near-parallel geometry, large contact counts, and near-degenerate strong adsorption energies. Edge instead exhibits a highly localized but much stronger attractive/polar density feature, consistent with the geometrically identified O74-H75...N81 hydrogen-bond candidate, while lacking the broad interaction domain present in Flat/Slipped.
+- Cross-descriptor synthesis: corrected B3LYP+BSSE and M06-2X energetics favor Flat/Slipped strongly over Edge; contact geometry shows 129/134 versus 8 heavy-atom contacts <=4 A; Hirshfeld/Hirshfeld-I shows minimal net redistribution for Flat/Slipped but stronger localized redistribution for Edge; NCI/RDG now independently supports broad distributed interactions for Flat/Slipped versus localized strong polarity in Edge.
+- Mechanistic conclusion: the accepted evidence supports distributed pi/dispersion-dominated surface contact as the principal source of Flat/Slipped stabilization. The localized Edge O-H...N interaction is strong enough to produce a pronounced attractive NCI signature but cannot compensate energetically for the loss of broad GQD-drug surface contact.
+- Scientific disposition: ACCEPTED_DESCRIPTOR_VALIDATION.
+- Advancement gate: PASS — three-pose NCI/RDG comparison closed. RELEASE — targeted QTAIM of the Edge O74-H75...N81 region and frontier-orbital spatial localization. HOLD final Erlotinib descriptor-package closure until those remaining core descriptors are complete.
+- Quantum-run count: unchanged at 38; all NCI/RDG analyses are post-processing of accepted wavefunctions.

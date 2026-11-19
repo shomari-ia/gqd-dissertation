@@ -1,0 +1,4 @@
+pose	job_id	dat_rows	grid_points	dat_fraction_grid	low_rdg_points	low_rdg_fraction_dat	low_rdg_fraction_grid	negative_low_rdg_points	negative_low_rdg_fraction_grid	signed_rho_min	signed_rho_max	low_rdg_signed_rho_p05	low_rdg_signed_rho_p50	low_rdg_signed_rho_p95	accepted_interpretation
+Flat	355537	119493	3765886	0.03173038	10831	0.09064129	0.00287608	3280	0.00087098	-0.028380452	0.023092610	-0.00646955425	0.00415745830	0.00588946825	broad_distributed_surface_interaction
+Slipped	355543	121321	4129888	0.02937634	11397	0.09394087	0.00275964	3156	0.00076419	-0.028928209	0.029757990	-0.00650380968	0.00420905300	0.00596299432	broad_distributed_surface_interaction
+Edge	355544	11599	8179380	0.00141808	200	0.01724287	0.00002445	136	0.00001663	-0.198028400	0.052231277	-0.07700272815	-0.00653637370	0.00589496132	localized_strong_polar_interaction

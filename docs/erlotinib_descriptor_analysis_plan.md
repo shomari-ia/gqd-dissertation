@@ -233,3 +233,46 @@ Advancement:
 - RELEASE Slipped and Edge NCI/RDG using the locked Flat-pilot parameters.
 - HOLD final NCI interpretation until all three poses pass quantitative QC.
 - HOLD targeted QTAIM until the three-pose NCI comparison is complete.
+
+
+## Gate 4 — three-pose NCI/RDG comparison
+
+Status: PASS.
+
+Identical fragment-restricted NCI/RDG settings were applied to Flat, Slipped,
+and Edge. All analyses passed quantitative QC.
+
+Grid-normalized low-RDG fractions:
+
+- Flat: 0.2876%
+- Slipped: 0.2760%
+- Edge: 0.002445%
+
+The Flat and Slipped low-RDG interaction domains are therefore approximately
+118x and 113x more spatially extensive than the Edge domain under the same
+spacing and thresholds.
+
+The minimum sign(lambda2)rho values are:
+
+- Flat: -0.02838
+- Slipped: -0.02893
+- Edge: -0.19803
+
+Thus Edge contains a much stronger localized attractive-density feature but a
+far smaller overall intermolecular interaction domain.
+
+Accepted interpretation:
+
+- Flat and Slipped: broad, distributed surface interaction consistent with
+  extensive pi/dispersion contact.
+- Edge: localized strong polar interaction consistent with the O-H...N
+  hydrogen-bond candidate, but insufficient spatial contact to compete
+  energetically with Flat/Slipped.
+
+NCI point counts are not treated as energies.
+
+Next controlled stages:
+
+1. targeted QTAIM of the Edge O74-H75...N81 region;
+2. HOMO/LUMO spatial localization for the accepted complexes;
+3. final integrated Erlotinib descriptor-package closure.
