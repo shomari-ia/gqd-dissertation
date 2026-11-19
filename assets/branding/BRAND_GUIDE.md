@@ -1,27 +1,44 @@
-# GQD Visual Identity — v1.0
+# GQD Visual Identity — v2.0 · Gray Scientific Futurism
 
-This directory contains **presentation assets**, not scientific evidence or validated molecular figures.
+**Creative studio:** Shomari IA  
+**Scientific project:** pH-responsive carboxyl-functionalized GQD dissertation
 
-## Design concept
-**Hybrid Scientific Innovation** combines scientific clarity with a graphite / metallic / aquamarine digital identity.
+This directory contains **branding and presentation assets, not scientific evidence or validated molecular figures**.
+
+## Style
 
 | Role | Color | Hex |
 |---|---|---|
-| Primary background | Deep graphite | `#08111D` |
-| Secondary background | Slate graphite | `#172736` |
-| Primary text | Off-white | `#F3F5F7` |
-| Accent | Metallic gold | `#D6B374` |
-| Active / digital accent | Aquamarine | `#55DDE0` |
-| Secondary text | Cool gray | `#BBCAD4` |
+| Primary graphite | Dark charcoal | `#181B1D` |
+| Secondary | Charcoal gray | `#27292B` |
+| Primary text | Metallic silver | `#E4E6E6` |
+| Supporting text | Neutral cool gray | `#B9BEC0` |
+| Accent | Champagne gold | `#D8C194` |
+| Light highlight | Silver-white | `#FAFAF8` |
 
-## Usage
-- Use the banner for README and general visual identification.
-- Always label stylized molecular art as **conceptual**. Reproducible molecular structures and scientific figures must instead come from audited repository coordinates/results.
-- AXIOM is a separate character identity and is not evidence of computational findings.
-- Keep scientific records, acceptance decisions, and technical workflow material untouched during brand updates.
-- Ensure contrast and readability; avoid animated clutter in technical sections.
-- The hero SVG is vector-based, accessible, lightweight, and hosted in this repository.
-- Do not imply Phase II/III calculations are complete; the three phases are the research framework.
+Gray is the dominant design color. Gold is restrained. Avoid blue/cyan in default branding.
 
-## Future assets
-A full AXIOM identity sheet, poster family, slide templates, and QR destination registry may be developed as separate reviewed changes.
+## Form language
+
+Use smooth contours, waveforms, line fields, scientific coordinate grids, brushed-metal highlights, and refined typographic spacing. Do **not** use decorative honeycomb/hexagon carpets or octagon fields. Actual graphene lattice imagery is permitted when it is scientifically relevant and accurately sourced.
+
+## Relationship to AXIOM
+
+AXIOM is an intelligent-agent mascot and creative presentation interface. It is **not** a validation engine, acceptance authority, or a representation of a real autonomous scientific result. The approved character may have its own distinctive lighting, but shared external materials should follow the gray/silver identity.
+
+## Scientific graphics safeguard
+
+- Brand art is conceptual; label it as such.
+- Figures that claim computed geometry, orbitals, molecular trajectories, spectra, adsorption energies or interactions must derive from auditable scientific results.
+- Technical claims, research phase statuses, and acceptance dispositions are governed by `SCIENTIFIC_STATUS.md`, `scientific_evidence_register.tsv`, and `docs/acceptance_gates_v2.md`.
+- A checkmark symbol is permissible as an icon design, but only label an actual *accepted* result after governing evidence gates pass.
+- Do not edit computational results, run logs, scripts, datasets, or acceptance records under an aesthetics change.
+- Scientific methods and figure captions should identify whether something is illustrative, predicted, calculated, validated, or proposed.
+
+## Assets
+
+- `assets/branding/gqd-header.svg` — GitHub header, grayscale version
+- `assets/graphics/README.md` — icon and diagram library index
+- `docs/design/milestone_03_scientific_graphics.md` — milestone plan, usage controls and production queue
+
+**Personal public identity:** Shomari IA. Formal academic name remains unchanged in official research documents.
