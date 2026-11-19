@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-labelledby="t d">
+<title id="t">pH-responsive modeling</title><desc id="d">Stylized pH-dependent protonation concept, not quantified equilibrium or release results.</desc>
+<defs><linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#343739"/><stop offset=".55" stop-color="#242729"/><stop offset="1" stop-color="#151719"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#F4F4F2"/><stop offset=".5" stop-color="#B6BABC"/><stop offset="1" stop-color="#E1E3E3"/></linearGradient></defs>
+<rect x="3" y="3" width="122" height="122" rx="22" fill="url(#panel)" stroke="#797D7F" stroke-width="1.25"/>
+<path d="M19 19h30" fill="none" stroke="#D8C194" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".76"/>
+<path d="M19 107h90" fill="none" stroke="#D8C194" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".6"/>
+<path d="M64 23C56 40 37 58 37 75a27 27 0 0 0 54 0c0-17-19-35-27-52Z" fill="none" stroke="url(#metal)" stroke-width="3.4" stroke-linejoin="round"/><circle cx="55" cy="68" r="9.5" fill="none" stroke="#D8C194" stroke-width="2.7"/><path d="M55 63v10m-5-5h10" stroke="#D8C194" stroke-width="2.2" stroke-linecap="round"/><path d="M74 69h12" stroke="#E4E6E6" stroke-width="3" stroke-linecap="round"/></svg>

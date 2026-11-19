@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-labelledby="t d">
+<title id="t">Scientific acceptance gate</title><desc id="d">Symbol for a controlled acceptance outcome, not proof that any specific run passed.</desc>
+<defs><linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#343739"/><stop offset=".55" stop-color="#242729"/><stop offset="1" stop-color="#151719"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#F4F4F2"/><stop offset=".5" stop-color="#B6BABC"/><stop offset="1" stop-color="#E1E3E3"/></linearGradient></defs>
+<rect x="3" y="3" width="122" height="122" rx="22" fill="url(#panel)" stroke="#797D7F" stroke-width="1.25"/>
+<path d="M19 19h30" fill="none" stroke="#D8C194" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".76"/>
+<path d="M19 107h90" fill="none" stroke="#D8C194" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".6"/>
+<path d="M64 22l31 11v28c0 20-13 31-31 38-18-7-31-18-31-38V33Z" fill="none" stroke="url(#metal)" stroke-width="3.2" stroke-linejoin="round"/><path d="M48 61l11 12 22-26" fill="none" stroke="#D8C194" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="460" viewBox="0 0 1440 460" role="img" aria-labelledby="title desc">
+<title id="title">GQD scientific acceptance pipeline — conceptual overview</title>
+<desc id="desc">Grouped validation and provenance controls based on acceptance gates G0 to G9; showing process rather than completed outcomes.</desc>
+<defs><linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2B2D30"/><stop offset="1" stop-color="#151718"/></linearGradient></defs>
+<rect width="1440" height="460" rx="20" fill="url(#b)"/>
+<g font-family="Arial,Helvetica,sans-serif">
+<text x="62" y="61" fill="#E6E7E8" font-size="25" letter-spacing="3">FROM CALCULATION TO SCIENTIFIC EVIDENCE</text>
+<path d="M62 79H1376" stroke="#D8C194" stroke-width="2"/>
+<g font-size="20" fill="#F1F2F2" font-weight="bold">
+<rect x="59" y="125" width="296" height="190" rx="12" fill="#303335" stroke="#C2C6C7" stroke-width="2"/><text x="83" y="165" fill="#D8C194">01 / MODEL IDENTITY</text><text x="83" y="215">G0–G3</text><text x="83" y="248" font-size="18" font-weight="normal" fill="#C2C6C7">Input, topology, geometry</text>
+<path d="M371 220h28m-9-9 9 9-9 9" fill="none" stroke="#D8C194" stroke-width="3"/>
+<rect x="414" y="125" width="296" height="190" rx="12" fill="#303335" stroke="#C2C6C7" stroke-width="2"/><text x="438" y="165" fill="#D8C194">02 / NUMERICAL QC</text><text x="438" y="215">G4–G5</text><text x="438" y="248" font-size="18" font-weight="normal" fill="#C2C6C7">Execution and frequency</text>
+<path d="M726 220h28m-9-9 9 9-9 9" fill="none" stroke="#D8C194" stroke-width="3"/>
+<rect x="769" y="125" width="296" height="190" rx="12" fill="#303335" stroke="#C2C6C7" stroke-width="2"/><text x="793" y="165" fill="#D8C194">03 / SCIENTIFIC GATES</text><text x="793" y="215">G6–G9</text><text x="793" y="248" font-size="18" font-weight="normal" fill="#C2C6C7">Comparability and archive</text>
+<path d="M1081 220h28m-9-9 9 9-9 9" fill="none" stroke="#D8C194" stroke-width="3"/>
+<rect x="1124" y="125" width="255" height="190" rx="12" fill="#303335" stroke="#D8C194" stroke-width="2"/><text x="1148" y="165" fill="#D8C194">04 / DISPOSITION</text><text x="1148" y="215">Evidence record</text><text x="1148" y="248" font-size="18" font-weight="normal" fill="#C2C6C7">Accepted · Held · Failed</text>
+</g>
+<text x="62" y="370" font-family="Arial,Helvetica,sans-serif" fill="#CACED0" font-size="19">Illustrative control flow only. Machine QC alone does not establish scientific acceptance.</text>
+<text x="62" y="402" font-family="Arial,Helvetica,sans-serif" fill="#CACED0" font-size="19">Authoritative source: docs/acceptance_gates_v2.md · scientific_evidence_register.tsv · supersession_register.tsv</text>
+</g></svg>

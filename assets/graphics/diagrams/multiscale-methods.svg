@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 430" width="1440" height="430" role="img" aria-labelledby="title desc">
+<title id="title">GQD multiscale modeling program — conceptual architecture</title>
+<desc id="desc">Three research components: DFT and drug loading as the primary Phase I component; planned protonation and pH-dependent modeling; planned molecular docking and molecular dynamics. Does not indicate completed computations.</desc>
+<defs><linearGradient id="b" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#292B2D"/><stop offset="1" stop-color="#141617"/></linearGradient><linearGradient id="silver" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#F0F0EE"/><stop offset="1" stop-color="#969B9D"/></linearGradient></defs>
+<rect width="1440" height="430" rx="20" fill="url(#b)"/>
+<g font-family="Arial,Helvetica,sans-serif">
+<text x="64" y="64" font-size="25" letter-spacing="3" fill="#E9EAEA">MULTISCALE RESEARCH ARCHITECTURE</text>
+<path d="M64 86H1376" stroke="#D8C194" stroke-width="2" opacity=".8"/>
+<g transform="translate(64 125)"><rect width="400" height="220" rx="14" fill="#303335" stroke="#D1D4D4" stroke-width="2.5"/><rect width="400" height="6" rx="3" fill="#D8C194"/><text x="28" y="55" fill="#D8C194" letter-spacing="2" font-size="21">PHASE I · DFT</text><text x="28" y="119" fill="url(#silver)" font-weight="bold" font-size="35">Drug loading</text><text x="28" y="165" fill="#C2C6C6" font-size="22">GQD–drug interactions</text><text x="28" y="193" fill="#C2C6C6" font-size="22">Quantum modeling and QC</text></g>
+<path d="M482 235H516m-12-11 12 11-12 11" fill="none" stroke="#C4C8CA" stroke-width="3"/>
+<g transform="translate(533 125)"><rect width="390" height="220" rx="14" fill="#25282A" stroke="#83888B" stroke-width="2"/><text x="28" y="55" fill="#E2E4E4" letter-spacing="2" font-size="21">PHASE II · PLANNED</text><text x="28" y="119" fill="#F0F1F1" font-weight="bold" font-size="35">pH response</text><text x="28" y="165" fill="#C2C6C6" font-size="22">Protonation-state modeling</text><text x="28" y="193" fill="#C2C6C6" font-size="22">Energetics and release</text></g>
+<path d="M940 235H973m-12-11 12 11-12 11" fill="none" stroke="#C4C8CA" stroke-width="3"/>
+<g transform="translate(990 125)"><rect width="386" height="220" rx="14" fill="#25282A" stroke="#83888B" stroke-width="2"/><text x="28" y="55" fill="#E2E4E4" letter-spacing="2" font-size="21">PHASE III · PLANNED</text><text x="28" y="119" fill="#F0F1F1" font-weight="bold" font-size="34">Biological modeling</text><text x="28" y="165" fill="#C2C6C6" font-size="22">EGFR / Bcl-2 docking</text><text x="28" y="193" fill="#C2C6C6" font-size="22">Molecular dynamics</text></g>
+<text x="64" y="397" fill="#BFC3C5" font-size="20">Conceptual schematic. Consult SCIENTIFIC_STATUS.md and the evidence register for current scientific dispositions.</text></g></svg>
