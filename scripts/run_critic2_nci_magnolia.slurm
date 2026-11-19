@@ -47,8 +47,15 @@ if [[ -e "$CRO" || -e "$ERR" || -e "$PROV" ]]; then
     exit 4
 fi
 
-for f in   "${NCI_ROOT}.dat"   "${NCI_ROOT}-dens.cube"   "${NCI_ROOT}-grad.cube"   "${NCI_ROOT}.vmd"
-do
+EXPECTED=(
+  "${NCI_ROOT}.dat"
+  "${NCI_ROOT}-dens.cube"
+  "${NCI_ROOT}-grad.cube"
+  "${NCI_ROOT}-pdens.cube"
+  "${NCI_ROOT}.vmd"
+)
+
+for f in "${EXPECTED[@]}"; do
     if [[ -e "$f" ]]; then
         echo "ERROR: root-level NCI artifact already exists: $f" >&2
         exit 5
@@ -85,8 +92,7 @@ if [[ "$RC" -eq 0 ]] && ! grep -qi 'ended successfully' "$CRO"; then
 fi
 
 if [[ "$RC" -eq 0 ]]; then
-    for f in       "${NCI_ROOT}.dat"       "${NCI_ROOT}-dens.cube"       "${NCI_ROOT}-grad.cube"       "${NCI_ROOT}.vmd"
-    do
+    for f in "${EXPECTED[@]}"; do
         if [[ ! -s "$f" ]]; then
             echo "ERROR: expected NCI artifact missing/empty: $f" >&2
             RC=8
@@ -96,10 +102,9 @@ if [[ "$RC" -eq 0 ]]; then
 fi
 
 if [[ "$RC" -eq 0 ]]; then
-    mv "${NCI_ROOT}.dat" "$RESULTDIR/"
-    mv "${NCI_ROOT}-dens.cube" "$RESULTDIR/"
-    mv "${NCI_ROOT}-grad.cube" "$RESULTDIR/"
-    mv "${NCI_ROOT}.vmd" "$RESULTDIR/"
+    for f in "${EXPECTED[@]}"; do
+        mv "$f" "$RESULTDIR/"
+    done
 fi
 
 {
