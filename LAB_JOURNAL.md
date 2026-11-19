@@ -7842,3 +7842,15 @@ single-session format.*
 - Scientific disposition: ACCEPTED_DESCRIPTOR_VALIDATION.
 - Advancement gate: PASS — three-pose NCI/RDG comparison closed. RELEASE — targeted QTAIM of the Edge O74-H75...N81 region and frontier-orbital spatial localization. HOLD final Erlotinib descriptor-package closure until those remaining core descriptors are complete.
 - Quantum-run count: unchanged at 38; all NCI/RDG analyses are post-processing of accepted wavefunctions.
+
+
+### Entry 081 — 2026-11-19 — Targeted Edge QTAIM pilot release
+- Scientific objective: Test whether the geometrically strong Edge O74-H75...N81 hydrogen-bond candidate is accompanied by an H75...N81 bond critical point in the accepted M06-2X electron density.
+- Scientific context: NCI/RDG shows Edge has a highly localized attractive density feature (minimum sign(lambda2)rho=-0.1980) but a much smaller intermolecular interaction domain than Flat/Slipped.
+- Source wavefunction: `M062X-COOH-GQD-ERLOTINIB-EDGE-001`, accepted M06-2X/6-311+G(d,p), SMD-water single-point wavefunction on the frozen accepted B3LYP Edge minimum.
+- Atom identity control: accepted ordering is retained; O74 and H75 belong to the GQD carboxylic acid group and N81 belongs to Erlotinib. Critic2 atom labels are deterministically rewritten as element+atom-ID using `ATOMLABEL %S%aid`.
+- QTAIM search protocol: Critic2 AUTO restricted to bond critical points (`TYPES b`) with manual pair seeding for atom pairs <=2.0 A (`SEED PAIR DIST 2.0 NPTS 9`). This includes the accepted H75...N81 distance of 1.5689 A while avoiding an unrestricted all-space critical-point search.
+- Interpretation rule: presence of an H75-N81 BCP will provide QTAIM topological support for the localized interaction and allow rho/Laplacian/ellipticity characterization. Absence of a BCP will be retained as a valid topological result and will not be interpreted as absence of the noncovalent interaction.
+- Run ID released: `CRITIC2-ERLOTINIB-EDGE-QTAIM-OHN-PILOT-001`.
+- Advancement gate: RELEASE targeted QTAIM pilot. HOLD final QTAIM interpretation until Critic2 execution and endpoint-specific parsing are complete.
+- Quantum-run count: remains 38; this is post-processing of an accepted wavefunction.

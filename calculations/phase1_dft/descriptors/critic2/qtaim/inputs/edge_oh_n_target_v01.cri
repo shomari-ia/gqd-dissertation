@@ -1,0 +1,24 @@
+# CRITIC2-ERLOTINIB-EDGE-QTAIM-OHN-PILOT-001
+# Target: Edge O74-H75...N81 region
+# Source wavefunction: M062X-COOH-GQD-ERLOTINIB-EDGE-001
+# Post-processing only; no new electronic-structure calculation.
+#
+# Atom labels preserve the accepted complex ordering:
+# GQD atoms 1-75; Erlotinib atoms 76-127.
+
+ROOT erlotinib_edge_qtaim_ohn_v01
+
+UNITS ANGSTROM
+
+MOLECULE archive/wfn/cooh_gqd_c1_erlotinib_edge_m062x_smd_sp_v01.fchk
+
+ATOMLABEL %S%aid
+
+LOAD archive/wfn/cooh_gqd_c1_erlotinib_edge_m062x_smd_sp_v01.fchk
+
+# Search only bond critical points. Manual PAIR seeding replaces the default
+# molecular seeding and includes all atom pairs separated by <=2.0 A,
+# including the accepted H75...N81 distance of 1.5689 A.
+AUTO TYPES b SEED PAIR DIST 2.0 NPTS 9
+
+END
