@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-labelledby="t d">
+<title id="t">Molecular docking</title><desc id="d">Conceptual binding pocket and ligand; not a validated docking pose.</desc>
+<defs><linearGradient id="panel" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#303235"/><stop offset="1" stop-color="#17191B"/></linearGradient><linearGradient id="silver" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#F0F0F0"/><stop offset=".65" stop-color="#AEB3B5"/><stop offset="1" stop-color="#E8E9E9"/></linearGradient></defs>
+<rect x="3" y="3" width="122" height="122" rx="23" fill="url(#panel)" stroke="#6C6F72" stroke-width="1.5"/>
+<path d="M19 107H109" stroke="#D8C194" stroke-width="2" stroke-opacity=".7"/>
+<path d="M25 39Q16 72 39 88Q53 99 62 83Q71 67 79 73Q89 83 103 64" fill="none" stroke="url(#silver)" stroke-width="5" stroke-linecap="round"/><circle cx="68" cy="48" r="12" fill="none" stroke="#D8C194" stroke-width="3"/><circle cx="68" cy="48" r="4" fill="#D8C194"/><path d="M68 63v8" fill="none" stroke="#D8C194" stroke-width="2.5" stroke-dasharray="3 4"/></svg>
