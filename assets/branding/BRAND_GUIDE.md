@@ -18,6 +18,12 @@ This directory contains **branding and presentation assets, not scientific evide
 
 Gray is the dominant design color. Gold is restrained. Avoid blue/cyan in default branding.
 
+## Typography standard
+
+**Georgia** is the primary typeface for authored explanatory prose: dissertation presentation text, section headings, research journal, poster narratives, figure explanations, and QR-linked exhibit descriptions. Use a natural serif hierarchy with comfortable spacing. Mathematical symbols, equations, code, terminal logs, and dense numeric tables may use appropriate mathematical, monospaced or sans-serif fonts for legibility; this is a functional exception, not a different brand.
+
+On GitHub, README and Markdown body text are displayed using GitHub's own interface typography; repository Markdown cannot reliably impose Georgia on viewers. Keep Markdown accessible and use the Georgia standard in editable presentation/document formats and supported web publications. Do not embed or distribute font files.
+
 ## Form language
 
 Use smooth contours, waveforms, line fields, scientific coordinate grids, brushed-metal highlights, and refined typographic spacing. Do **not** use decorative honeycomb/hexagon carpets or octagon fields. Actual graphene lattice imagery is permitted when it is scientifically relevant and accurately sourced.
