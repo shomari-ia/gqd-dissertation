@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-labelledby="t d">
-<title id="t">Molecular dynamics</title><desc id="d">Abstract molecular trajectory motion, not simulation output.</desc>
-<defs><linearGradient id="panel" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#303235"/><stop offset="1" stop-color="#17191B"/></linearGradient><linearGradient id="silver" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#F0F0F0"/><stop offset=".65" stop-color="#AEB3B5"/><stop offset="1" stop-color="#E8E9E9"/></linearGradient></defs>
-<rect x="3" y="3" width="122" height="122" rx="23" fill="url(#panel)" stroke="#6C6F72" stroke-width="1.5"/>
-<path d="M19 107H109" stroke="#D8C194" stroke-width="2" stroke-opacity=".7"/>
-<path d="M22 86C42 89 38 37 65 49S86 88 106 30" fill="none" stroke="url(#silver)" stroke-width="3.3" stroke-linecap="round"/><path d="M22 66C46 63 49 95 75 82S93 40 106 47" fill="none" stroke="#767B7D" stroke-width="2.2"/><circle cx="28" cy="82" r="7" fill="#D8C194"/><circle cx="65" cy="49" r="6.5" fill="#E4E6E6"/><circle cx="104" cy="34" r="7" fill="#D8C194"/></svg>
+<title id="t">Molecular dynamics</title><desc id="d">Smooth path and selected conceptual particle positions; not a simulation trajectory.</desc>
+<defs><linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#343739"/><stop offset=".55" stop-color="#242729"/><stop offset="1" stop-color="#151719"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#F4F4F2"/><stop offset=".5" stop-color="#B6BABC"/><stop offset="1" stop-color="#E1E3E3"/></linearGradient></defs>
+<rect x="3" y="3" width="122" height="122" rx="22" fill="url(#panel)" stroke="#797D7F" stroke-width="1.25"/>
+<path d="M19 19h30" fill="none" stroke="#D8C194" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".76"/>
+<path d="M19 107h90" fill="none" stroke="#D8C194" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".6"/>
+<path d="M22 83C40 92 43 38 62 49S84 88 106 33" fill="none" stroke="url(#metal)" stroke-width="3.2" stroke-linecap="round"/><path d="M25 65C41 60 47 94 75 82S93 42 105 48" fill="none" stroke="#818688" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="3 4"/><circle cx="27" cy="82" r="6.7" fill="#D8C194"/><circle cx="62" cy="49" r="6.7" fill="#E3E5E5"/><circle cx="105" cy="34" r="6.7" fill="#D8C194"/></svg>
