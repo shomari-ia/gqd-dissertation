@@ -41,7 +41,9 @@ Create a repeatable, recognizable visual language for computational science that
 ## Visual grammar
 
 **Palette:** dark neutral graphite, brushed gray/silver, white text and a restrained warm gold accent. No default cyan/blue.  
-**Forms:** smooth lines, restrained scientific curves, signal traces, negative space, precise spacing and typographic hierarchy. The revised molecular-docking icon shows a connected ligand nested in a stylized receptor pocket rather than an ambiguous free-floating shape.\n\n**Typography:** Georgia for authored titles and narrative/body text in presentation decks, posters, journal and digital exhibits; mathematical notation, code, and dense numeric labels may use appropriate specialist fonts. GitHub-rendered Markdown typography is controlled by GitHub and cannot be globally changed through README content.  
+**Forms:** smooth lines, restrained scientific curves, signal traces, negative space, precise spacing and typographic hierarchy. The revised molecular-docking icon shows a connected ligand nested in a stylized receptor pocket rather than an ambiguous free-floating shape.
+
+**Typography:** Georgia for authored titles and narrative/body text in presentation decks, posters, journal and digital exhibits; mathematical notation, code, and dense numeric labels may use appropriate specialist fonts. GitHub-rendered Markdown typography is controlled by GitHub and cannot be globally changed through README content.  
 **Sizing:** icons are 128×128 vector; diagrams use widescreen or banner format and should be legible when scaled.  
 **Accessibility:** SVG title/description, high contrast, textual labels for dispositions, never color-only PASS/FAIL semantics.  
 **Naming:** descriptive `kebab-case` paths; filenames identify concepts, not unsupported findings.
