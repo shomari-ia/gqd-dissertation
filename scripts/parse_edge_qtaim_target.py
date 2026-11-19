@@ -8,15 +8,37 @@ import csv
 import re
 from pathlib import Path
 
-NUM = r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[Ee][+-]?\d+)?"
+NUM = r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[EeDd][+-]?\d+)?"
+
+
+def as_float(token: str) -> float:
+    return float(token.strip().rstrip(",;").replace("D", "E").replace("d", "e"))
+
+
+def endpoint_atom_id(label: str) -> int | None:
+    """Extract atom id from labels such as H75, H_75, H(75), n(75)."""
+    s = label.strip()
+    m = re.search(r"\((\d+)\)$", s)
+    if m:
+        return int(m.group(1))
+    m = re.search(r"(\d+)$", s)
+    if m:
+        return int(m.group(1))
+    return None
 
 
 def normalize_endpoint(label: str) -> str:
-    """Normalize labels such as H75, H_75, H(75) -> H75."""
-    m = re.search(r"([A-Za-z]+)\D*(\d+)$", label.strip())
-    if not m:
-        return label.strip().upper()
-    return f"{m.group(1).upper()}{int(m.group(2))}"
+    """Normalize endpoint labels while preserving atom identity when available."""
+    s = label.strip()
+    aid = endpoint_atom_id(s)
+    if aid is None:
+        return s.upper()
+
+    # Prefer an explicit elemental prefix, if present.
+    m = re.match(r"\s*([A-Za-z]+)", s)
+    if m and m.group(1).lower() != "n":
+        return f"{m.group(1).upper()}{aid}"
+    return f"ATOM{aid}"
 
 
 def extract_cp_properties(text: str, cp: int):
@@ -32,7 +54,7 @@ def extract_cp_properties(text: str, cp: int):
 
     def grab(pattern):
         m = re.search(pattern, block)
-        return None if not m else float(m.group(1))
+        return None if not m else as_float(m.group(1))
 
     rho = grab(rf"Field value \(f\):\s*({NUM})")
     lap = grab(rf"Laplacian \(del2 f\):\s*({NUM})")
@@ -42,6 +64,51 @@ def extract_cp_properties(text: str, cp: int):
     cptype = None if not typem else f"({typem.group(1)},{typem.group(2)})"
 
     return rho, lap, ell, cptype
+
+
+def parse_bond_row(line: str):
+    """Parse one Critic2 bond-analysis row without assuming rigid whitespace."""
+    s = line.strip()
+    if not s or s.startswith(("#", "*", "+", "%")):
+        return None
+
+    parts = s.split()
+    if len(parts) < 7:
+        return None
+
+    try:
+        cp = int(parts[0])
+    except ValueError:
+        return None
+
+    end1_raw = parts[1]
+    end2_raw = parts[2]
+
+    nums = []
+    for token in parts[3:]:
+        try:
+            nums.append(as_float(token))
+        except ValueError:
+            continue
+        if len(nums) == 4:
+            break
+
+    if len(nums) < 4:
+        return None
+
+    return {
+        "cp_id": cp,
+        "end1_raw": end1_raw,
+        "end2_raw": end2_raw,
+        "end1": normalize_endpoint(end1_raw),
+        "end2": normalize_endpoint(end2_raw),
+        "end1_atom_id": endpoint_atom_id(end1_raw),
+        "end2_atom_id": endpoint_atom_id(end2_raw),
+        "r1_ang": nums[0],
+        "r2_ang": nums[1],
+        "r1_r2_ratio": nums[2],
+        "bond_path_angle_deg": nums[3],
+    }
 
 
 def main() -> None:
@@ -56,14 +123,8 @@ def main() -> None:
     if "CRITIC2 ended successfully" not in text:
         raise SystemExit("ERROR: Critic2 success marker absent")
 
-    # Molecular AUTO bond-analysis rows:
-    # ncp end1 end2 r1(ang) r2(ang) r1/r2 angle(deg)
-    bond_row = re.compile(
-        rf"^\s*(\d+)\s+(\S+)\s+(\S+)\s+"
-        rf"({NUM})\s+({NUM})\s+({NUM})\s+({NUM})\s*$"
-    )
-
     bonds = []
+    candidate_unparsed = []
     in_bonds = False
     saw_bond_header = False
 
@@ -77,57 +138,64 @@ def main() -> None:
             line.lstrip().startswith("* Analysis of system rings")
             or line.lstrip().startswith("* Attractor connectivity matrix")
             or line.lstrip().startswith("* Complete CP list")
+            or line.lstrip().startswith("* Additional properties")
         ):
             break
 
         if not in_bonds:
             continue
 
-        m = bond_row.match(line)
-        if not m:
+        row = parse_bond_row(line)
+        if row is not None:
+            bonds.append(row)
             continue
 
-        raw1, raw2 = m.group(2), m.group(3)
-        bonds.append({
-            "cp_id": int(m.group(1)),
-            "end1_raw": raw1,
-            "end2_raw": raw2,
-            "end1": normalize_endpoint(raw1),
-            "end2": normalize_endpoint(raw2),
-            "r1_ang": float(m.group(4)),
-            "r2_ang": float(m.group(5)),
-            "r1_r2_ratio": float(m.group(6)),
-            "bond_path_angle_deg": float(m.group(7)),
-        })
+        stripped = line.strip()
+        if stripped and stripped[0].isdigit():
+            candidate_unparsed.append(stripped)
 
     if not saw_bond_header:
         raise SystemExit(
             "ERROR: Critic2 'Analysis of system bonds' section not found; "
-            "cannot validate target-BPC absence."
+            "cannot validate target-BCP absence."
         )
 
     if not bonds:
+        sample = "\n".join(candidate_unparsed[:8]) or "<no data-like rows captured>"
         raise SystemExit(
-            "ERROR: bond-analysis section found but zero bond rows parsed; "
-            "parser/table format must be reconciled before interpretation."
+            "ERROR: bond-analysis section found but zero bond rows parsed.\n"
+            "First data-like lines from that section:\n"
+            f"{sample}"
         )
 
     related = [
         b for b in bonds
-        if "H75" in {b["end1"], b["end2"]}
-        or "N81" in {b["end1"], b["end2"]}
+        if b["end1_atom_id"] in {75, 81}
+        or b["end2_atom_id"] in {75, 81}
     ]
 
     target = next(
-        (b for b in bonds if {b["end1"], b["end2"]} == {"H75", "N81"}),
+        (
+            b for b in bonds
+            if {b["end1_atom_id"], b["end2_atom_id"]} == {75, 81}
+        ),
         None,
     )
 
     if args.connectivity_out:
         args.connectivity_out.parent.mkdir(parents=True, exist_ok=True)
         fields = [
-            "cp_id", "end1_raw", "end2_raw", "end1", "end2",
-            "r1_ang", "r2_ang", "r1_r2_ratio", "bond_path_angle_deg",
+            "cp_id",
+            "end1_raw",
+            "end2_raw",
+            "end1",
+            "end2",
+            "end1_atom_id",
+            "end2_atom_id",
+            "r1_ang",
+            "r2_ang",
+            "r1_r2_ratio",
+            "bond_path_angle_deg",
         ]
         with args.connectivity_out.open("w", newline="") as f:
             w = csv.DictWriter(f, fieldnames=fields, delimiter="\t")
@@ -146,6 +214,8 @@ def main() -> None:
         "cp_id",
         "end1",
         "end2",
+        "end1_atom_id",
+        "end2_atom_id",
         "r1_ang",
         "r2_ang",
         "r1_r2_ratio",
@@ -166,6 +236,8 @@ def main() -> None:
         "cp_id": "",
         "end1": "",
         "end2": "",
+        "end1_atom_id": "",
+        "end2_atom_id": "",
         "r1_ang": "",
         "r2_ang": "",
         "r1_r2_ratio": "",
@@ -192,6 +264,8 @@ def main() -> None:
             "cp_id": cp,
             "end1": target["end1"],
             "end2": target["end2"],
+            "end1_atom_id": target["end1_atom_id"],
+            "end2_atom_id": target["end2_atom_id"],
             "r1_ang": f"{target['r1_ang']:.8f}",
             "r2_ang": f"{target['r2_ang']:.8f}",
             "r1_r2_ratio": f"{target['r1_r2_ratio']:.8f}",
@@ -218,17 +292,17 @@ def main() -> None:
             print(
                 f"  cp={b['cp_id']} "
                 f"{b['end1_raw']}--{b['end2_raw']} "
-                f"(normalized {b['end1']}--{b['end2']}) "
+                f"(ids {b['end1_atom_id']}--{b['end2_atom_id']}) "
                 f"r1={b['r1_ang']:.6f} r2={b['r2_ang']:.6f} "
                 f"angle={b['bond_path_angle_deg']:.4f}"
             )
     else:
-        print("No BCP connectivity rows involve H75 or N81.")
+        print("No BCP connectivity rows involve atom IDs 75 or 81.")
 
     if target:
         print(
             f"TARGET_BCP=YES cp={target['cp_id']} "
-            f"{target['end1']}--{target['end2']}"
+            f"atom_ids={target['end1_atom_id']}--{target['end2_atom_id']}"
         )
         print(
             f"rho={row['rho_bcp']} "
