@@ -21,7 +21,9 @@
 - [Multiscale methods architecture](diagrams/multiscale-methods.svg) — conceptual three-phase plan, not evidence of phase completion.
 - [Scientific acceptance pipeline](diagrams/evidence-gates.svg) — schematic sequence of validation controls, not a PASS claim.
 
-## Intended applications
+## Visual refinement v1.1
+
+The glyphs share a consistent 128px vector frame, a restrained silver stroke language, gold as an occasional signal, and minimal internal forms. The revised **molecular docking** glyph shows a compact three-node ligand nested inside a clear receptor-pocket outline, with dotted conceptual interaction marks. It remains an illustration, **not** an actual docking pose or scientific result.\n\n**Typography:** Georgia is the primary prose font for publications, PowerPoint and exhibition materials. GitHub renders README text in its own site font.\n\n## Intended applications
 
 - Dissertation PowerPoint master slides and section dividers
 - GQD README and research landing pages
