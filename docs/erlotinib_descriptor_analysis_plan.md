@@ -188,3 +188,48 @@ Next controlled stage:
    interfragment interaction domains.
 4. Generate HOMO/LUMO spatial surfaces.
 5. Use targeted QTAIM only after NCI/RDG validation.
+
+
+## Gate 3 — Flat NCI/RDG pilot
+
+Status: PASS.
+
+The Flat interfragment NCI/RDG pilot validated the Critic2 workflow using the
+accepted analytical M06-2X wavefunction and explicit 75-atom GQD / 52-atom
+Erlotinib fragments.
+
+Locked parameters:
+
+- CUTOFFS 0.2 2.0
+- CUTPLOT 0.05 0.5
+- RTHRES 2.0 A
+- RHOPARAM 0.95
+- RHOPARAM2 0.75
+- INCREMENTS 0.10 0.10 0.10 A
+- NOCHK
+
+Flat pilot QC:
+
+- Critic2: 0 warnings, 0 comments
+- grid: 206 x 181 x 101
+- .dat rows: 119493
+- sign(lambda2)rho: -0.028380452 to +0.02309261
+- RDG: 0.012962228 to 1.9999521
+- RDG <= 0.5 points: 10831
+- negative signed-density low-RDG points: 3280
+- positive signed-density low-RDG points: 7551
+- density/RDG/promolecular-density cubes: 127 atoms and identical grids
+- expected NCI artifacts: PASS
+
+Interpretive constraint:
+
+The NCI grid-point counts are spatial samples, not interaction energies.
+Negative sign(lambda2)rho identifies attractive regions, positive values
+repulsive/steric regions, and values close to zero weak/dispersive regions.
+Comparative mechanistic conclusions require identical Slipped and Edge analyses.
+
+Advancement:
+
+- RELEASE Slipped and Edge NCI/RDG using the locked Flat-pilot parameters.
+- HOLD final NCI interpretation until all three poses pass quantitative QC.
+- HOLD targeted QTAIM until the three-pose NCI comparison is complete.

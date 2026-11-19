@@ -7804,3 +7804,21 @@ single-session format.*
 - Scientific disposition: ACCEPTED_DESCRIPTOR_VALIDATION for Hirshfeld/Hirshfeld-I fragment charge. Preliminary Mulliken charge-transfer interpretation is superseded.
 - Advancement gate: PASS — real-space charge-partition sub-gate closed. RELEASE — proceed to controlled interfragment NCI/RDG using the accepted M06-2X wavefunctions. HOLD targeted QTAIM until the NCI workflow is validated.
 - Quantum-run count: unchanged at 38; all work in this entry is post-processing of accepted wavefunctions.
+
+
+### Entry 079 — 2026-11-19 — Erlotinib Flat NCI/RDG pilot validation and production release
+- Scientific objective: Validate a fragment-restricted Critic2 NCI/RDG workflow on the accepted Flat Erlotinib adsorption wavefunction before applying the identical settings to Slipped and Edge.
+- Source wavefunction: `M062X-COOH-GQD-ERLOTINIB-FLAT-001`, M06-2X/6-311+G(d,p), SMD-water single-point density on the frozen accepted B3LYP Flat geometry.
+- Pilot analysis: `CRITIC2-ERLOTINIB-FLAT-NCI-PILOT-001`; Slurm job 355537; node011.
+- Execution result: PASS. Slurm state COMPLETED, exit code 0:0, elapsed 00:03:40; Critic2 return code 0; stderr empty; Critic2 ended successfully with 0 warnings and 0 comments.
+- Fragment control: GQD atoms 1-75, formula C55H18O2; Erlotinib atoms 76-127, formula C22H23N3O4. Critic2 recognized two fragments and restricted NCIPLOT to their intermolecular region.
+- Locked pilot parameters: CUTOFFS 0.2 2.0; CUTPLOT 0.05 0.5; RTHRES 2.0 A; RHOPARAM 0.95; RHOPARAM2 0.75; INCREMENTS 0.10 0.10 0.10 A; NOCHK.
+- Grid result: 206 x 181 x 101 nodes; 0.188973 bohr (~0.10 A) step; box lengths 20.6 x 18.1 x 10.1 A.
+- Quantitative NCI QC: 119493 .dat rows; sign(lambda2)rho range -0.028380452 to +0.02309261; RDG range 0.012962228 to 1.9999521; 10831 points with RDG <= 0.5, of which 3280 have negative sign(lambda2)rho and 7551 positive. These point counts are spatial samples and are not interpreted as interaction energies.
+- Low-RDG signed-density percentiles: p05=-0.00646955425; median=+0.0041574583; p95=+0.00588946825.
+- Artifact QC: density, RDG, promolecular-density cubes each contain 127 atoms and identical 206 x 181 x 101 grids. Five expected NCI artifacts are present after recovery of the initially uncollected promolecular-density cube.
+- Artifact SHA256: dat=2752a732c7048a7081575b49b86d540986f5711a441f8a9a2b2b19d8dca955a3; dens=fb16fedf9bdcb6f5e20a7d886397c6faed637fea713ddc670db10c574af6678b; grad=c757906430ef6145ecf05885880509bd39c837c4d14904b62c128d164adad045; pdens=6103ccc83307f35a788087cd82093b51ff74a3f6aabe9fafb1f446eda6c3428c; vmd=98a287b37df4aa4a88041bafcdf3a80bf40f3744699074fcae2ccf475dd735ff.
+- Workflow hardening: the production NCI wrapper now requires, moves, and hashes the promolecular-density cube in addition to the .dat, density cube, RDG cube, and VMD script. Quantitative NCI QC is performed by `scripts/analyze_critic2_nci.py`.
+- Scientific interpretation at pilot stage: the validated Flat interfragment NCI dataset contains both attractive and repulsive/steric signed-density regimes. The presence of negative low-RDG points establishes an attractive intermolecular domain, but grid-point counts are not treated as interaction energies. Comparative interpretation is deferred until Slipped and Edge are analyzed under identical settings.
+- Advancement gate: PASS — Flat NCI/RDG pilot validated and parameter set locked. RELEASE — Slipped and Edge production NCI/RDG analyses under identical settings. HOLD final three-pose NCI interpretation and targeted QTAIM until comparative QC is complete.
+- Quantum-run count: unchanged at 38; NCI/RDG is post-processing of accepted M06-2X wavefunctions.

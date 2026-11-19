@@ -1,0 +1,27 @@
+# CRITIC2-ERLOTINIB-SLIPPED-NCI-001
+# Source wavefunction: M062X-COOH-GQD-ERLOTINIB-SLIPPED-001
+# Production NCI/RDG analysis using Flat-pilot-validated settings.
+# No new electronic-structure calculation.
+
+ROOT erlotinib_slipped_nci_v01
+
+UNITS ANGSTROM
+
+MOLECULE archive/wfn/cooh_gqd_c1_erlotinib_slipped_m062x_smd_sp_v01.fchk
+
+LOAD archive/wfn/cooh_gqd_c1_erlotinib_slipped_m062x_smd_sp_v01.fchk
+
+NCIPLOT
+  ONAME erlotinib_slipped_nci_v01
+  CUTOFFS 0.2 2.0
+  CUTPLOT 0.05 0.5
+  RTHRES 2.0
+  RHOPARAM 0.95
+  RHOPARAM2 0.75
+  INCREMENTS 0.10 0.10 0.10
+  FRAGMENT calculations/phase1_dft/descriptors/critic2/nci/fragments/slipped_gqd.xyz
+  FRAGMENT calculations/phase1_dft/descriptors/critic2/nci/fragments/slipped_erlotinib.xyz
+  NOCHK
+ENDNCIPLOT
+
+END
