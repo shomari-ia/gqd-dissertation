@@ -23,7 +23,7 @@
 
 ## Visual refinement v1.1
 
-The glyphs share a consistent 128px vector frame, a restrained silver stroke language, gold as an occasional signal, and minimal internal forms. The revised **molecular docking** glyph shows a compact three-node ligand nested inside a clear receptor-pocket outline, with dotted conceptual interaction marks. It remains an illustration, **not** an actual docking pose or scientific result.
+The glyphs share a consistent 128px vector frame, a restrained silver stroke language, coral-peach as an occasional signal, and minimal internal forms. The revised **molecular docking** glyph shows a compact three-node ligand nested inside a clear receptor-pocket outline, with dotted conceptual interaction marks. It remains an illustration, **not** an actual docking pose or scientific result.
 
 **Typography:** Georgia is the primary prose font for publications, PowerPoint and exhibition materials. GitHub renders README text in its own site font.
 
@@ -42,7 +42,7 @@ The glyphs share a consistent 128px vector frame, a restrained silver stroke lan
 2. These illustrations are **not scientific evidence**; provide an explicit conceptual-art label when they may be mistaken for calculated data.
 3. Keep exact scientific statuses grounded in `SCIENTIFIC_STATUS.md`, `scientific_evidence_register.tsv`, and `docs/acceptance_gates_v2.md`.
 4. Do not assign an accepted/failed status based on icon appearance or color alone; always use a text status and run/evidence ID.
-5. Colors: graphite `#181B1D`, charcoal gray `#27292B`, silver `#E4E6E6`, cool gray `#B9BEC0`, champagne gold `#D8C194`.
+5. Colors: graphite `#181B1D`, charcoal gray `#27292B`, silver `#E4E6E6`, cool gray `#B9BEC0`, luminous coral-peach `#FF8975`.
 6. No decorative honeycomb or hexagon fields. Depict graphene rings only in explicitly chemical graphics.
 7. Source SVG is editable, scalable, and intended for transparent or dark slide contexts. A printable light-background variant is in the next production set.
 
