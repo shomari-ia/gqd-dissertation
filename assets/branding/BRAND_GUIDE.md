@@ -14,7 +14,7 @@ This directory contains **branding and presentation assets, not scientific evide
 | Primary text | Metallic silver | `#E4E6E6` |
 | Supporting text | Neutral cool gray | `#B9BEC0` |
 | Accent | Coral-Peach | `#FF8975` |
-| Accent for light backgrounds | Neutral graphite text | `#4A4D50` |
+| Text on light backgrounds | Neutral graphite | `#4A4D50` |
 | Light highlight | Silver-white | `#FAFAF8` |
 
 Gray is the dominant design color. The coral-peach accent is deliberately more vivid to introduce a subtle futuristic warmth. Luminous Coral-Peach replaces gold as the signature accent; use it sparingly. Avoid blue/cyan in default branding.
@@ -56,4 +56,4 @@ AXIOM is an intelligent-agent mascot and creative presentation interface. It is 
 
 ## Restricted accent tones
 
-Maroon and dark-red tones are excluded from the visual identity. Do not reintroduce `#A74442`. Use neutral dark graphite (`#4A4D50`) for small text on light surfaces and luminous coral-peach (`#FF8975`) only as a bright accent against dark graphite backgrounds.
+Maroon and dark-red tones are excluded from the visual identity. Do not reintroduce maroon or dark-red accents. Use neutral dark graphite (`#4A4D50`) for small text on light surfaces and luminous coral-peach (`#FF8975`) only as a bright accent against dark graphite backgrounds.
