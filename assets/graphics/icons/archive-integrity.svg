@@ -2,6 +2,6 @@
 <title id="t">Archive integrity</title><desc id="d">Folder and verification glyph for checksum and archive integrity documentation.</desc>
 <defs><linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#343739"/><stop offset=".55" stop-color="#242729"/><stop offset="1" stop-color="#151719"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#F4F4F2"/><stop offset=".5" stop-color="#B6BABC"/><stop offset="1" stop-color="#E1E3E3"/></linearGradient></defs>
 <rect x="3" y="3" width="122" height="122" rx="22" fill="url(#panel)" stroke="#797D7F" stroke-width="1.25"/>
-<path d="M19 19h30" fill="none" stroke="#D8C194" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".76"/>
-<path d="M19 107h90" fill="none" stroke="#D8C194" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".6"/>
-<path d="M23 43h32l9 9h41v41H23Z" fill="none" stroke="url(#metal)" stroke-width="3.3" stroke-linejoin="round"/><path d="M27 37h32l8 10h35" fill="none" stroke="#B6BABD" stroke-width="2.6" stroke-linecap="round"/><circle cx="65" cy="73" r="14.5" fill="#242729" stroke="#D8C194" stroke-width="2.5"/><path d="M57 73l6 6 11-13" fill="none" stroke="#D8C194" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<path d="M19 19h30" fill="none" stroke="#FF8975" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".76"/>
+<path d="M19 107h90" fill="none" stroke="#FF8975" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".6"/>
+<path d="M23 43h32l9 9h41v41H23Z" fill="none" stroke="url(#metal)" stroke-width="3.3" stroke-linejoin="round"/><path d="M27 37h32l8 10h35" fill="none" stroke="#B6BABD" stroke-width="2.6" stroke-linecap="round"/><circle cx="65" cy="73" r="14.5" fill="#242729" stroke="#FF8975" stroke-width="2.5"/><path d="M57 73l6 6 11-13" fill="none" stroke="#FF8975" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
