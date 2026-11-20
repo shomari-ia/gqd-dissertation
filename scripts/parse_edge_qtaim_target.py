@@ -15,30 +15,18 @@ def as_float(token: str) -> float:
     return float(token.strip().rstrip(",;").replace("D", "E").replace("d", "e"))
 
 
-def endpoint_atom_id(label: str) -> int | None:
-    """Extract atom id from labels such as H75, H_75, H(75), n(75)."""
-    s = label.strip()
-    m = re.search(r"\((\d+)\)$", s)
+def parse_index_token(token: str) -> int | None:
+    m = re.fullmatch(r"\((\d+)\)", token.strip())
+    return int(m.group(1)) if m else None
+
+
+def normalize_endpoint(label: str, atom_id: int | None) -> str:
+    if atom_id is None:
+        return label.strip().upper()
+    m = re.match(r"\s*([A-Za-z]+)", label)
     if m:
-        return int(m.group(1))
-    m = re.search(r"(\d+)$", s)
-    if m:
-        return int(m.group(1))
-    return None
-
-
-def normalize_endpoint(label: str) -> str:
-    """Normalize endpoint labels while preserving atom identity when available."""
-    s = label.strip()
-    aid = endpoint_atom_id(s)
-    if aid is None:
-        return s.upper()
-
-    # Prefer an explicit elemental prefix, if present.
-    m = re.match(r"\s*([A-Za-z]+)", s)
-    if m and m.group(1).lower() != "n":
-        return f"{m.group(1).upper()}{aid}"
-    return f"ATOM{aid}"
+        return f"{m.group(1).upper()}{atom_id}"
+    return f"ATOM{atom_id}"
 
 
 def extract_cp_properties(text: str, cp: int):
@@ -67,13 +55,17 @@ def extract_cp_properties(text: str, cp: int):
 
 
 def parse_bond_row(line: str):
-    """Parse one Critic2 bond-analysis row without assuming rigid whitespace."""
+    """Parse Critic2 molecular bond table rows.
+
+    Expected native format:
+      ncp End-1 (idx1) End-2 (idx2) r1 r2 r1/r2 angle p1 p2
+    """
     s = line.strip()
     if not s or s.startswith(("#", "*", "+", "%")):
         return None
 
     parts = s.split()
-    if len(parts) < 7:
+    if len(parts) < 11:
         return None
 
     try:
@@ -82,32 +74,37 @@ def parse_bond_row(line: str):
         return None
 
     end1_raw = parts[1]
-    end2_raw = parts[2]
+    id1 = parse_index_token(parts[2])
+    end2_raw = parts[3]
+    id2 = parse_index_token(parts[4])
 
-    nums = []
-    for token in parts[3:]:
-        try:
-            nums.append(as_float(token))
-        except ValueError:
-            continue
-        if len(nums) == 4:
-            break
+    if id1 is None or id2 is None:
+        return None
 
-    if len(nums) < 4:
+    try:
+        r1 = as_float(parts[5])
+        r2 = as_float(parts[6])
+        ratio = as_float(parts[7])
+        angle = as_float(parts[8])
+        p1 = as_float(parts[9])
+        p2 = as_float(parts[10])
+    except ValueError:
         return None
 
     return {
         "cp_id": cp,
         "end1_raw": end1_raw,
         "end2_raw": end2_raw,
-        "end1": normalize_endpoint(end1_raw),
-        "end2": normalize_endpoint(end2_raw),
-        "end1_atom_id": endpoint_atom_id(end1_raw),
-        "end2_atom_id": endpoint_atom_id(end2_raw),
-        "r1_ang": nums[0],
-        "r2_ang": nums[1],
-        "r1_r2_ratio": nums[2],
-        "bond_path_angle_deg": nums[3],
+        "end1": normalize_endpoint(end1_raw, id1),
+        "end2": normalize_endpoint(end2_raw, id2),
+        "end1_atom_id": id1,
+        "end2_atom_id": id2,
+        "r1_ang": r1,
+        "r2_ang": r2,
+        "r1_r2_ratio": ratio,
+        "bond_path_angle_deg": angle,
+        "p1_ang": p1,
+        "p2_ang": p2,
     }
 
 
@@ -157,7 +154,7 @@ def main() -> None:
     if not saw_bond_header:
         raise SystemExit(
             "ERROR: Critic2 'Analysis of system bonds' section not found; "
-            "cannot validate target-BCP absence."
+            "cannot validate target BCP."
         )
 
     if not bonds:
@@ -196,6 +193,8 @@ def main() -> None:
             "r2_ang",
             "r1_r2_ratio",
             "bond_path_angle_deg",
+            "p1_ang",
+            "p2_ang",
         ]
         with args.connectivity_out.open("w", newline="") as f:
             w = csv.DictWriter(f, fieldnames=fields, delimiter="\t")
@@ -220,6 +219,8 @@ def main() -> None:
         "r2_ang",
         "r1_r2_ratio",
         "bond_path_angle_deg",
+        "p1_ang",
+        "p2_ang",
         "cp_type",
         "rho_bcp",
         "laplacian_bcp",
@@ -242,6 +243,8 @@ def main() -> None:
         "r2_ang": "",
         "r1_r2_ratio": "",
         "bond_path_angle_deg": "",
+        "p1_ang": "",
+        "p2_ang": "",
         "cp_type": "",
         "rho_bcp": "",
         "laplacian_bcp": "",
@@ -270,6 +273,8 @@ def main() -> None:
             "r2_ang": f"{target['r2_ang']:.8f}",
             "r1_r2_ratio": f"{target['r1_r2_ratio']:.8f}",
             "bond_path_angle_deg": f"{target['bond_path_angle_deg']:.8f}",
+            "p1_ang": f"{target['p1_ang']:.8f}",
+            "p2_ang": f"{target['p2_ang']:.8f}",
             "cp_type": "" if cptype is None else cptype,
             "rho_bcp": "" if rho is None else f"{rho:.10e}",
             "laplacian_bcp": "" if lap is None else f"{lap:.10e}",
@@ -291,18 +296,16 @@ def main() -> None:
         for b in related:
             print(
                 f"  cp={b['cp_id']} "
-                f"{b['end1_raw']}--{b['end2_raw']} "
+                f"{b['end1']}--{b['end2']} "
                 f"(ids {b['end1_atom_id']}--{b['end2_atom_id']}) "
                 f"r1={b['r1_ang']:.6f} r2={b['r2_ang']:.6f} "
                 f"angle={b['bond_path_angle_deg']:.4f}"
             )
-    else:
-        print("No BCP connectivity rows involve atom IDs 75 or 81.")
 
     if target:
         print(
             f"TARGET_BCP=YES cp={target['cp_id']} "
-            f"atom_ids={target['end1_atom_id']}--{target['end2_atom_id']}"
+            f"{target['end1']}--{target['end2']}"
         )
         print(
             f"rho={row['rho_bcp']} "
@@ -311,10 +314,6 @@ def main() -> None:
         )
     else:
         print("TARGET_BCP=NO")
-        print(
-            "A NO result is accepted only because the Critic2 bond-connectivity "
-            "table was successfully parsed."
-        )
 
 
 if __name__ == "__main__":
