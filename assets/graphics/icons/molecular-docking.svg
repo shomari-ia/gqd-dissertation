@@ -2,10 +2,10 @@
 <title id="t">Molecular docking</title><desc id="d">Stylized receptor binding pocket enclosing a small connected ligand, with dotted conceptual interactions; not a validated pose.</desc>
 <defs><linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#343739"/><stop offset=".55" stop-color="#242729"/><stop offset="1" stop-color="#151719"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#F4F4F2"/><stop offset=".5" stop-color="#B6BABC"/><stop offset="1" stop-color="#E1E3E3"/></linearGradient></defs>
 <rect x="3" y="3" width="122" height="122" rx="22" fill="url(#panel)" stroke="#797D7F" stroke-width="1.25"/>
-<path d="M19 19h30" fill="none" stroke="#D8C194" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".76"/>
-<path d="M19 107h90" fill="none" stroke="#D8C194" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".6"/>
+<path d="M19 19h30" fill="none" stroke="#FF8975" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".76"/>
+<path d="M19 107h90" fill="none" stroke="#FF8975" stroke-width="1.65" stroke-linecap="round" stroke-opacity=".6"/>
 <path d="M28 34C19 43 20 70 31 82C42 97 55 99 64 97C83 97 99 85 101 68C103 54 100 41 94 34" fill="none" stroke="url(#metal)" stroke-width="5.2" stroke-linecap="round"/>
 <path d="M40 42C33 51 34 70 43 78M89 43C94 52 92 67 87 75" fill="none" stroke="#858A8D" stroke-width="1.4" stroke-linecap="round" opacity=".75"/>
-<g fill="none" stroke="#D8C194" stroke-width="3.2" stroke-linecap="round"><path d="M52 58L73 53L70 76L52 58"/></g>
-<g fill="#D8C194"><circle cx="52" cy="58" r="6.7"/><circle cx="73" cy="53" r="6.7"/><circle cx="70" cy="76" r="6.7"/></g>
+<g fill="none" stroke="#FF8975" stroke-width="3.2" stroke-linecap="round"><path d="M52 58L73 53L70 76L52 58"/></g>
+<g fill="#FF8975"><circle cx="52" cy="58" r="6.7"/><circle cx="73" cy="53" r="6.7"/><circle cx="70" cy="76" r="6.7"/></g>
 <path d="M44 62L34 65M79 68L91 71" stroke="#E4E6E6" stroke-opacity=".72" stroke-width="2" stroke-dasharray="2 5" stroke-linecap="round"/></svg>
