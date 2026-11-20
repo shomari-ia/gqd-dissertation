@@ -7871,3 +7871,16 @@ single-session format.*
 - Scientific disposition: ACCEPTED_DESCRIPTOR_VALIDATION.
 - Advancement gate: PASS — targeted Edge QTAIM gate closed. RELEASE — frontier-orbital spatial localization from the accepted M06-2X wavefunctions. HOLD final Erlotinib descriptor-package closure until HOMO/LUMO spatial localization is complete.
 - Quantum-run count: unchanged at 38; QTAIM is post-processing of an accepted wavefunction.
+
+
+### Entry 083 — 2026-11-19 — Frontier-orbital spatial localization pilot release
+- Scientific objective: Generate spatial HOMO/LUMO surfaces from accepted M06-2X wavefunctions to determine whether the frontier orbitals of the Erlotinib adsorption complexes are localized primarily on the GQD, the drug, or shared across both fragments.
+- Source hierarchy: accepted M06-2X/6-311+G(d,p), SMD-water formatted checkpoints generated from the five accepted validation calculations; no new SCF calculation is required.
+- Tool selection: Gaussian `cubegen` is used directly with `MO=HOMO` and `MO=LUMO` on the formatted checkpoint. The Flat complex is used as the first pilot.
+- Pilot source: `archive/wfn/cooh_gqd_c1_erlotinib_flat_m062x_smd_sp_v01.fchk`, associated with `M062X-COOH-GQD-ERLOTINIB-FLAT-001`.
+- Pilot analysis ID released: `CUBEGEN-ERLOTINIB-FLAT-FMO-PILOT-001`.
+- Output control: one HOMO cube and one LUMO cube written under an immutable analysis-specific result directory; source fchk SHA256 and output cube hashes captured in provenance.
+- QC plan: verify 127 atoms, matching HOMO/LUMO grids/origins/vectors, nonempty orbital amplitudes, and approximate numerical integral of psi^2 over the generated grid. The integral is a cube-grid QC diagnostic, not a fragment population analysis.
+- Interpretation rule: orbital localization will be assessed qualitatively from matched-isovalue surfaces. The cube voxel count above an amplitude threshold is not treated as an orbital population or charge-transfer metric.
+- Advancement gate: RELEASE Flat HOMO/LUMO cube pilot. HOLD Slipped/Edge production orbital cubes until the Flat cubegen syntax, provenance, and QC pass.
+- Quantum-run count: unchanged at 38; cubegen is post-processing of an accepted wavefunction.
