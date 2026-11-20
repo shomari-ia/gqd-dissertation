@@ -12,7 +12,9 @@
 - Luminous Coral-Peach accent: `#FF8975`
 - Graphite labels on light: `#4A4D50`
 
-**Contrast note:** use coral-peach as a luminous accent against charcoal, and graphite for text over light panels. Do not tint large background areas saturated coral.\n\n## First slide designs
+**Contrast note:** use coral-peach as a luminous accent against charcoal, and graphite for text over light panels. Do not tint large background areas saturated coral.
+
+## First slide designs
 1. Dissertation title (preserving original formal title/affiliation).
 2. Research architecture — Phase I current, II/III planned.
 3. Methodological framework — construction, quantum modeling, validation and cross-scale extensions.
@@ -32,4 +34,4 @@
 
 ## Restricted accent tones
 
-Maroon and dark-red tones are excluded from the visual identity. Do not reintroduce `#A74442`. Use neutral dark graphite (`#4A4D50`) for small text on light surfaces and luminous coral-peach (`#FF8975`) only as a bright accent against dark graphite backgrounds.
+Maroon and dark-red tones are excluded from the visual identity. Do not reintroduce maroon or dark-red accents. Use neutral dark graphite (`#4A4D50`) for small text on light surfaces and luminous coral-peach (`#FF8975`) only as a bright accent against dark graphite backgrounds.
