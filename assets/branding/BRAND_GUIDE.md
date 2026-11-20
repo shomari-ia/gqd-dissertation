@@ -13,11 +13,11 @@ This directory contains **branding and presentation assets, not scientific evide
 | Secondary | Charcoal gray | `#27292B` |
 | Primary text | Metallic silver | `#E4E6E6` |
 | Supporting text | Neutral cool gray | `#B9BEC0` |
-| Accent | Georgia Peach | `#FFD6B0` |
-| Accent for light backgrounds | Deep peach | `#965D4C` |
+| Accent | Coral-Peach | `#FF8975` |
+| Accent for light backgrounds | Deep coral | `#A74442` |
 | Light highlight | Silver-white | `#FAFAF8` |
 
-Gray is the dominant design color. Georgia Peach replaces gold as the signature accent; use it sparingly. Avoid blue/cyan in default branding.
+Gray is the dominant design color. The coral-peach accent is deliberately more vivid to introduce a subtle futuristic warmth. Luminous Coral-Peach replaces gold as the signature accent; use it sparingly. Avoid blue/cyan in default branding.
 
 ## Typography standard
 
