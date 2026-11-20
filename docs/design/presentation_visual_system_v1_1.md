@@ -1,4 +1,4 @@
-# GQD Presentation Visual System v1.1 — Gray Scientific Futurism × Georgia Peach
+# GQD Presentation Visual System v1.1 — Gray Scientific Futurism × Luminous Coral-Peach
 
 **Current design preview:** Five-slide editable PowerPoint, authored separately from the scientific repository.
 **Display typography candidates:** Sage (priority) / Mumbai (alternate); exact font family and licensing pending confirmation.
@@ -9,10 +9,10 @@
 - Charcoal: `#27292B`
 - Metallic silver: `#E4E6E6`
 - Pearl background: `#F7F5F3`
-- Georgia Peach accent: `#FFD6B0`
-- Deep peach labels on light: `#965D4C`
+- Luminous Coral-Peach accent: `#FF8975`
+- Deep coral labels on light: `#A74442`
 
-## First slide designs
+**Contrast note:** use coral-peach as a luminous accent against charcoal, and deep coral for text over light panels. Do not tint large background areas saturated coral.\n\n## First slide designs
 1. Dissertation title (preserving original formal title/affiliation).
 2. Research architecture — Phase I current, II/III planned.
 3. Methodological framework — construction, quantum modeling, validation and cross-scale extensions.
