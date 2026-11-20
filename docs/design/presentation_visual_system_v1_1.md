@@ -10,9 +10,9 @@
 - Metallic silver: `#E4E6E6`
 - Pearl background: `#F7F5F3`
 - Luminous Coral-Peach accent: `#FF8975`
-- Deep coral labels on light: `#A74442`
+- Graphite labels on light: `#4A4D50`
 
-**Contrast note:** use coral-peach as a luminous accent against charcoal, and deep coral for text over light panels. Do not tint large background areas saturated coral.\n\n## First slide designs
+**Contrast note:** use coral-peach as a luminous accent against charcoal, and graphite for text over light panels. Do not tint large background areas saturated coral.\n\n## First slide designs
 1. Dissertation title (preserving original formal title/affiliation).
 2. Research architecture — Phase I current, II/III planned.
 3. Methodological framework — construction, quantum modeling, validation and cross-scale extensions.
@@ -29,3 +29,7 @@
 - Scientific truth remains `SCIENTIFIC_STATUS.md`, `scientific_evidence_register.tsv`, `docs/acceptance_gates_v2.md`, `docs/scientific_scope.md`.
 - Presentation example scientific status was grounded in the status document controlled 2026-11-13 and must be refreshed for committee use.
 - No production scripts, results, logs, ledgers, or acceptance gates are changed by branding updates.
+
+## Restricted accent tones
+
+Maroon and dark-red tones are excluded from the visual identity. Do not reintroduce `#A74442`. Use neutral dark graphite (`#4A4D50`) for small text on light surfaces and luminous coral-peach (`#FF8975`) only as a bright accent against dark graphite backgrounds.
