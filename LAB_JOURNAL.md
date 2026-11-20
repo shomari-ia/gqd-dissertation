@@ -7854,3 +7854,20 @@ single-session format.*
 - Run ID released: `CRITIC2-ERLOTINIB-EDGE-QTAIM-OHN-PILOT-001`.
 - Advancement gate: RELEASE targeted QTAIM pilot. HOLD final QTAIM interpretation until Critic2 execution and endpoint-specific parsing are complete.
 - Quantum-run count: remains 38; this is post-processing of an accepted wavefunction.
+
+
+### Entry 082 — 2026-11-19 — Targeted Edge QTAIM acceptance
+- Scientific objective: Determine whether the localized Edge O74-H75...N81 interaction identified geometrically and by NCI/RDG is represented by a QTAIM bond critical point in the accepted M06-2X electron density.
+- Source wavefunction: `M062X-COOH-GQD-ERLOTINIB-EDGE-001`, M06-2X/6-311+G(d,p), SMD-water single-point wavefunction on the frozen accepted B3LYP Edge geometry.
+- Analysis / job: `CRITIC2-ERLOTINIB-EDGE-QTAIM-OHN-PILOT-001`; Slurm job 355737; node025.
+- Execution result: PASS. Slurm completed with exit code 0:0 in 13 s; runtime Git commit 6a6f874ef7f746569e6b794bc880d0ff5c2dc3e2; worktree clean; Critic2 return code 0; stderr empty; Critic2 ended successfully with 0 warnings and 0 comments.
+- Geometry context: O74-H75=1.0440 A; H75...N81=1.5689 A; O74...N81=2.6104 A; O74-H75...N81=174.869 degrees.
+- QTAIM connectivity result: the validated Critic2 bond-analysis table contains CP 275 connecting H75 (atom 75) directly to N81 (atom 81). CP 275 is a `(3,-1)` bond critical point.
+- Target BCP path geometry: H75-to-BCP distance=0.4610 A; N81-to-BCP distance=1.1080 A; ratio=0.4161; H75-BCP-N81 angle=179.79 degrees; bond-path lengths=0.4610 A and 1.1080 A.
+- Target BCP properties: electron density rho=0.0740003548 a.u.; Laplacian del2rho=+0.0855291841 a.u.; ellipticity=0.0442019362.
+- Interpretation: The H75...N81 bond critical point provides direct QTAIM topological support for the localized O-H...N interaction in the Edge pose. The positive Laplacian and rho<0.1 a.u. are consistent with closed-shell/noncovalent QTAIM character. Because local total energy density H(r) was not extracted, no stronger covalency classification is made from rho/Laplacian alone.
+- Cross-descriptor synthesis: Edge is weak in total adsorption energy relative to Flat/Slipped but possesses a strong localized interaction signature across geometry, Hirshfeld/Hirshfeld-I redistribution, NCI/RDG, and now QTAIM. This localized interaction does not compensate for the loss of the broad surface-contact network that stabilizes Flat and Slipped.
+- Parser lineage: initial v01-v03 endpoint interpretations are superseded parser artifacts. Raw Critic2 bond rows use the native format `ncp End-1 (idx1) End-2 (idx2) r1 r2 ratio angle p1 p2`. The corrected parser at commit 4f1ac0d3c74e4aa1f1f729227a5278ef8af01ca1 resolves this format and recovers CP 275 correctly. No Critic2 calculation was rerun.
+- Scientific disposition: ACCEPTED_DESCRIPTOR_VALIDATION.
+- Advancement gate: PASS — targeted Edge QTAIM gate closed. RELEASE — frontier-orbital spatial localization from the accepted M06-2X wavefunctions. HOLD final Erlotinib descriptor-package closure until HOMO/LUMO spatial localization is complete.
+- Quantum-run count: unchanged at 38; QTAIM is post-processing of an accepted wavefunction.

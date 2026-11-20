@@ -276,3 +276,45 @@ Next controlled stages:
 1. targeted QTAIM of the Edge O74-H75...N81 region;
 2. HOMO/LUMO spatial localization for the accepted complexes;
 3. final integrated Erlotinib descriptor-package closure.
+
+
+## Gate 5 — targeted Edge QTAIM
+
+Status: PASS.
+
+The accepted Edge M06-2X wavefunction contains a `(3,-1)` bond critical point
+directly connecting H75 and N81 (CP 275).
+
+Target BCP properties:
+
+- H75-to-BCP distance: 0.4610 A
+- N81-to-BCP distance: 1.1080 A
+- H75-BCP-N81 angle: 179.79 degrees
+- rho_BCP: 0.0740003548 a.u.
+- Laplacian: +0.0855291841 a.u.
+- ellipticity: 0.0442019362
+
+Accepted interpretation:
+
+- the H75...N81 BCP provides direct topological support for the localized
+  O-H...N interaction identified by geometry and NCI/RDG;
+- the positive Laplacian and rho<0.1 a.u. are consistent with closed-shell /
+  noncovalent QTAIM character;
+- no stronger covalency classification is made without the local total energy
+  density H(r).
+
+Parser-control note:
+
+The earlier v01-v03 target tables are superseded parser artifacts. Critic2's
+native bond-table format separates each endpoint label from its parenthesized
+atom index. The corrected parser resolves CP 275 as H75 (75) -- N81 (81)
+without rerunning Critic2.
+
+Next controlled stage:
+
+1. generate HOMO and LUMO cube files from the accepted M06-2X formatted
+   checkpoints;
+2. evaluate orbital localization on GQD versus Erlotinib for Flat, Slipped,
+   and Edge, with isolated C1/Erlotinib available as references;
+3. integrate geometry, energetics, charge, NCI/RDG, QTAIM, and orbital
+   localization into the final Erlotinib descriptor-package conclusion.

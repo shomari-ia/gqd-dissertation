@@ -1,0 +1,2 @@
+target	bond_section_found	bond_rows_parsed	h75_or_n81_related_rows	bcp_found	cp_id	end1	end2	end1_atom_id	end2_atom_id	r1_ang	r2_ang	r1_r2_ratio	bond_path_angle_deg	p1_ang	p2_ang	cp_type	rho_bcp	laplacian_bcp	ellipticity	qc_status
+H75...N81	YES	149	4	YES	275	H75	N81	75	81	0.46100000	1.10800000	0.41610000	179.79000000	0.46100000	1.10800000	(3,-1)	7.4000354800e-02	8.5529184100e-02	4.4201936220e-02	PASS_TARGET_BCP_FOUND
