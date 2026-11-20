@@ -1,4 +1,4 @@
-# GQD Visual Identity — v2.0 · Gray Scientific Futurism
+# GQD Visual Identity — v2.1 · Gray Scientific Futurism × Georgia Peach
 
 **Creative studio:** Shomari IA  
 **Scientific project:** pH-responsive carboxyl-functionalized GQD dissertation
@@ -13,12 +13,17 @@ This directory contains **branding and presentation assets, not scientific evide
 | Secondary | Charcoal gray | `#27292B` |
 | Primary text | Metallic silver | `#E4E6E6` |
 | Supporting text | Neutral cool gray | `#B9BEC0` |
-| Accent | Champagne gold | `#D8C194` |
+| Accent | Georgia Peach | `#FFD6B0` |
+| Accent for light backgrounds | Deep peach | `#965D4C` |
 | Light highlight | Silver-white | `#FAFAF8` |
 
-Gray is the dominant design color. Gold is restrained. Avoid blue/cyan in default branding.
+Gray is the dominant design color. Georgia Peach replaces gold as the signature accent; use it sparingly. Avoid blue/cyan in default branding.
 
 ## Typography standard
+
+**Display typography candidates:** Sage (priority) and Mumbai (alternate) are exploratory primary/display-face references, pending confirmation of exact font family and appropriate licensing. These names are not claims that specific font files are installed. Use portable Georgia as the working display fallback until the chosen font is verified.
+
+**Supporting serif candidates:** Georgia, Times New Roman, and Lora. Technical notation and code use a suitable mathematical or monospaced face.
 
 **Georgia** is the primary typeface for authored explanatory prose: dissertation presentation text, section headings, research journal, poster narratives, figure explanations, and QR-linked exhibit descriptions. Use a natural serif hierarchy with comfortable spacing. Mathematical symbols, equations, code, terminal logs, and dense numeric tables may use appropriate mathematical, monospaced or sans-serif fonts for legibility; this is a functional exception, not a different brand.
 
