@@ -5,8 +5,8 @@
 <rect width="1440" height="430" rx="20" fill="url(#b)"/>
 <g font-family="Arial,Helvetica,sans-serif">
 <text x="64" y="64" font-size="25" letter-spacing="3" fill="#E9EAEA">MULTISCALE RESEARCH ARCHITECTURE</text>
-<path d="M64 86H1376" stroke="#D8C194" stroke-width="2" opacity=".8"/>
-<g transform="translate(64 125)"><rect width="400" height="220" rx="14" fill="#303335" stroke="#D1D4D4" stroke-width="2.5"/><rect width="400" height="6" rx="3" fill="#D8C194"/><text x="28" y="55" fill="#D8C194" letter-spacing="2" font-size="21">PHASE I · DFT</text><text x="28" y="119" fill="url(#silver)" font-weight="bold" font-size="35">Drug loading</text><text x="28" y="165" fill="#C2C6C6" font-size="22">GQD–drug interactions</text><text x="28" y="193" fill="#C2C6C6" font-size="22">Quantum modeling and QC</text></g>
+<path d="M64 86H1376" stroke="#FF8975" stroke-width="2" opacity=".8"/>
+<g transform="translate(64 125)"><rect width="400" height="220" rx="14" fill="#303335" stroke="#D1D4D4" stroke-width="2.5"/><rect width="400" height="6" rx="3" fill="#FF8975"/><text x="28" y="55" fill="#FF8975" letter-spacing="2" font-size="21">PHASE I · DFT</text><text x="28" y="119" fill="url(#silver)" font-weight="bold" font-size="35">Drug loading</text><text x="28" y="165" fill="#C2C6C6" font-size="22">GQD–drug interactions</text><text x="28" y="193" fill="#C2C6C6" font-size="22">Quantum modeling and QC</text></g>
 <path d="M482 235H516m-12-11 12 11-12 11" fill="none" stroke="#C4C8CA" stroke-width="3"/>
 <g transform="translate(533 125)"><rect width="390" height="220" rx="14" fill="#25282A" stroke="#83888B" stroke-width="2"/><text x="28" y="55" fill="#E2E4E4" letter-spacing="2" font-size="21">PHASE II · PLANNED</text><text x="28" y="119" fill="#F0F1F1" font-weight="bold" font-size="35">pH response</text><text x="28" y="165" fill="#C2C6C6" font-size="22">Protonation-state modeling</text><text x="28" y="193" fill="#C2C6C6" font-size="22">Energetics and release</text></g>
 <path d="M940 235H973m-12-11 12 11-12 11" fill="none" stroke="#C4C8CA" stroke-width="3"/>
