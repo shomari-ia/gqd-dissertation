@@ -7884,3 +7884,13 @@ single-session format.*
 - Interpretation rule: orbital localization will be assessed qualitatively from matched-isovalue surfaces. The cube voxel count above an amplitude threshold is not treated as an orbital population or charge-transfer metric.
 - Advancement gate: RELEASE Flat HOMO/LUMO cube pilot. HOLD Slipped/Edge production orbital cubes until the Flat cubegen syntax, provenance, and QC pass.
 - Quantum-run count: unchanged at 38; cubegen is post-processing of an accepted wavefunction.
+
+
+### Entry 084 — 2026-11-24 — Flat frontier-orbital cube pilot acceptance
+- Analysis: CUBEGEN-ERLOTINIB-FLAT-FMO-PILOT-001; Slurm 356034, node041; COMPLETED 0:0, elapsed 00:01:15, MaxRSS 380196K, one CPU. Generation commit d3a84b9d588006fd09050b9c531b488e331cfc91; tracked worktree clean; Gaussian 16 C.02 cubegen, both return codes zero.
+- Source: accepted Flat M06-2X/6-311+G(d,p), SMD-water formatted checkpoint SHA256 985ede889dbeab659b2201bb0d30f54ae6a97512e369eec9b570ed1cb95b5ac1; 286 alpha and 286 beta electrons.
+- Cube hashes: HOMO c8ff7c4a585212a3fb0874b09fc9523a75898a6969fc907c444df85da8cec50a; LUMO ef94e21aa83073888fac158c27fe096e1a177443f7d0231e4480b55c731df586; matched recorded provenance.
+- Parser correction: original reader included the two-integer single-MO metadata record in the grid data, yielding 511040 instead of 511038 values. Corrected analyzer at e4ed8315ef116df8df577527db434f58ca6053f2 successfully reads the existing cubes. No cube regeneration or quantum rerun.
+- Accepted QC: 127 atoms, MO indices 286/287, identical 99 x 89 x 58 grids, 511038 samples per cube, voxel volume 0.06541526587137199 bohr^3. Approximate integrated squared orbital amplitudes HOMO 1.0002213096936226, LUMO 1.0002882561718864. Both deviations from unity <0.03%. QC table reproduced from the reported Magnolia v02 TSV at calculations/phase1_dft/descriptors/orbitals/results/flat_fmo_pilot_qc_v02.tsv.
+- Disposition: PASS for cube-generation and grid QC; no fragment-localization conclusion yet. RELEASE Slipped and Edge production pairs using the unchanged cubegen 0 MO=HOMO/LUMO ... 0 h settings and corrected reader with expected 127 atoms and HOMO index 286. Require provenance/hash checks and numerical normalization review for each pair before localization. Default grid extent and dimensions may differ by pose.
+- HOLD final Erlotinib descriptor closure until spatial localization is evaluated with matched absolute isovalues; voxel counts alone are not fragment orbital populations. Quantum-run count unchanged at 38.

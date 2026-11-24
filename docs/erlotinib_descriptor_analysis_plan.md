@@ -318,3 +318,11 @@ Next controlled stage:
    and Edge, with isolated C1/Erlotinib available as references;
 3. integrate geometry, energetics, charge, NCI/RDG, QTAIM, and orbital
    localization into the final Erlotinib descriptor-package conclusion.
+
+
+## Gate 6A — Flat frontier-orbital cube pilot
+Status: PASS (generation and grid QC; localization pending).
+
+Job 356034 generated HOMO 286 and LUMO 287 on matched 99 x 89 x 58 grids, 127 atoms, 511038 samples each. Corrected MO-header parser at e4ed8315ef116df8df577527db434f58ca6053f2 validated the existing cubes. Approximate squared-amplitude integrals: HOMO 1.00022131, LUMO 1.00028826. See Entry 084 and flat_fmo_pilot_qc_v02.tsv.
+
+RELEASE Slipped/Edge production cube generation using unchanged cubegen settings and corrected analyzer. Verify source electron counts, orbital indices, hashes, matching within-pose grids and normalization. Automatic grid dimensions may differ between poses. HOLD fragment localization and final descriptor closure until spatial comparison; grid integrals are QC, not fragment populations.
