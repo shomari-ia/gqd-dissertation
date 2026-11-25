@@ -13,6 +13,9 @@ Shared handoff between **GQD Workflow & Journal** (scientific authority) and **C
 | VE-005 | Actual three-pose HOMO/LUMO surfaces | Pending source-derived rendering | Six accepted cubes on Magnolia; matched absolute isovalue, sign colors, camera and representation; no fabricated surfaces |
 | VE-006 | Actual NCI scatter and isosurfaces | Pending source-derived rendering | Critic2 .dat and cubes; matched RDG isovalue and signed-density scale; no synthetic plot |
 
+| VE-007 | [Frontier orbital spatial distribution](erlotinib_fmo_spatial_distribution.svg) | Data-derived design draft | [Accepted numerical localization table](../../../calculations/phase1_dft/descriptors/orbitals/results/erlotinib_fmo_localization_accepted_v01.tsv); SE-ERL-012 / Entry 086; 0–100% scale |
+| VE-008 | [Erlotinib-domain orbital contribution](erlotinib_fmo_drug_region.svg) | Data-derived design draft | Same source; expanded 0–2% scale; geometric fraction, not charge transfer |
+
 ## Handoff rules
 
 - Scientific claims are controlled by the lab journal, scientific evidence register and acceptance gates, not presentation styling.
@@ -26,4 +29,4 @@ Shared handoff between **GQD Workflow & Journal** (scientific authority) and **C
 
 ## Creative Workspace entry point
 
-Read this index and [the cross-workspace handoff](../../../docs/design/visual_evidence_handoff.md). Start with VE-001 and VE-002, then develop the roadmap with source-linked figures. Gate 6C localization results are pending as of this release.
+Read this index and [the cross-workspace handoff](../../../docs/design/visual_evidence_handoff.md). Start with VE-001 and VE-002, then develop the roadmap with source-linked figures. Gate 6C numerical localization is accepted (Entry 086); actual surfaces VE-005 and final integrated review remain pending.
