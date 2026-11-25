@@ -326,3 +326,10 @@ Status: PASS (generation and grid QC; localization pending).
 Job 356034 generated HOMO 286 and LUMO 287 on matched 99 x 89 x 58 grids, 127 atoms, 511038 samples each. Corrected MO-header parser at e4ed8315ef116df8df577527db434f58ca6053f2 validated the existing cubes. Approximate squared-amplitude integrals: HOMO 1.00022131, LUMO 1.00028826. See Entry 084 and flat_fmo_pilot_qc_v02.tsv.
 
 RELEASE Slipped/Edge production cube generation using unchanged cubegen settings and corrected analyzer. Verify source electron counts, orbital indices, hashes, matching within-pose grids and normalization. Automatic grid dimensions may differ between poses. HOLD fragment localization and final descriptor closure until spatial comparison; grid integrals are QC, not fragment populations.
+
+
+## Gate 6B — Three-pose frontier-orbital cube generation
+Status: PASS. Slipped/Edge job 373879/373880 completed with valid provenance and matching hashes; all six cubes pass QC with normalization within 0.05% of unity. See Entry 085 and erlotinib_fmo_cube_qc_comparison.tsv. Different automatic voxel volumes are expected.
+
+## Gate 6C — Orbital spatial localization
+Status: RELEASED, results pending. Integrate squared orbital amplitudes on existing grids using nearest-nucleus GQD/drug spatial domains, with all-atom and heavy-atom partitions for sensitivity. Treat as a geometric localization proxy, not an atomic-orbital population or charge-transfer measure. Compare with matched-isovalue molecular surfaces before interpretation. No new Gaussian runs.
