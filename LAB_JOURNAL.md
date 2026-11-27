@@ -7912,3 +7912,11 @@ single-session format.*
 - ACCEPTED_DESCRIPTOR_VALIDATION: numerical spatial proxy (SE-ERL-012). HOLD final descriptor package closure pending matched absolute isovalue molecular rendering and review. Visual evidence register VE-007/VE-008 records data-derived SVG design drafts; actual surfaces VE-005 remain pending.
 - Interpretative control for final synthesis: NCI signed-density minima are not bond energies or spatial assignments by themselves; full-box fractions depend on grid extent. Positive QTAIM Laplacian supports closed-shell character but does not alone determine interaction strength or covalency.
 - Quantum calculation count unchanged at 38. Legacy construction stash remains to be reconciled before Gefitinib.
+
+
+### Entry 087 — 2026-11-26 — Core scientific visualization environment acceptance
+- Magnolia localization archive byte comparison PASS; local HEAD fa1d1161490e3f45d1057b6d038f520b5be8bc8a; legacy construction stash preserved.
+- Separate user-space environment $HOME/.venvs/gqd-viz created with Python 3.12.3. Existing gqd-tools preserved. Binary-wheel installation completed; pip check reported no broken requirements; NumPy 2.5.5, Matplotlib 3.11.2 and scikit-image 0.26.0 imports PASS.
+- Synthetic marching-cubes test: 888 vertices, 1772 faces, MARCHING_CUBES=PASS, HEADLESS_RENDERING=PASS. Matplotlib Agg PNG and pip freeze retained in $HOME/gqd-viz-check.zXZHk4/. The tracked core manifest at docs/environments/gqd-viz-core-20261126.txt is transcribed from the reported terminal output; original manifest remains on Magnolia.
+- ACCEPTED_ENVIRONMENT_VALIDATION: core visualization capability only. Actual accepted-cube molecular rendering remains pending. Additional molecular structure, cheminformatics, data plotting, trajectory and VTK tools proposed; installation and functional checks not yet confirmed. Preserve core versions and avoid modifying gqd-tools. VMD, NAMD, Open Babel and docking executables require separately verified installation/build and phase-specific validation.
+- Quantum calculation count unchanged at 38; no new scientific calculations.
