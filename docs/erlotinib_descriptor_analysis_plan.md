@@ -337,3 +337,7 @@ Status: RELEASED, results pending. Integrate squared orbital amplitudes on exist
 
 ### Gate 6C numerical result — 2026-11-25 (supersedes pending status above)
 PASS for geometric spatial localization proxy. SE-ERL-012 / Entry 086. All six orbitals occupy the GQD domain by >98.2% under the all-atom nearest-nucleus partition; heavy-atom partition sensitivity <0.5 percentage points. Drug-domain tails are larger for Flat/Slipped than Edge. Not formal orbital populations or charge transfer; grid convergence not established. Source: calculations/phase1_dft/descriptors/orbitals/results/erlotinib_fmo_localization_accepted_v01.tsv. RELEASE actual matched-isovalue molecular surfaces from existing cubes (VE-005); HOLD final integrated descriptor closure until reviewed.
+
+
+## Gate 6D — Actual molecular orbital rendering
+Core and expanded visualization environment imports accepted (Entries 087–088). RELEASE Flat rendering pilot VIS-ERL-FLAT-FMO-PILOT-001; use accepted cube hashes, both signs at |psi|=0.020 au, complete affine grid transform and shared within-pose camera bounds. Render via validated Agg backend; VTK offscreen capability still untested. Pilot visual review and common cross-pose registration required before production and integrated closure. No SCF or cubegen reruns.
